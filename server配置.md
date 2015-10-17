@@ -10,4 +10,5 @@
 2. 生成pem密钥  
 首先`yum update openssl`,升级到最新版本  1.0.1e-42.el7.9
 然后在一个指定目录下，执行`openssl genrsa -out key.pem 1024`, 产生私钥  
-继续执行`openssl req -key key.pem -new -x509 -out cert.pem`,一路回车，生成公钥
+继续执行`openssl req -key key.pem -new -x509 -out cert.pem`,一路回车，生成公钥  
+修改ss-express/routes/assist/general.js，将pemPath改成key.pem的路径
