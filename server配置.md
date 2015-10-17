@@ -12,3 +12,6 @@
 然后在一个指定目录下，执行`openssl genrsa -out key.pem 1024`, 产生私钥  
 继续执行`openssl req -key key.pem -new -x509 -out cert.pem`,一路回车，生成公钥  
 修改ss-express/routes/assist/general.js，将pemPath改成key.pem的路径
+
+3. 修改ss-express/routes/assist/general.js  
+   captchaImg_path:['/home/ss-express/captcha_Img'],
