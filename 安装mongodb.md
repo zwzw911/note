@@ -6,4 +6,5 @@
 2. 解压   
 `tar zxf mongodb-linux-x86_64-rhel70-3.0.7.tgz`  
 
-3.copy到/usr/local/bin  
+3. copy到/usr/local/bin  
+`cp * /usr/local/bin`
