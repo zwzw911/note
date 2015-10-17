@@ -36,6 +36,7 @@
     4.1  **把node-v4.2.1下所有的目录copy到/usr/local对应的目录下**，例如：把node-v4.2.1/bin下的node/npm copy到/usr/local/bin，node-v4.2.1/lib=>/usr/local/lib，node-v4.2.1/share=>/usr/local/share。  
           因为node会依照原始结构来查找，例如，运行npm，会在../lib查找对应的文件    
     4.2   在PATH中添加node-v4.2.1/bin，这样，目录结构不用改变，可以直接运行bin下的文件了  
+    4.3 修改.bachrc文件，添加`export PATH=$PATH:node-V4.2.1/bin`, 以便在用户登录后可以直接使用
     
 
     
