@@ -29,4 +29,14 @@
   2. 列出时区:`timedatectl list-timezones`  
   3. 设置时区:`tiemdatectrl set-timezone Asia/Shanghai`  
   4. 设置时间:  `timedatectrl set-time "YYYY-MM-DD hh:mm:ss"`  
+ 
+#####7. 设置ueditor上传路径  
+  ueditor上传路径由2部分组成：  
+  general.js/ueUploadPath设置路径，udeitor.config/imagePathFormat设置目录  
+  general.js/ueUploadPath:/home  
+  `mkdir -p /home/inner_image`
+
+#####8. 设置附件上传路径  
+  upload_define.js/saveDir:/home/attachment  
+  `mkdir -p /home/attachment`  
 
