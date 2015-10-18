@@ -23,4 +23,10 @@
 #####5. 安装font
    生成captcha需要用到某种字体。  
    首先`fc-cache -vfs`查看当前是否有字体，如果没有，安装基本字体`yum install liberation-sans-fonts.noarch liberation-mono-fonts.noarch liberation-serif-fonts.noarch`, 然后查看当前可用字体`fc-match`，查看所有字体`fc-list :lang=zh/en`  
-   
+
+#####6. 更改时区  
+  1. 查看:`timedatectl`   
+  2. 列出时区:`timedatectl list-timezones`  
+  3. 设置时区:`tiemdatectrl set-timezone Asia/Shanghai`  
+  4. 设置时间:  `timedatectrl set-time "YYYY-MM-DD hh:mm:ss"`  
+
