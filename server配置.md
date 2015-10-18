@@ -37,6 +37,6 @@
   `mkdir -p /home/inner_image`
 
 #####8. 设置附件上传路径  
-  upload_define.js/saveDir:/home/attachment  
+  upload_define.js/saveDir:/home/attachment/  
   `mkdir -p /home/attachment`  
 
