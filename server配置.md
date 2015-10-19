@@ -33,7 +33,7 @@
 #####7. 设置ueditor上传路径  
   ueditor上传路径由2部分组成：  
   general.js/ueUploadPath设置路径，udeitor.config/imagePathFormat设置目录  
-  general.js/ueUploadPath:/home/ss-express. **为了使用node来提供静态资源，此目录必须设在ss-express下**，但是可以为软连接，到实际防止文件的地方
+  general.js/ueUploadPath:/home/ss-express. **为了使用node来提供静态资源，此目录必须设在ss-express下**，但是可以为软连接，到实际放置文件的地方(windows不可以用快捷方式)
   `mkdir -p /home/inner_image`
 
 #####8. 设置附件上传路径  
