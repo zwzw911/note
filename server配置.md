@@ -44,4 +44,4 @@
 首先安装3个包，pcre（必须），openssl和zlib。可以通过源代码安装。  
 此处使用yum install pcre/openssl/zlib安装。  
 安装完毕后，`rpm -qa | grep -i pcre`获得包名字，`rpm -ql packagename`获得包安装的地址，一般就是/usr/lib64.  
-然后进入nginx源码目录，执行` ./configure --prefix=/usr/local --with-pcre=/usr/lib64 --with-zlib=/usr/lib64 --with-openssl=/usr/lib64 && make && make install`  
+然后进入nginx源码目录，执行` ./configure --prefix=/usr/local --with-pcre=pcre_source_code_directory --with-zlib=/usr/lib64 --with-openssl=/usr/lib64 && make && make install`. **注意，--with-pcre的参数是pcre代码的目录，而不是安装目录**
