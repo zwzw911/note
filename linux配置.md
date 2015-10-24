@@ -11,3 +11,8 @@ cent7使用fireware而不是iptables
 systemctl start firewalld.service	#启动firewall  
 systemctl stop firewalld.service	#停止firewall  
 systemctl disable firewalld.service	#禁止firewall开机启动  
+
+
+#####3. 安装gcc/gcc+
+yum install gcc  
+yum install gcc-c++
