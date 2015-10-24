@@ -40,3 +40,8 @@
   upload_define.js/saveDir:/home/attachment/  
   `mkdir -p /home/attachment`  
 
+#####9. 安装nginx  
+首先安装3个包，pcre（必须），openssl和zlib。可以通过源代码安装。  
+此处使用yum install pcre/openssl/zlib安装。  
+安装完毕后，`rpm -qa | grep -i pcre`获得包名字，`rpm -ql packagename`获得包安装的地址，一般就是/usr/lib64.  
+然后进入nginx源码目录，执行` ./configure --prefix=/usr/local --with-pcre=/usr/lib64 --with-zlib=/usr/lib64 --with-openssl=/usr/lib64 && make && make install`  
