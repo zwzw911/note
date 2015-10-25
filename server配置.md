@@ -44,4 +44,15 @@
 首先安装3个包，pcre（必须），openssl和zlib。可以通过源代码安装，也可以使用yum install pcre/openssl/zlib安装。  
 但是pcre和zlib的源代码必须下载，安装nginx的时候，需要指明源代码的目录（而不是安装的目录）。  
 安装完毕后，`rpm -qa | grep -i pcre`获得包名字，`rpm -ql packagename`获得包安装的地址，一般就是/usr/lib64.  
-然后进入nginx源码目录，执行` ./configure --prefix=/usr/local --with-pcre=pcre源代码目录 --with-zlib=zlib源代码目录 --with-openssl=/usr/lib64 && make && make install`. **注意，--with-pcre和--with-zlib的参数是pcre代码的目录，而不是安装目录**
+然后进入nginx源码目录，执行` ./configure --prefix=/usr/local --with-pcre=pcre源代码目录 --with-zlib=zlib源代码目录 --with-openssl=/usr/lib64 && make && make install`.   **注意，--with-pcre和--with-zlib的参数是pcre代码的目录，而不是安装目录**  
+	upstream localhost {  
+		server localhost:3000;=====>这是nodejs的地址和端口  
+		ip_hash;  
+	}    
+	listen       80;========》这是服务器的端口  
+ server_name  192.168.116.131;=====>这是服务器的地址 
+ charset utf-8;========>服务器的编码    
+ 		location = / {  
+			proxy_pass http://localhost;=======>接收到进入服务器的request，转发到localhost的地址上  
+		}  
+		
