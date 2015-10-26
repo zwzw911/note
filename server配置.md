@@ -40,7 +40,10 @@
   upload_define.js/saveDir:/home/attachment/  
   `mkdir -p /home/attachment`  
 
-#####9. 安装nginx  
+#####9. 更改cookie的domian  
+routes/express_component/cookieSession: domain改成当前服务器的ip/域名  
+
+#####10. 安装nginx  
 首先安装3个包，pcre（必须），openssl和zlib。可以通过源代码安装，也可以使用yum install pcre/openssl/zlib安装。  
 但是pcre和zlib的源代码必须下载，安装nginx的时候，需要指明源代码的目录（而不是安装的目录）。  
 安装完毕后，`rpm -qa | grep -i pcre`获得包名字，`rpm -ql packagename`获得包安装的地址，一般就是/usr/lib64.  
