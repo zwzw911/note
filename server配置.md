@@ -49,26 +49,26 @@ routes/express_component/cookieSession: domain改成当前服务器的ip/域名
 安装完毕后，`rpm -qa | grep -i pcre`获得包名字，`rpm -ql packagename`获得包安装的地址，一般就是/usr/lib64.  
 然后进入nginx源码目录，执行` ./configure --prefix=/usr/local --with-pcre=pcre源代码目录 --with-zlib=zlib源代码目录 --with-openssl=/usr/lib64 && make && make install`.   **注意，--with-pcre和--with-zlib的参数是pcre代码的目录，而不是安装目录** 
   
-gzip  on;*启用gzip*
-gzip_min_length  1000;*内容长度大于1000byte才用gzip压缩(小于1000bytes,压缩之后可能会更大)*
-gzip_buffers 4 16k;*压缩使用的buffer大小, 4*16k*  
+gzip  on;	*启用gzip*
+gzip_min_length  1000	*内容长度大于1000byte才用gzip压缩(小于1000bytes,压缩之后可能会更大)*
+gzip_buffers 4 16k;	*压缩使用的buffer大小, 4*16k*  
 \#gzip_http_version 1.0;  
-gzip_comp_level 3;*压缩比率,1-9, 1:不压缩,9:压缩最大(cpu消耗最多)*  
+gzip_comp_level 3;	*压缩比率,1-9, 1:不压缩,9:压缩最大(cpu消耗最多)*  
 gzip_proxied     expired no-cache no-store private auth;  
-gzip_types       text/plain text/css application/x-javascript application/javascript application/xml image/jpeg image/gif image/png;*压缩类型*   
-gzip_disable "MSIE [1-6]\.";*IE6以及更老版本不压缩*  
-curl -I -H "Accept-Encoding:gzip,deflate" 127.0.0.1:*检测是否启动了gzip*  
-curl -I -H "Accept-Encoding:gzip,deflate" 127.0.0.1/image/logo.png:*检测是否启动了gzip*  
+gzip_types       text/plain text/css application/x-javascript application/javascript application/xml image/jpeg image/gif image/png;	*压缩类型*   
+gzip_disable "MSIE [1-6]\.";	*IE6以及更老版本不压缩*  
+curl -I -H "Accept-Encoding:gzip,deflate" 127.0.0.1:	*检测是否启动了gzip*  
+curl -I -H "Accept-Encoding:gzip,deflate" 127.0.0.1/image/logo.png:	*检测是否启动了gzip*  
   
 upstream localhost 
 {  
-server localhost:3000;*这是nodejs的地址和端口*  
+server localhost:3000;	*这是nodejs的地址和端口*  
 ip_hash;  
 }    
-listen       80;*这是服务器的端口*  
- server_name  192.168.116.131;*这是服务器的地址*  
- charset utf-8;*服务器的编码*    
+listen       80;	*这是服务器的端口*  
+ server_name  192.168.116.131;	*这是服务器的地址*  
+ charset utf-8;	*服务器的编码*    
 location = / {  
-proxy_pass http://localhost;*接收到进入服务器的request，转发到localhost的地址上*
+proxy_pass http://localhost;	*接收到进入服务器的request，转发到localhost的地址上*
 }  
 		
