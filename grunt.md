@@ -15,4 +15,4 @@
 "grunt-contrib-htmlmin": 缩小html文件  
 "grunt-contrib-jshint": 检查js语法  
 "grunt-contrib-uglify": 压缩js文件  
-"ngmin": 设置angular文件格式，以便可以用uglify压缩  
+"grunt-ng-annotate": 重构angular依赖，以便可以进行压缩  
