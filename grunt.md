@@ -16,3 +16,6 @@
 "grunt-contrib-jshint": 检查js语法  
 "grunt-contrib-uglify": 压缩js文件  
 "grunt-ng-annotate": 重构angular依赖，以便可以进行压缩  
+
+#####5. 如果要对当前目录下的子目录和文件进行操作。  
+必需使用pwd/\*\*/\*.ejs，而不是pwd/\*\*.ejs
