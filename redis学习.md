@@ -11,3 +11,7 @@
 11.  **append**       //尾部增加字符。foo=6.1; append foo 2; foo-6.1**2**
 12.  **strlen**       //**字符**长度
 13.  **mget/mset**    // mget key1 val1 key2 val2
+  
+#####hash  
+1.  hset key field value
+2.  hmset key field1 val1 field2 vale
