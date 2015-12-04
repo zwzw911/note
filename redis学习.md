@@ -17,4 +17,5 @@
 2.  **hmset** key field1 val1 field2 vale
 3.  **hmget** key f1 f2
 4.  **hgetall** key
-5.  
+5.  **hexists** key f1
+6.  **hsetNX**  key f3 3
