@@ -1,3 +1,7 @@
+1. redis支持16个数据库，默认使用0.可以是**select 1**更换数据库
+
+
+
 1.  **set**     //设置key-value
 2.  **exists**  //判断key是否存在
 3.  **keys**  //打印所有key
@@ -18,4 +22,4 @@
 3.  **hmget** key f1 f2
 4.  **hgetall** key
 5.  **hexists** key f1
-6.  **hsetNX**  key f3 3
+6.  **hsetNX**  key f3 3  //如果f3已经存在，那么不设置
