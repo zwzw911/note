@@ -33,3 +33,4 @@
 7.  **lset** key idx val  //把list中idx对应的值设成val
 8.  **ltrim** key startIdx endIdx   //把list中，除了startIdx至endIdx外，所有的元素都删除
 9.  **linsert** key **after/before** checkval insertval //在**第一个**查找到的checkval之前（before）或者（之后），插入insertval
+10.  **RpopLPush**  key1 key2 //从key1中rpop出**一个元素**，然后lpush到key2中
