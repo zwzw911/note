@@ -32,3 +32,4 @@
 6.  **lindex** key idx  //当成一个数组，使用index显示值
 7.  **lset** key idx val  //把list中idx对应的值设成val
 8.  **ltrim** key startIdx endIdx   //把list中，除了startIdx至endIdx外，所有的元素都删除
+9.  **linsert** key **after/before** checkval insertval //在**第一个**查找到的checkval之前（before）或者（之后），插入insertval
