@@ -40,3 +40,6 @@
 2.  **sREM**  key member1 member2 //集合删除成员
 3.  **sMEMBERS**  key   //获得集合中所有元素
 4.  **sISMEMBER** key member1 //判断member1是不是已经在key中存在了。存在：1，不存在：0
+5.  **sDIFF** key1 key2 //key1－key2（key1中有，而key2中没有的部分）
+6.  **sINTER**  key1 key2 //key1，key2共有部分
+7.  **sUNION**  key1 key2 //key1+key2
