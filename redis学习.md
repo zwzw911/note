@@ -27,3 +27,4 @@
 1.  **lpush/rpush** key val1 [val2]   //把val1、val2从左边（L）或右（R）边推入list
 2.  **lpush/rpush** key    //从左边（L）或右（R）边删除一个值，并返回这个值
 3.  **llen**  key     //list的长度（key不存在时为0）
+4.  **lrange** key start stop   //start、stop可选正数和负数；正数：从左边开始选取，负数：从右边选取。lrange key 0 -1：选取所有。
