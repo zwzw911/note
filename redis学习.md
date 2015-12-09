@@ -47,3 +47,7 @@
 5.  **sDIFF** key1 key2 //key1－key2（key1中有，而key2中没有的部分）
 6.  **sINTER**  key1 key2 //key1，key2共有部分
 7.  **sUNION**  key1 key2 //key1+key2
+8.  **sCARD** key   //获得集合中成员的数量
+9.  **sDIFF/INTER/UNION/STORE** dest key1 key2  //和diff/inter/union类似，只是会把结果存储在dest这个新的键值中
+10.  **sRANDMEMBER**  key [count]   //从集合中随机获取count个成员
+11.  **sPOP** key   //从集合中返回一个成员，并从集合中删除
