@@ -63,3 +63,11 @@
 8.  **zREM**  key member1 [member2]   //删除成员
 9.  **zREMRANGEBYRANK** key start stop    //按照score排序，删除index [start,stop]的元素，并返回（显示）
 10.  **zRANK**  key val     //获得val对应的排名（idx）
+
+
+#####事务
+1.  **multi/exec**      //开始结束事务，如果**事务命令出错，事务不执行**；如果事务**执行中出错，跳过出错语句，继续向下执行，需要手动回滚（redis不支持自动rollback）**
+2.  **(p)expire** key  time(s)  //设置key超时时间（秒），redis自动删除; pEXPIRE是以ms为单位
+3.  **ttl** key   //key还剩多久过期
+4.  **persist** key   //设成expire的key再次变成永久key
+2.  
