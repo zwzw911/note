@@ -22,7 +22,7 @@
 2.  **hmset** key field1 val1 field2 vale
 3.  **hmget** key f1 f2
 4.  **hgetall** key
-5.  **hexists** key f1
+5.  **hexists** key f1    //判断的是**key下的field**
 6.  **hsetNX**  key f3 3  //如果f3已经存在，那么不设置
 7.  **hkeys/hvals** key   //获得一个key所有字段名/字段值  
 
