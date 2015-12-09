@@ -51,3 +51,10 @@
 9.  **sDIFF/INTER/UNION/STORE** dest key1 key2  //和diff/inter/union类似，只是会把结果存储在dest这个新的键值中
 10.  **sRANDMEMBER**  key [count]   //从集合中随机获取count个成员
 11.  **sPOP** key   //从集合中返回一个成员，并从集合中删除
+
+#####有序集合
+1. **zADD** key score val //scroe可以是整数，小数，+inf，－inf
+2. **zSCORE** key val   //val对应的score
+3. **z(REV)RANGE** key startIdx endIdx **[withscores]**  //按照score从小达到排序，去index[start,end]的元素。withscores：同时显示score
+4.  **z(REV)RANGEBYSCORE** key scoreMIN scoreMAX **[withscores]** **[LIMIT]** start total//根据scoreMIN/MAX范围取值, limit同mysql
+5.  **zINCRBY** key scorenum val  //为某个val增加score值，可以为正数，负数
