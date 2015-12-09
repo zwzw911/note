@@ -25,10 +25,11 @@
 5.  **hexists** key f1    //判断的是**key下的field**
 6.  **hsetNX**  key f3 3  //如果f3已经存在，那么不设置
 7.  **hkeys/hvals** key   //获得一个key所有字段名/字段值  
+8.  **hdel** key f1   //删除hash下的一个字段
 
 #####list
 1.  **lpush/rpush** key val1 [val2]   //把val1、val2从左边（L）或右（R）边推入list
-2.  **lpush/rpush** key    //从左边（L）或右（R）边删除一个值，并返回这个值
+2.  **lpop/rpop** key    //从左边（L）或右（R）边删除一个值，并返回这个值
 3.  **llen**  key     //list的长度（key不存在时为0）
 4.  **lrange** key start stop   //start、stop可选正数和负数；正数：从左边开始选取，负数：从右边选取。lrange key 0 -1：选取所有。
 5.  **lrem** key count val    //从key中删除conut个值为val的元素。count>0，从左开始删除count个；count<0，从右开始删除count个；count=0，删除所有val；
