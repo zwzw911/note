@@ -58,3 +58,8 @@
 3. **z(REV)RANGE** key startIdx endIdx **[withscores]**  //按照score从小达到排序，去index[start,end]的元素。withscores：同时显示score
 4.  **z(REV)RANGEBYSCORE** key scoreMIN scoreMAX **[withscores]** **[LIMIT]** start total//根据scoreMIN/MAX范围取值, limit同mysql
 5.  **zINCRBY** key scorenum val  //为某个val增加score值，可以为正数，负数
+6.  **zCARD** key   //有序集合的成员数
+7.  **zCount**  key scoremin scoremax   //统计key中min/max范围内的成员数量
+8.  **zREM**  key member1 [member2]   //删除成员
+9.  **zREMRANGEBYRANK** key start stop    //按照score排序，删除index [start,stop]的元素，并返回（显示）
+10.  **zRANK**  key val     //获得val对应的排名（idx）
