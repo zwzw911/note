@@ -26,6 +26,7 @@
 6.  **hsetNX**  key f3 3  //如果f3已经存在，那么不设置
 7.  **hkeys/hvals** key   //获得一个key所有字段名/字段值  
 8.  **hdel** key f1   //删除hash下的一个字段
+9.  **hlen**  key   //key下有几个字段
 
 #####list
 1.  **lpush/rpush** key val1 [val2]   //把val1、val2从左边（L）或右（R）边推入list
@@ -70,4 +71,7 @@
 2.  **(p)expire** key  time(s)  //设置key超时时间（秒），redis自动删除; pEXPIRE是以ms为单位
 3.  **ttl** key   //key还剩多久过期
 4.  **persist** key   //设成expire的key再次变成永久key
-2.  
+
+
+#####排序
+**sort** key [alpha]      //用作对列表（list）和集合（set/zset）进行排序。alpha对无法字符进行排序。
