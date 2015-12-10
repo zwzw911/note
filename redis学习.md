@@ -74,4 +74,4 @@
 
 
 #####排序
-**sort** key [alpha]      //用作对列表（list）和集合（set/zset）进行排序。alpha对无法字符进行排序。
+**sort** key [alpha] [DESC] [limit offset count]   //用作对列表（list）和集合（set/zset）进行排序。alpha对无法字符进行排序。DESC：反向排序。limit:跳过offset，总共显示count个。
