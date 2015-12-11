@@ -95,4 +95,4 @@
 
 #####持久化
 RDB：snapshot。 save 900 1/save 300 10
-AOF：append only file。 appendonly **no=>yes**。appendfilenam默认为appendonly.aof，**auto-aof-rewrite-percentage** 100，**auto-aof-rewrite-min-size** 64mb，**BGREWRITEAO**
+AOF：append only file。 appendonly **no=>yes**。appendfilenam默认为appendonly.aof，**auto-aof-rewrite-percentage** 100，**auto-aof-rewrite-min-size** 64mb，**BGREWRITEAO**，**appendfsync** always/everysec/no9从磁盘缓存写入磁盘的策略）
