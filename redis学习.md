@@ -92,3 +92,7 @@
 
 #####管道
 将多个不互相依赖的命令，通过管道一次发送，并且一次获得结果。可以节省client/server之间的往返时间
+
+#####持久化
+RDB：snapshot。 save 900 1/save 300 10
+AOF：append only file。 appendonly **no=>yes**。appendfilenam默认为appendonly.aof，**auto-aof-rewrite-percentage** 100，**auto-aof-rewrite-min-size** 64mb，**BGREWRITEAO**
