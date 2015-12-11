@@ -75,3 +75,20 @@
 
 #####排序
 **sort** key [alpha] [DESC] [limit offset count]   //用作对列表（list）和集合（set/zset）进行排序。alpha对无法字符进行排序。DESC：反向排序。limit:跳过offset，总共显示count个。
+**by**
+**get**   //#返回本身
+**store**   //sort/by/get返回值存储在**列表**中
+
+#####任务
+**生产者**  //产生任务
+**消费者**  //执行任务
+任务的概念使用列表（list）比较合适，lpush加入任务，rpop取出任务。
+**bRPOP** list1 list2 timeout   //阻塞，直到有新元素加入list才读取。list1,list2，如果都有新元素，按照list1，list2的顺序执行。timeout，检测超时
+
+#####订阅发布
+**publish** channel val  //向channel发布数据val
+**(un)subscribe** channel   //（退订）订阅channel的数据
+**p(un)subscribe**  channel.*   //和subscribe互不影响。可以使用通配符
+
+#####管道
+将多个不互相依赖的命令，通过管道一次发送，并且一次获得结果。可以节省client/server之间的往返时间
