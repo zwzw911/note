@@ -8,5 +8,6 @@
 #####配置  
 1. 打开**环境变量**，添加一个新的变量，"JAVA_HOME"，设成jdk所在目录。例如JAVA_HOME=C:\Program Files\Java\jdk1.8.0_66.
 2. path中加入%JAVA_HOME%（就是step1中设置的值）。可能为optional。
-3. 打开cmd，进入elastic解压目录，进入bin，执行service.bat **install**。将elastic安装成一个windows service。
-4. 输入**services.msc**，检查elastic已经安装成service 。
+3. path中加入elastic解压后所在的目录。例如：C:\Users\wzhan039\Downloads\elasticsearch-2.1.1\elasticsearch-2.1.1
+3. 打开cmd，~~进入elastic解压目录，进入bin~~，执行service.bat **install**。将elastic安装成一个windows service。因为step3已经把elastic的目录加入path变量了
+4. 执行service（不需要bat） **manager**，检查elastic已经安装成service 。
