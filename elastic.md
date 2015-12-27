@@ -10,7 +10,22 @@
 2. path中加入%JAVA_HOME%（就是step1中设置的值）。可能为optional。
 3. path中加入elastic解压后所在的目录。例如：C:\Users\wzhan039\Downloads\elasticsearch-2.1.1\elasticsearch-2.1.1
 3. 打开cmd，~~进入elastic解压目录，进入bin~~，执行service.bat **install**。将elastic安装成一个windows service。因为step3已经把elastic的目录加入path变量了
-4. 执行service（不需要bat） **manager**，检查elastic已经安装成service 。或者使用浏览器或者curl，get本地地址http://localhost:9200/?pretty，如果有信息返回，说明service已经启动。
+4. 执行service（不需要bat） **manager**，检查elastic已经安装成service 。或者使用浏览器或者curl，get本地地址http://localhost:9200/?pretty，如果有信息返回，说明service已经启动。或者**service.msc**打开windows服务，直接诶查看。
 
 #####安装plugin
 1. https://www.elastic.co/downloads/marvel
+2. npm install elasticsearch --save
+
+#####配置
+1.  elasticsearch.yml: node.name=>节点名称。所有同名节点属于同一个集群。
+2.  
+
+#####连接
+**curl -X\<VERB> '\<PROTOCOL>://\<HOST>/\<PATH>?\<QUERY_STRING>' -d '\<BODY>'**
+
+    VERB HTTP方法：GET, POST, PUT, HEAD, DELETE
+    PROTOCOL http或者https协议（只有在Elasticsearch前面有https代理的时候可用）
+    HOST Elasticsearch集群中的任何一个节点的主机名，如果是在本地的节点，那么就叫localhost
+    PORT Elasticsearch HTTP服务所在的端口，默认为9200
+    QUERY_STRING 一些可选的查询请求参数，例如?pretty参数将使请求返回更加美观易读的JSON数据
+    BODY 一个JSON格式的请求主体（如果请求需要的话）
