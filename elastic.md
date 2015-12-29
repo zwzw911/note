@@ -36,3 +36,6 @@
 3. {query:{match:{lastname:smith}}}: query is q=;
 4. match/match_phrase: match：包含匹配；match_phrase：全部匹配
     
+#####分词
+1. curl -XGET "http://localhost:9200/_analyze?analyzer=standard" -d "text to text"
+2. 
