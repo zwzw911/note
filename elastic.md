@@ -38,4 +38,10 @@
     
 #####分词
 1. curl -XGET "http://localhost:9200/_analyze?analyzer=standard" -d "text to text"
-2. 
+2. 分词类型：string/whole number/floating number/bollean/date
+    string=>string  
+    whole number=>byte/short/integer/long  
+    floating number=>float/double  
+    boolean=>true/false  
+    date=>date  
+
