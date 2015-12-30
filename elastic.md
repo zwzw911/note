@@ -21,14 +21,15 @@
 2.  
 
 #####连接
-**curl -X\<VERB> "\<PROTOCOL>://\<HOST>/\<PATH>?\<QUERY_STRING>" -d "\<BODY>"**
-**注意，是双引号隔开，而不是单引号**
-    VERB HTTP方法：GET, POST, PUT, HEAD（文档是否存在）, DELETE
-    PROTOCOL http或者https协议（只有在Elasticsearch前面有https代理的时候可用）
-    HOST Elasticsearch集群中的任何一个节点的主机名，如果是在本地的节点，那么就叫localhost
-    PORT Elasticsearch HTTP服务所在的端口，默认为9200
-    QUERY_STRING 一些可选的查询请求参数，例如?pretty参数将使请求返回更加美观易读的JSON数据
-    BODY 一个JSON格式的请求主体（如果请求需要的话）
+**curl -X\<VERB> "\<PROTOCOL>://\<HOST>/\<PATH>?\<QUERY_STRING>" -d "\<BODY>"**  
+**注意，是双引号隔开，而不是单引号**  
+**body中的双引号，需要用\进行转义**  
+    VERB HTTP方法：GET, POST, PUT, HEAD（文档是否存在）, DELETE  
+    PROTOCOL http或者https协议（只有在Elasticsearch前面有https代理的时候可用）  
+    HOST Elasticsearch集群中的任何一个节点的主机名，如果是在本地的节点，那么就叫localhost  
+    PORT Elasticsearch HTTP服务所在的端口，默认为9200  
+    QUERY_STRING 一些可选的查询请求参数，例如?pretty参数将使请求返回更加美观易读的JSON数据  
+    BODY 一个JSON格式的请求主体（如果请求需要的话）  
 
 **pretty**：美化输出
   
