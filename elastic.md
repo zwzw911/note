@@ -36,7 +36,9 @@
 #####文档
 1. 文档的元数据:_index(存储和索引数据)/_type（文档代表的对象的类）/_id（文档的唯一标识）。_version/_source
 2. 所应（存储？）：PUT /type/index/id: 把文档放到id对应的空间。POST：把文档添加到type下（_id自动增加）。
-3. 检索：GET
+3. 检索：GET  /index/type/id**/_source**，只显示检索到的内容。  /index/type/id**？_source＝title**（可能有用，只显示某个字段）
+4. 是否存在：HEAD: 通过-i参数获得resopnse的header判断，404：不存在；200：存在。  
+5. 
 #####
 1. _search: type下所有数据
 2. _search?q=lastname:smith：q=设置条件
