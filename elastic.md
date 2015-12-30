@@ -32,7 +32,16 @@
     BODY 一个JSON格式的请求主体（如果请求需要的话）  
 
 **pretty**：美化输出
-  
+ 
+#####集群
+1. 集群中一个节点会被选举为**主节点**(master),它将临时管理集群级别的一些变更，例如**新建或删除索引、增加或移除节点**等。主节点不参与**文档**级别的**变更或搜索**，这意味着在流量增长的时候，该主节点不会成为集群的瓶颈。 
+2. 我们能够发送请求给集群中任意一个节点。每个节点都有能力处理任意请求。每个节点都知道任意文档所在的节点，所以也可以将请求转发到需要的节点。这个节点我们将会称之为请求节点(requesting node)。
+1. 集群健康： GET **_cluster/health**。至少有2个Node，才能保证状态是GREEN（一个node放主分片，一个node放复制分片）
+2. 集群是由cluster.name相同的node组成。node是ES的一个实例。shard是自动分配到不同的shard。
+3. 一个分片(shard)是一个最小级别“工作单元(worker unit)”,它只是保存了索引中所有数据的一部分，是一个Lucene实例，它本身就是一个完整的搜索引擎。
+4. 分片可以是**主分片(primary shard)**或者是**复制分片(replica shard)**。
+5. PUT /index {"settings":{"**number_of_shards**" : 3,"**number_of_replicas**" : 1}}。number_of_shards：index有几个主分片，每个主分片有几个复制分片。
+6. 
 #####文档
 1. 文档的元数据:_index(存储和索引数据)/_type（文档代表的对象的类）/_id（文档的唯一标识）。_version/_source
 2. 所应（存储？）：PUT /type/index/id: 把文档放到id对应的空间。POST：把文档添加到type下（_id自动增加）。
@@ -43,7 +52,11 @@
 7. 更新冲突控制：悲观并发控制：将数据锁定，知道操作完毕；乐观并发控制：程序决定冲突后的操作。PUT /index/type/id?**version=1**  当version**等于**1才更改。PUT /index/type/id?**version=1&version_type=10** 当前的version**小于**10才执行update，**并且将version改成10 **  
 8. 更新: PUT /index/type/id/**_update**。body必需带**doc**，然后带字段：已经存在的字段更新，没有的字段添加。{"doc":{"title":"asdf"}}
 9. 获得多个文档： **_mget**。GET /index/type/_mget  {"**ids**":**[**"123","124"**]**}
-10. 批量（bulk）：？？
+10. 批量（bulk）：？？  
+
+#####分布式CRUD  
+1. 确定shard的位置：** = hash(routing) % number_of_primary_shards**。routing值是一个任意字符串，它默认是_id但也可以自定义。自定义路由值可以确保所有相关文档——例如属于同一个人的文档——被保存在同一分片上。   
+2. 
 #####
 1. _search: type下所有数据
 2. _search?q=lastname:smith：q=设置条件
