@@ -30,6 +30,12 @@
     QUERY_STRING 一些可选的查询请求参数，例如?pretty参数将使请求返回更加美观易读的JSON数据
     BODY 一个JSON格式的请求主体（如果请求需要的话）
 
+**pretty**：美化输出
+  
+#####文档
+1. 文档的元数据:_index(存储和索引数据)/_type（文档代表的对象的类）/_id（文档的唯一标识）。_version/_source
+2. 所应（存储？）：PUT /type/index/id: 把文档放到id对应的空间。POST：把文档添加到type下（_id自动增加）。
+3. 检索：GET
 #####
 1. _search: type下所有数据
 2. _search?q=lastname:smith：q=设置条件
