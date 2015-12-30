@@ -38,7 +38,10 @@
 2. 所应（存储？）：PUT /type/index/id: 把文档放到id对应的空间。POST：把文档添加到type下（_id自动增加）。
 3. 检索：GET  /index/type/id**/_source**，只显示检索到的内容。  /index/type/id**？_source＝title**（可能有用，只显示某个字段）
 4. 是否存在：HEAD: 通过-i参数获得resopnse的header判断，404：不存在；200：存在。  
-5. 
+5. 检查文档是否已经存在：PUT /index/type/id/**_create**。 201：created 409：conflict。 PS；必需是PUT（带ID）。POST的话会自动生成ID。
+6. 删除：DELETE  
+7. 更新冲突控制：悲观并发控制：将数据锁定，知道操作完毕；乐观并发控制：程序决定冲突后的操作。PUT /index/type/id?version=1  当version**等于**1才更改。PUT /index/type/id?version=1&version_type=10 当前的version**小于**10才执行update，**并且将version改成10 **  
+8. 更新: PUT /index/type/id/**_update**。body必需带doc，然后带字段：已经存在的字段更新，没有的字段添加。{"doc":{"title":"asdf"}}
 #####
 1. _search: type下所有数据
 2. _search?q=lastname:smith：q=设置条件
