@@ -54,7 +54,7 @@
 8. 更新: PUT /index/type/id/**_update**。body必需带**doc**，然后带字段：已经存在的字段更新，没有的字段添加。{"doc":{"title":"asdf"}}
 9. 获得多个文档： **_mget**。GET /index/type/_mget  {"**ids**":**[**"123","124"**]**}
 10. 批量（bulk）：？？  
-11. 
+  
 #####搜索
 1. 空搜索：不指定index/type/id，直接使用**_search**，获得集群中所有文档。**?timeout=10ms**：搜索超时时间，**不会停止搜索**，而是在达到定义的时间后返回当前搜索到的结果。took:搜索花费的时间。shards：节点告诉我们参与查询的分片数。
 2. 多索引和多类别：/index1\*,index2\*,_all/type1,type2/_search。**\*只能用于index，而不能用于type**  
@@ -63,9 +63,12 @@
 5. _all：搜索是，ES把所有字段的字符组合成一个字符串，名字是_all。  
 
 #####映射
-mapping用于字段的数据类型确认（把字段值匹配到一种特定的数据类型：）。
-analysis机制用于Full Text的分词。
-
+**mapping**用于字段的数据类型确认（把字段值匹配到一种特定的数据类型：）。
+**analysis**机制用于Full Text的分词。
+1. 查看type的mapping： GET /index/**_mapping**/type?pretty。**不显示_all，因为是默认字段，且类型为string**
+2. 确切值（exact value）和全文文本（Full text）。**确切值：要么匹配，要么不匹配；全文文本：匹配程度。**
+3. 为了对Full text搜索，需要进行analysis，然后建立倒排索引。
+4. 首先进行分词，得到terms或者tokens数组
 #####分布式CRUD  
 1. 确定shard的位置：** = hash(routing) % number_of_primary_shards**。routing值是一个任意字符串，它默认是_id但也可以自定义。自定义路由值可以确保所有相关文档——例如属于同一个人的文档——被保存在同一分片上。   
 2. 
