@@ -41,7 +41,8 @@
 3. 一个分片(shard)是一个最小级别“工作单元(worker unit)”,它只是保存了索引中所有数据的一部分，是一个Lucene实例，它本身就是一个完整的搜索引擎。
 4. 分片可以是**主分片(primary shard)**或者是**复制分片(replica shard)**。
 5. PUT /index {"settings":{"**number_of_shards**" : 3,"**number_of_replicas**" : 1}}。number_of_shards：index有几个主分片，每个主分片有几个复制分片。
-6. 
+
+
 #####文档
 1. 文档的元数据:_index(存储和索引数据)/_type（文档代表的对象的类）/_id（文档的唯一标识）。_version/_source
 2. 所应（存储？）：PUT /type/index/id: 把文档放到id对应的空间。POST：把文档添加到type下（_id自动增加）。
@@ -53,6 +54,17 @@
 8. 更新: PUT /index/type/id/**_update**。body必需带**doc**，然后带字段：已经存在的字段更新，没有的字段添加。{"doc":{"title":"asdf"}}
 9. 获得多个文档： **_mget**。GET /index/type/_mget  {"**ids**":**[**"123","124"**]**}
 10. 批量（bulk）：？？  
+11. 
+#####搜索
+1. 空搜索：不指定index/type/id，直接使用**_search**，获得集群中所有文档。**?timeout=10ms**：搜索超时时间，**不会停止搜索**，而是在达到定义的时间后返回当前搜索到的结果。took:搜索花费的时间。shards：节点告诉我们参与查询的分片数。
+2. 多索引和多类别：/index1\*,index2\*,_all/type1,type2/_search。**\*只能用于index，而不能用于type**  
+3. 分页：**_search**只返回10个文档，使用**size（个数）和from（跳过数）**。_search?size=5&from=5。**每个分片返回size个文档，然后请求节点从N\*size个文档中排序获得size个文档**。  
+4. 建议搜索：**查询字符串** or **DSL（请求体）**。_search?**q=****+/-**title:test。**+：必需满足**；**-:必需不满足**。没有+-，可有可无。**不建议使用查询字符串，虽然它功能强大，但是隐晦和调试困难，并且允许任意用户在索引中任何一个字段上运行潜在的慢查询语句，可能暴露私有信息甚至使你的集群瘫痪**  
+5. _all：搜索是，ES把所有字段的字符组合成一个字符串，名字是_all。  
+
+#####映射
+mapping用于字段的数据类型确认（把字段值匹配到一种特定的数据类型：）。
+analysis机制用于Full Text的分词。
 
 #####分布式CRUD  
 1. 确定shard的位置：** = hash(routing) % number_of_primary_shards**。routing值是一个任意字符串，它默认是_id但也可以自定义。自定义路由值可以确保所有相关文档——例如属于同一个人的文档——被保存在同一分片上。   
