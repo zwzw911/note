@@ -64,11 +64,22 @@
 
 #####映射
 **mapping**用于字段的数据类型确认（把字段值匹配到一种特定的数据类型：）。
-**analysis**机制用于Full Text的分词。
-1. 查看type的mapping： GET /index/**_mapping**/type?pretty。**不显示_all，因为是默认字段，且类型为string**
-2. 确切值（exact value）和全文文本（Full text）。**确切值：要么匹配，要么不匹配；全文文本：匹配程度。**
-3. 为了对Full text搜索，需要进行analysis，然后建立倒排索引。
-4. **分析器**完成分词，得到terms或者tokens数组的过程。3部分：**字符过滤器**(过滤html标签，或者转换成字符)；**分词器**（根据空格或,进行分词，不适用于中文）;**表征过滤**（修改词（例如将"Quick"转为小写），去掉词（例如停用词像"a"、"and"``"the"等等），或者增加词（例如同义词像"jump"和"leap"））
+**analysis**机制用于Full Text的分词。  
+1. 查看type的mapping： GET /index/**_mapping**/type?pretty。**不显示_all，因为是默认字段，且类型为string**  
+2. 确切值（exact value）和全文文本（Full text）。**确切值：要么匹配，要么不匹配；全文文本：匹配程度。**  
+3. 为了对Full text搜索，需要进行analysis，然后建立倒排索引。  
+4. **分析器**完成分词，得到terms或者tokens数组的过程。3部分：**字符过滤器**(过滤html标签，或者转换成字符)；**分词器**（根据空格或,进行分词，不适用于中文）;**表征过滤**（修改词（例如将"Quick"转为小写），去掉词（例如停用词像"a"、"and"``"the"等等），或者增加词（例如同义词像"jump"和"leap"））  
+5. 内置分析器：**标准分析器**：去掉大部分标点符号，转成小写。**简单分析器**：将非单个字母的文本切分，然后把每个词转为小写。**空格分析器**：依据空格切分文本。它**不转换小写**。**语言分析器**。
+6. 如果**查询字符串是Full text**而不是exact value，那么**查询字符串也要通过分析器进行分析**。
+7. 测试分析器： GET /**_analyze?analyzer=standard**。
+8. 分词类型：**string/whole number/floating number/bollean/date**  
+    string=>string  
+    whole number=>byte/short/integer/long  
+    floating number=>float/double  
+    boolean=>true/false  
+    date=>date 
+9. 当为文档添加一个新的字段，ES会用动态映射对字段类型进行推测。查看映射 GET /index/**_mapping**/type。出了string类型，其它类型很少需要映射。string有2个重要的映射参数：**index**和**analyzer**。**index:analyzed/not_anaylzed/no。**。analyzed（funnel Text），not_analyzed（exact value），no（不索引这个字段。这个字段不能为搜索到。）。对以非字符类型，也可以设置index，但是只能取not_analyzed或者no。对于analyzed类型的字符串字段，使用**analyzer参数来指定哪一种分析器将在搜索和索引的时候使用**。默认的，Elasticsearch使用**standard**分析器，但是你可以通过指定一个内建的分析器来更改它，例如**whitespace、simple或english**。  
+10. 定义映射： **新建索引* PUT {"**mappings**":{"tweet":{"**properties**":{"tweet":{"type":"string","analyzer":"english"}}}}}。**添加字段**： PUT {"properties":{"tag":{"type":"string","index":"not_analyzed"}}}
 #####分布式CRUD  
 1. 确定shard的位置：** = hash(routing) % number_of_primary_shards**。routing值是一个任意字符串，它默认是_id但也可以自定义。自定义路由值可以确保所有相关文档——例如属于同一个人的文档——被保存在同一分片上。   
 2. 
@@ -80,10 +91,5 @@
     
 #####分词
 1. curl -XGET "http://localhost:9200/_analyze?analyzer=standard" -d "text to text"
-2. 分词类型：string/whole number/floating number/bollean/date
-    string=>string  
-    whole number=>byte/short/integer/long  
-    floating number=>float/double  
-    boolean=>true/false  
-    date=>date  
+2.  
 
