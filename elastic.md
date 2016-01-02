@@ -63,15 +63,15 @@
 5. _all：搜索是，ES把所有字段的字符组合成一个字符串，名字是_all。  
 
 #####映射
-**mapping**用于字段的数据类型确认（把字段值匹配到一种特定的数据类型：）。
+**mapping**用于字段的数据类型确认（把字段值匹配到一种特定的数据类型：）。  
 **analysis**机制用于Full Text的分词。  
 1. 查看type的mapping： GET /index/**_mapping**/type?pretty。**不显示_all，因为是默认字段，且类型为string**  
 2. 确切值（exact value）和全文文本（Full text）。**确切值：要么匹配，要么不匹配；全文文本：匹配程度。**  
 3. 为了对Full text搜索，需要进行analysis，然后建立倒排索引。  
 4. **分析器**完成分词，得到terms或者tokens数组的过程。3部分：**字符过滤器**(过滤html标签，或者转换成字符)；**分词器**（根据空格或,进行分词，不适用于中文）;**表征过滤**（修改词（例如将"Quick"转为小写），去掉词（例如停用词像"a"、"and"``"the"等等），或者增加词（例如同义词像"jump"和"leap"））  
-5. 内置分析器：**标准分析器**：去掉大部分标点符号，转成小写。**简单分析器**：将非单个字母的文本切分，然后把每个词转为小写。**空格分析器**：依据空格切分文本。它**不转换小写**。**语言分析器**。
-6. 如果**查询字符串是Full text**而不是exact value，那么**查询字符串也要通过分析器进行分析**。
-7. 测试分析器： GET /**_analyze?analyzer=standard**。
+5. 内置分析器：**标准分析器**：去掉大部分标点符号，转成小写。**简单分析器**：将非单个字母的文本切分，然后把每个词转为小写。**空格分析器**：依据空格切分文本。它**不转换小写**。**语言分析器**。  
+6. 如果**查询字符串是Full text**而不是exact value，那么**查询字符串也要通过分析器进行分析**。  
+7. 测试分析器： GET /**_analyze?analyzer=standard**。  
 8. 分词类型：**string/whole number/floating number/bollean/date/null/数组/对象**  
     string=>string  
     whole number=>byte/short/integer/long  
