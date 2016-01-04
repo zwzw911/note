@@ -20,6 +20,7 @@
 #####hash  
 1.  **hset** key field value
 2.  **hmset** key field1 val1 field2 vale
+3.  **hget** key f1
 3.  **hmget** key f1 f2
 4.  **hgetall** key
 5.  **hexists** key f1    //判断的是**key下的field**
