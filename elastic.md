@@ -95,7 +95,9 @@
 8. 查询语句：**match**：查询是一个标准查询，不管你需要全文本查询还是精确查询（**精确查询最好用过滤，因为可以缓存**）基本上都要用到它。**march_all**：可以查询到所有文档，是没有查询条件下的默认语句。**multi_match**:查询允许你做match查询的基础上同时搜索多个字段。"**multi_match**":{"**query**":"full text search","**fields**":["title","body"]}。**bool查询**：bool 查询与 bool 过滤相似，用于**合并多个查询子句**。不同的是，bool 过滤可以直接给出是否匹配成功， 而bool查询要**计算每一个查询子句的 _score** （相关性分值）。must:: 查询指定文档**一定要被包含**。must_not:: 查询指定文档一定**不要**被包含。should::查询指定文档，有则可以为**文档相关性加分**（和bool过滤不同，should在此是加分的作用）。   
 #####排序
 1. 默认按照**相关性**排序。相关性指\_score。某些情况下，\_score是一样的（使用过滤来查询文档，\_score都是1）
-2. GET \_search {"query":{"filtered":{"filter":{"term":{"user_id":1}}}},"**sort**":{"date":{"**order**":"**desc**"}}}
+2. GET \_search {"query":{"filtered":{"filter":{"term":{"user_id":1}}}},"**sort**":{"date":{"**order**":"**desc**"}}}。
+3. sort添加一个sort字段，用来排序。同时\_score和max\_score为null，因为此时无需score（计算score耗费资源）。如要强迫开启：track_scores设为true。
+4. 
 #####分布式CRUD  
 1. 确定shard的位置：** = hash(routing) % number_of_primary_shards**。routing值是一个任意字符串，它默认是_id但也可以自定义。自定义路由值可以确保所有相关文档——例如属于同一个人的文档——被保存在同一分片上。   
 2.   
