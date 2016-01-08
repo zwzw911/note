@@ -97,7 +97,9 @@
 1. 默认按照**相关性**排序。相关性指\_score。某些情况下，\_score是一样的（使用过滤来查询文档，\_score都是1）
 2. GET \_search {"query":{"filtered":{"filter":{"term":{"user_id":1}}}},"**sort**":{"date":{"**order**":"**desc**"}}}。
 3. sort添加一个sort字段，用来排序。如果sort的字段不是\_score，则\_score和max\_score为null，因为此时无需score（计算score耗费资源）。如要强迫开启：track\_scores设为true。**sort也可以使用\_score进行排序**
-4. 
+4. 如果要对多个字段排序，sort为数组。"sort":**[**{"date":{"order":"desc"}},{"\_score":{"order":"desc"}}**]**
+5. 查询字符串：GET /\_search?sort=date:desc&sort=_score&q=search
+6. 多值（数组）字段排序："sort":{"dates":{"order":"asc",**"mode":"min"**}}。模式可以是min/max/sum/avg。
 #####分布式CRUD  
 1. 确定shard的位置：** = hash(routing) % number_of_primary_shards**。routing值是一个任意字符串，它默认是_id但也可以自定义。自定义路由值可以确保所有相关文档——例如属于同一个人的文档——被保存在同一分片上。   
 2.   
