@@ -101,6 +101,9 @@
 5. 查询字符串：GET /\_search?sort=date:desc&sort=_score&q=search
 6. 多值（数组）字段排序（确切值）："sort":{"dates":{"order":"asc",**"mode":"min"**}}。模式可以是min/max/sum/avg。
 7. 字符串排序：ES存储的是**analyzed的多值字段**，可以强制使用min/max，但是无意义。一般希望对原始字符串进行排序，需要使用fields添加一个non\_analyzed字段，以便排序。"tweet":{"type":"string","analyzer":"english","**fields**":{"**raw**":{**"type":"string","index":"not_analyzed"**}}}
+8. 相关性算法：**TF/IDF，term frequency/invert document frequency，词频/反向文档/字段长度准则**。词频：出现次数多，权重高；反向文档：出现频率低，权重高（检索词越少越重要）；长度准则：检索到的字符串长度越短，权重越高（检索词占整个字符串的比重高，权重高）。如果多条查询子句被合并为一条复合查询语句，比如 bool 查询，则每个查询子句计算得出的评分会被合并到总的相关性评分中。
+9. GET /\_search?**explain** {"query":{"match":{"tweet":"honeymoon"}}}。
+10. 当explain选项加到**某一文档**上时，它会告诉你为何这个文档会被匹配，以及一个文档为何没有被匹配。GET /us/tweet/12/**\_explain**
 #####分布式CRUD  
 1. 确定shard的位置：** = hash(routing) % number_of_primary_shards**。routing值是一个任意字符串，它默认是_id但也可以自定义。自定义路由值可以确保所有相关文档——例如属于同一个人的文档——被保存在同一分片上。   
 2.   
