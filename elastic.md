@@ -117,7 +117,9 @@
 7. **timeout**：告诉协调节点最多等待多久，就可以放弃等待而将已有结果返回。返回部分结果总比什么都没有好。
 8. **routing（路由选择）**：建立索引时提供一个自定义的routing参数来保证所有相关的document（如属于单个用户的document）被存放在一个单独的分片中。在搜索时，你可以指定一个或多个routing 值来限制只搜索那些分片而不是搜索index里的全部分片：
 9. **search_type**：**count**（不要具体内容，只要数量），**query_and_fetch**:搜索类型将查询和取回阶段合并成一个步骤。这是一个内部优化选项，当搜索请求的目标只是一个分片时可以使用，**dfs_query_then_fetch 和 dfs_query_and_fetch**：有一个预查询的阶段，它会从全部相关的分片里取回项目频数来计算全局的项目频数。**scan**：和scroll（滚屏）API连在一起使用的，可以高效地取回巨大数量的结果。它是通过**禁用排序**来实现的。
-10. 
+10. **扫描**（scan）和**滚屏**（scroll）：扫描：禁用排序，滚屏：ES一旦得到结果，立刻返回给客户端。2者组合，可以快速获取大量数据。 GET /index/**\_search**?**search\_type=scan**&**scroll**=1m{"query":{"match_all":{}},"size":1000}  
+
+#####索引管理
 #####
 1. _search: type下所有数据
 2. _search?q=lastname:smith：q=设置条件
