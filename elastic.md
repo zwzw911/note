@@ -120,6 +120,8 @@
 10. **扫描**（scan）和**滚屏**（scroll）：扫描：禁用排序，滚屏：ES一旦得到结果，立刻返回给客户端。2者组合，可以快速获取大量数据。 GET /index/**\_search**?**search\_type=scan**&**scroll**=1m{"query":{"match_all":{}},"size":1000}  
 
 #####索引管理
+1. 创建：PUT /index {"**settings**":{...anysettings...},"**mappings**":{"type_one":{...anymappings...},"type_two":{...anymappings...},...}。防止**自动**创建索引：action.**auto_create_index**: false
+2. 删除： DELETE /index。删除多个索引：**DELETE /index***。
 #####
 1. _search: type下所有数据
 2. _search?q=lastname:smith：q=设置条件
