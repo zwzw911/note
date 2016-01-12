@@ -113,6 +113,8 @@
 3. **查询阶段**：把请求**广播到所有分片，然后每个分片执行搜索并产生一个优先队列priority queue（document id和排序值）**。 一个优先队列（priority queue is）只是一个存有**前n个（而不是size个，保证单独节点的结果即可满足搜索结果）**（top-n）匹配document的有序列表。这个优先队列的大小由分页参数from和size决定。
 4. **取回阶段**：查询阶段返回的是document_id和排序值，**协调节点**收到后需要决定**哪些文档需要获取**（例如，需要**丢弃from**个document），并发出请求到对应分片**enrich**（通过id获得完整document），最后返回给客户端。
 5. 深分页：一般是爬虫所为，不建议，因为需要大量的硬件资源。
+6. 搜索选项：**preference**：\_primary， \_primary\_first， \_local， \_only\_node:xyz， \_prefer\_node:xyz和\_shards:2,3。**结果震荡**：2个或多个文档有同样的排序值（例如timestamp），那么在主分片和副分片上，获得的结果顺序可能不一样，导致最终得到的排序结果会有变化（从主还是副分片得到的值）。
+7. 
 #####
 1. _search: type下所有数据
 2. _search?q=lastname:smith：q=设置条件
