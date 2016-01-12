@@ -108,8 +108,9 @@
   
 #####分布式查询  
 一般CRUD只处理一个文档。文档的唯一性由_\index, \_type和routing-value（通常默认是该文档的\_id）的组合来确定。这意味着我们可以准确知道集群中的哪个分片持有这个文档。而搜索不同，需要遍历所有shard上的所有文档。
-1. 确定shard的位置：** = hash(routing) % number_of_primary_shards**。routing值是一个任意字符串，它默认是_id但也可以自定义。自定义路由值可以确保所有相关文档——例如属于同一个人的文档——被保存在同一分片上。   
-2. 查询阶段：把请求**广播到所有分片，然后每个分片执行搜索并产生一个优先队列priority queue**。 一个优先队列（priority queue is）只是一个存有**前n个（而不是size个）**（top-n）匹配document的有序列表。这个优先队列的大小由分页参数from和size决定。
+1. 确定shard的位置：** = hash(routing) % number_of_primary_shards**。routing值是一个任意字符串，它默认是_id但也可以自定义。自定义路由值可以确保所有相关文档——例如属于同一个人的文档——被保存在同一分片上。
+2. 协调节点：接收客户端的查询请求，并转发请求到其它分片；接收其它分片的查询结果，并整合结果并返回给客户端。
+2. 查询阶段：把请求**广播到所有分片，然后每个分片执行搜索并产生一个优先队列priority queue（document id和排序值）**。 一个优先队列（priority queue is）只是一个存有**前n个（而不是size个，保证单独节点的结果即可满足搜索结果）**（top-n）匹配document的有序列表。这个优先队列的大小由分页参数from和size决定。
 #####
 1. _search: type下所有数据
 2. _search?q=lastname:smith：q=设置条件
