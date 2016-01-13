@@ -122,6 +122,29 @@
 #####索引管理
 1. 创建：PUT /index {"**settings**":{...anysettings...},"**mappings**":{"type_one":{...anymappings...},"type_two":{...anymappings...},...}。防止**自动**创建索引：action.**auto_create_index**: false
 2. 删除： DELETE /index。删除多个索引：**DELETE /index***。
+3. 更改setting：使用\_setting API。PUT /index/**\_settings**{"number_of_replicas":1}。
+PUT /my_index
+{
+    "**settings**": {
+        "**analysis**": {
+            "**char_filter**": {
+                "&_to_and": {
+                    "type":       "mapping",
+                    "mappings": [ "&=> and "]
+            }},
+            "**filter**": {
+                "my_stopwords": {
+                    "type":       "stop",
+                    "stopwords": [ "the", "a" ]
+            }},
+            "**analyzer**": {
+                "my_analyzer": {
+                    "type":         "custom",
+                    "**char_filter**":  [ "html_strip", "&_to_and" ],
+                    "**tokenizer**":    "standard",
+                    "**filter**":       [ "lowercase", "my_stopwords" ]
+            }}
+}}}
 #####
 1. _search: type下所有数据
 2. _search?q=lastname:smith：q=设置条件
