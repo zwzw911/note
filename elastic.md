@@ -40,7 +40,7 @@
 2. 集群是由cluster.name相同的node组成。node是ES的一个实例。shard是自动分配到不同的shard。
 3. 一个分片(shard)是一个最小级别“工作单元(worker unit)”,它只是保存了索引中所有数据的一部分，是一个Lucene实例，它本身就是一个完整的搜索引擎。
 4. 分片可以是**主分片(primary shard)**或者是**复制分片(replica shard)**。
-5. PUT /index {"settings":{"**number_of_shards**" : 3,"**number_of_replicas**" : 1}}。number_of_shards：index有几个主分片，每个主分片有几个复制分片。
+5. PUT /index {"settings":{"**number_of_shards**" : 3,"**number_of_replicas**" : 1}}。number_of_shards：index有几个主分片，每个主分片有几个复制分片。  
 
 
 #####文档
@@ -82,7 +82,7 @@
 10. 定义映射： **新建索引** PUT {"gb":{"**mappings**":{"tweet":{"**properties**":{"content":{"type":"string","**analyzer**":"english"}}}}}}。**添加字段**： **PUT** /gb/\_mapping/tweet {"**properties**":{"tag":{"type":"string","**index**":"**not_analyzed**"}}}。**测试映射**：GET /gb/_analyze?field=tweet -d "{Black-cats}"。
 11. **多值对象（数组）**:对于数组**不需要特殊的映射**。任何一个字段可以包含**零个、一个或多个值**，同样对于全文字段将被分析并产生多个词。言外之意，这意味着**数组中所有值必须为同一类型**。你不能把日期和字符窜混合。如果你创建一个新字段，这个字段索引了一个数组，Elasticsearch将使用**第一个值**的类型来确定这个新字段的类型。
 12. **空字段**: **""/null/[]/[null]**。
-13. **内部对象**：文档字段包含对像。
+13. **内部对象**：文档字段包含对像。  
   
 #####结构化查询（搜索）
 1. **大多数的参数以JSON格式所容纳而非查询字符串**
