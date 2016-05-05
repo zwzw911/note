@@ -20,6 +20,7 @@
 "grunt-contrib-less": 把less文件编译成css  
 "postcss-cli autoprefixer":2个包，一个是主程序，一个是插件。postcss调用插件autoprefixr，把css转换成all browser support  
 
+“grunt-contrib-watch”：监控指定的文件，如果发生变化，执行指定的task:target.  
 
 #####5. 如果要对当前目录下的子目录和文件进行操作。  
 必需使用pwd/\*\*/\*.ejs，而不是pwd/\*\*.ejs
