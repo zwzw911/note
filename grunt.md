@@ -17,6 +17,10 @@
 "grunt-contrib-uglify": 压缩js文件  
 "grunt-ng-annotate": 重构angular依赖，以便可以进行压缩  
 
+"grunt-contrib-less": 把less文件编译成css  
+"postcss-cli autoprefixer":2个包，一个是主程序，一个是插件。postcss调用插件autoprefixr，把css转换成all browser support  
+
+
 #####5. 如果要对当前目录下的子目录和文件进行操作。  
 必需使用pwd/\*\*/\*.ejs，而不是pwd/\*\*.ejs
 
