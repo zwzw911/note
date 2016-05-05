@@ -23,3 +23,7 @@
 #####6. 采用cwd  
 首先从a目录处理文件到目录dist_tmp，结构变成dist_tmp/a；然后从dist_tmp/a处理，变成dist/a。  
 在第二步中，需要使用**cwd**。如此，会忽略cwd指定的目录，直接处理cwd下的目录到src中
+
+#####7. 配置文件
+每个task必须有至少一个以上target（即，必须有target），grunt task:target，运行指定的target；grunt task，运行task下所有target。  
+options分成task级别和target级别，target级别会覆盖task级别的options。  
