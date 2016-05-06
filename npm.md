@@ -6,7 +6,7 @@ npm **-init**：创建packet.json文件
 
 #####设置代理
 npm config set proxy http://135.245.48.14:8000  
-npm config set https-proxy https://135.245.48.14:8000  
+npm config set https-proxy http://135.245.48.14:8000  
 执行后，自动写入配置文件  
 
 #####获得配置文件路径  
