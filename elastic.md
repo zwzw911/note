@@ -18,7 +18,10 @@
 
 #####配置
 1.  elasticsearch.yml: node.name=>节点名称。所有同名节点属于同一个集群。
-2.  
+2.  启动groovy脚本：在elasticsearch.yml中添加  
+**script.inline: on**  
+**script.indexed: on**  
+**script.file: on**  
 
 #####连接
 **curl -X\<VERB> "\<PROTOCOL>://\<HOST>/\<PATH>?\<QUERY_STRING>" -d "\<BODY>"**  
@@ -45,13 +48,13 @@
 
 #####文档
 1. 文档的元数据:_index(存储和索引数据)/_type（文档代表的对象的类）/_id（文档的唯一标识）。_version/_source
-2. 所应（存储？）：PUT /type/index/id: 把文档放到id对应的空间。POST：把文档添加到type下（_id自动增加）。
+2. 索引（存储？）：PUT /type/index/id: 把文档放到id对应的空间。POST：把文档添加到type下（_id自动增加）。使用PUT添加index，且检查是否index已经存在，带optype=create或者/_create。*PUT /website/blog/123/_create*  
 3. 检索：GET  /index/type/id**/_source**，只显示检索到的内容。  /index/type/id**？_source＝title**（source只显示指定字段title，但是整个结果和GET类似，会有index，type等）
 4. 是否存在：HEAD: 通过-i参数获得resopnse的header判断，404：不存在；200：存在。  
 5. 检查文档是否已经存在：PUT /index/type/id/**_create**。 201：created 409：conflict。 PS；必需是PUT（带ID）。POST的话会自动生成ID。
-6. 删除：DELETE  
-7. 更新冲突控制：悲观并发控制：将数据锁定，直到操作完毕；乐观并发控制：程序决定冲突后的操作。PUT /index/type/id?**version=1**  当version**等于**1才更改。PUT /index/type/id?**version=10&version_type=external** 当前的version**小于**10才执行update，**并且将version改成10**  
-8. 更新: PUT /index/type/id/**_update**。body必需带**doc**，然后带字段：已经存在的字段更新，没有的字段添加。{"doc":{"title":"asdf"}}
+6. 删除：DELETE。*/index/type/id?pretty*。  
+7. 版本控制：悲观并发控制：将数据锁定，直到操作完毕；乐观并发控制：程序决定冲突后的操作。PUT /index/type/id?**version=1**  当version**等于**1才更改。PUT /index/type/id?**version=10&version_type=external** 当前的version**小于**10才执行update，**并且将version改成10**  
+8. 更新: **POST** /index/type/id/**_update**。**过程和PUT（不带update）一致，都是标记原始文档为delete，同时生成新文档。但是update在操作过程中，给用户的感觉是局部更新**。body必需带**doc**，然后带字段：已经存在的字段更新，没有的字段添加。{"doc":{"title":"asdf"}}
 9. 获得多个文档： **_mget**。GET /index/type/_mget  {"**ids**":**[**"123","124"**]**}
 10. 批量（bulk）：？？  
   
