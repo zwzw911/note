@@ -23,7 +23,7 @@
 #####连接
 **curl -X\<VERB> "\<PROTOCOL>://\<HOST>/\<PATH>?\<QUERY_STRING>" -d "\<BODY>"**  
 **注意，是双引号隔开，而不是单引号**  
-**body中的双引号，需要用\进行转义**  
+**body中的数据，如果值是非数据（例如字符，日期等），需要用\+双引号括起**  curl -XPOST "http://localhost:9200/web/post1?pretty" -d "{name:\"21\",title:12}"  
     VERB HTTP方法：GET, POST, PUT, HEAD（文档是否存在）, DELETE  
     PROTOCOL http或者https协议（只有在Elasticsearch前面有https代理的时候可用）  
     HOST Elasticsearch集群中的任何一个节点的主机名，如果是在本地的节点，那么就叫localhost  
