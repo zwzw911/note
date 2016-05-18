@@ -54,9 +54,12 @@
 5. 检查文档是否已经存在：PUT /index/type/id/**_create**。 201：created 409：conflict。 PS；必需是PUT（带ID）。POST的话会自动生成ID。
 6. 删除：DELETE。*/index/type/id?pretty*。  
 7. 版本控制：悲观并发控制：将数据锁定，直到操作完毕；乐观并发控制：程序决定冲突后的操作。PUT /index/type/id?**version=1**  当version**等于**1才更改。PUT /index/type/id?**version=10&version_type=external** 当前的version**小于**10才执行update，**并且将version改成10**  
-8. 更新: **POST** /index/type/id/**_update**。**过程和PUT（不带update）一致，都是标记原始文档为delete，同时生成新文档。但是update在操作过程中，给用户的感觉是局部更新**。body必需带**doc**，然后带字段：已经存在的字段更新，没有的字段添加。{"doc":{"title":"asdf"}}
-9. 获得多个文档： **_mget**。GET /index/type/_mget  {"**ids**":**[**"123","124"**]**}
-10. 批量（bulk）：？？  
+8. 更新: **POST** /index/type/id/**_update**。**过程和PUT（不带update）一致，都是标记原始文档为delete，同时生成新文档。但是update在操作过程中，给用户的感觉是局部更新**。body必需带**doc**，然后带字段：已经存在的字段更新，没有的字段添加。{"doc":{"title":"asdf"}}。
+9. 更新（使用脚本局部更新）: POST /index/type/id/_update {script:"ctx._source.views+=para", params:{para:1}}  
+10. 更新（不存在则新加）：POST /index/type/id/_update {script:"ctx._source.views+=1", upsert:{views:1}}  
+11. 更新（根据内容删除）：POST /index/type/id/_update {script:"ctx.op= ctx._source.views==para? 'delete':'none'", params:{count:1}}  
+12. 获得多个文档： **_mget**。GET /index/type/_mget  {"**ids**":**[**"123","124"**]**}
+13. 批量（bulk）：？？  
   
 #####搜索
 1. 空搜索：不指定index/type/id，直接使用**_search**，获得集群中所有文档。**?timeout=10ms**：搜索超时时间，**不会停止搜索**，而是在达到定义的时间后返回当前搜索到的结果。took:搜索花费的时间。shards：节点告诉我们参与查询的分片数。
