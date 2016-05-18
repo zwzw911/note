@@ -51,10 +51,11 @@
 2. 索引（存储？）：PUT /type/index/id: 把文档放到id对应的空间。POST：把文档添加到type下（_id自动增加）。使用PUT添加index，且检查是否index已经存在，带optype=create或者/_create。*PUT /website/blog/123/_create*  
 3. 检索：GET  /index/type/id**/_source**，只显示检索到的内容。  /index/type/id**？_source＝title**（source只显示指定字段title，但是整个结果和GET类似，会有index，type等）
 4. 是否存在：HEAD: 通过-i参数获得resopnse的header判断，404：不存在；200：存在。  
-5. 检查文档是否已经存在：PUT /index/type/id/**_create**。 201：created 409：conflict。 PS；必需是PUT（带ID）。POST的话会自动生成ID。
+5. 更新（整个文档）：PUT。  
+5. 创建新文档（PUT）：PUT /index/type/id/**_create**。 201：created 409：conflict。 
 6. 删除：DELETE。*/index/type/id?pretty*。  
 7. 版本控制：悲观并发控制：将数据锁定，直到操作完毕；乐观并发控制：程序决定冲突后的操作。PUT /index/type/id?**version=1**  当version**等于**1才更改。PUT /index/type/id?**version=10&version_type=external** 当前的version**小于**10才执行update，**并且将version改成10**  
-8. 更新: **POST** /index/type/id/**_update**。**过程和PUT（不带update）一致，都是标记原始文档为delete，同时生成新文档。但是update在操作过程中，给用户的感觉是局部更新**。body必需带**doc**，然后带字段：已经存在的字段更新，没有的字段添加。{"doc":{"title":"asdf"}}。
+8. 更新: **POST** /index/type/id/**_update**。**过程和PUT（不带update）一致，都是标记原始文档为delete，同时生成新文档。但是update在操作过程中，给用户的感觉是局部更新**。通过两种方式：**doc和script**，然后带字段：已经存在的字段更新，没有的字段添加。{"**doc**":{"title":"asdf"}}。
 9. 更新（使用脚本局部更新）: POST /index/type/id/_update {script:"ctx._source.views+=para", params:{para:1}}  
 10. 更新（不存在则新加）：POST /index/type/id/_update {script:"ctx._source.views+=1", upsert:{views:1}}  
 11. 更新（根据内容删除）：POST /index/type/id/_update {script:"ctx.op= ctx._source.views==para? 'delete':'none'", params:{count:1}}  
