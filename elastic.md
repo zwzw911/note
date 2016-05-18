@@ -36,7 +36,7 @@
 #####集群
 1. 集群中一个节点会被选举为**主节点**(master),它将临时管理集群级别的一些变更，例如**新建或删除索引、增加或移除节点**等。主节点不参与**文档**级别的**变更或搜索**，这意味着在流量增长的时候，该主节点不会成为集群的瓶颈。 
 2. 我们能够发送请求给集群中任意一个节点。每个节点都有能力处理任意请求。每个节点都知道任意文档所在的节点，所以也可以将请求转发到需要的节点。这个节点我们将会称之为请求节点(requesting node)。
-1. 集群健康： GET **_cluster/health**。至少有2个Node，才能保证状态是GREEN（一个node放主分片，一个node放复制分片）
+1. 集群健康： GET **_cluster/health**(**curl -XGET http://localhost:9200/_cluster/health?pretty**)。至少有2个Node，才能保证状态是GREEN（一个node放主分片，一个node放复制分片）。
 2. 集群是由cluster.name相同的node组成。node是ES的一个实例。shard是自动分配到不同的shard。
 3. 一个分片(shard)是一个最小级别“工作单元(worker unit)”,它只是保存了索引中所有数据的一部分，是一个Lucene实例，它本身就是一个完整的搜索引擎。
 4. 分片可以是**主分片(primary shard)**或者是**复制分片(replica shard)**。
