@@ -59,8 +59,8 @@
 9. 更新（使用脚本局部更新）: POST /index/type/id/_update {script:"ctx._source.views+=para", params:{para:1}}  
 10. 更新（不存在则新加）：POST /index/type/id/_update {script:"ctx._source.views+=1", upsert:{views:1}}  
 11. 更新（根据内容删除）：POST /index/type/id/_update {script:"ctx.op= ctx._source.views==para? 'delete':'none'", params:{count:1}}  
-12. 获得多个文档： **_mget**。GET /index/type/_mget  {"**ids**":**[**"123","124"**]**}
-13. 批量（bulk）：？？  
+12. 获得多个文档： **_mget**。GET /index/type/_mget  -d {docs:[{_index:a,_body:b,id:c},{}]}。如果在同一个index/type线，原本的docs可简写成{"**ids**":**[**"123","124"**]**}。  
+13. 批量（bulk）：\n区分换行；**action/metadata**这一行定义了文档行为(what action)发生在哪个文档(which document)之上, action有create/index/delete/update，需要指定/index/type/id，  
   
 #####搜索
 1. 空搜索：不指定index/type/id，直接使用**_search**，获得集群中所有文档。**?timeout=10ms**：搜索超时时间，**不会停止搜索**，而是在达到定义的时间后返回当前搜索到的结果。took:搜索花费的时间。shards：节点告诉我们参与查询的分片数。
