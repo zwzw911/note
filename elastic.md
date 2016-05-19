@@ -99,16 +99,21 @@
     b.  **分词器**（根据空格或,进行分词，不适用于中文）;  
     c.  **表征过滤**（修改词（例如将"Quick"转为小写），去掉词（例如停用词像"a"、"and"``"the"等等），或者增加词（例如同义词像"jump"和"leap"））  
 5. 内置分析器：**标准分析器**：去掉大部分标点符号，转成小写。**简单分析器**：将非单个字母的文本切分，然后把每个词转为小写。**空格分析器**：依据空格切分文本。它**不转换小写**。**语言分析器**。  
-6. 如果**查询字符串是Full text**而不是exact value，那么**查询字符串也要通过分析器进行分析**。  
-7. 测试分析器： GET /**_analyze?analyzer=standard**。  
+6. 如果**查询字符串是Full text**而不是exact value，那么**查询字符串也要通过分析器进行分析**（例如，把查询字符串也全部变成小写，以便查找索引）。  
+7. 测试分析器： GET /**_analyze?analyzer=standard&text=Find New Trace**。  
 8. 分词类型：**string/whole number/floating number/bollean/date/null/数组/对象**  
     string=>string  
     whole number=>byte/short/integer/long  
     floating number=>float/double  
-    boolean=>true/false  
+    boolean=>boolean  
     date=>date   
-9. 当为文档添加一个新的字段，ES会用动态映射对字段类型进行推测。查看映射 GET /index/**_mapping**/type。出了string类型，其它类型很少需要映射。string有2个重要的映射参数：**index**和**analyzer**。**index:analyzed/not_anaylzed/no**。analyzed（full Text），not\_analyzed（exact value），no（不索引这个字段。这个字段不能为搜索到。）。对以非字符类型，也可以设置index，但是只能取not_analyzed或者no。对于analyzed类型的字符串字段，使用**analyzer参数来指定哪一种分析器将在搜索和索引的时候使用**。默认的，Elasticsearch使用**standard**分析器，但是你可以通过指定一个内建的分析器来更改它，例如**whitespace、simple或english**。  
-10. 定义映射： **新建索引** PUT {"gb":{"**mappings**":{"tweet":{"**properties**":{"content":{"type":"string","**analyzer**":"english"}}}}}}。**添加字段**： **PUT** /gb/\_mapping/tweet {"**properties**":{"tag":{"type":"string","**index**":"**not_analyzed**"}}}。**测试映射**：GET /gb/_analyze?field=tweet -d "{Black-cats}"。
+9. 当为文档添加一个新的字段，ES会用动态映射对字段类型进行推测。查看映射 GET /index/**_mapping**/type。除了string类型，其它类型很少需要映射。 
+    string有2个重要的映射参数：**index**和**analyzer**。**index:analyzed/not_anaylzed/no，以何种方式被索引**。  
+    analyzed（full Text），not\_analyzed（exact value），no（不索引这个字段。这个字段不能为搜索到。）。对以非字符类型，也可以设置index，但是只能取not_analyzed或者no。对于analyzed类型的字符串字段，使用**analyzer参数来指定哪一种分析器将在搜索和索引的时候使用**。默认的，Elasticsearch使用**standard**分析器，但是你可以通过指定一个内建的分析器来更改它，例如**whitespace、simple或english**。  
+10. 定义映射： mapping只能在新建index或者添加新字段是定义，而无法修改（修改字段的定义会导致已经存储的数据无法正确处理）
+    **新建索引是定义** PUT {"gb":{"**mappings**":{"tweet":{"**properties**":{"content":{"type":"string","**analyzer**":"english"}}}}}}。  
+    **添加字段时定义**： **PUT** /gb/\_mapping/tweet   {"**properties**":{"tag":{"type":"string","**index**":"**not_analyzed**"}}}。  
+    **测试映射**：GET /gb/_analyze?field=tweet -d "{Black-cats}"。
 11. **多值对象（数组）**:对于数组**不需要特殊的映射**。任何一个字段可以包含**零个、一个或多个值**，同样对于全文字段将被分析并产生多个词。言外之意，这意味着**数组中所有值必须为同一类型**。你不能把日期和字符窜混合。如果你创建一个新字段，这个字段索引了一个数组，Elasticsearch将使用**第一个值**的类型来确定这个新字段的类型。
 12. **空字段**: **""/null/[]/[null]**。
 13. **内部对象**：文档字段包含对像。  
