@@ -59,7 +59,7 @@
 9. 更新（使用脚本局部更新）: POST /index/type/id/_update {script:"ctx._source.views+=para", params:{para:1}}  
 10. 更新（不存在则新加）：POST /index/type/id/_update {script:"ctx._source.views+=1", upsert:{views:1}}  
 11. 更新（根据内容删除）：POST /index/type/id/_update {script:"ctx.op= ctx._source.views==para? 'delete':'none'", params:{count:1}}  
-12. 获得多个文档： **_mget**。GET /index/type/_mget  -d {docs:[{_index:a,_body:b,id:c},{}]}。如果在同一个index/type线，原本的docs可简写成{"**ids**":**[**"123","124"**]**}。  
+12. 获得多个文档： **_mget**。如果URL中没有指定index/type/id，那么body中，需要指定这3个参数：GET /_mget  -d {**docs**:[{**_index**:a,**_type**:b,**_id**:c,**_source**:filed}]}。如果在同一个index/type，原本的docs可简写成{"**ids**":**[**"123","124"**]**}。  
 13. 批量（bulk）：\n区分换行；**action/metadata**这一行定义了文档行为(what action)发生在哪个文档(which document)之上, action有create/index/delete/update，需要指定/index/type/id，  
   
 #####搜索
