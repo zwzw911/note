@@ -102,14 +102,14 @@
 6. 如果**查询字符串是Full text**而不是exact value，那么**查询字符串也要通过分析器进行分析**（例如，把查询字符串也全部变成小写，以便查找索引）。  
 7. 测试分析器： GET /**_analyze?analyzer=standard&text=Find New Trace**。  
 8. 分词类型：**string/whole number/floating number/bollean/date/null/数组/对象**  
-    string=>string  
-    whole number=>byte/short/integer/long  
-    floating number=>float/double  
-    boolean=>boolean  
-    date=>date   
-    null  
-    数组  
-    对象  
+    a. string=>string  
+    b. whole number=>byte/short/integer/long  
+    c. floating number=>float/double  
+    d. boolean=>boolean  
+    e. date=>date   
+    f. null  
+    g. 数组  
+    h. 对象  
 9. 当为文档添加一个新的字段，ES会用动态映射对字段类型进行推测。查看映射 GET /index/**_mapping**/type。除了string类型，其它类型很少需要映射。 
     string有2个重要的映射参数：**index**和**analyzer**。**index:analyzed/not_anaylzed/no，以何种方式被索引**。  
     analyzed（full Text），not\_analyzed（exact value），no（不索引这个字段。这个字段不能为搜索到。）。对以非字符类型，也可以设置index，但是只能取not_analyzed或者no。对于analyzed类型的字符串字段，使用**analyzer参数来指定哪一种分析器将在搜索和索引的时候使用**。默认的，Elasticsearch使用**standard**分析器，但是你可以通过指定一个内建的分析器来更改它，例如**whitespace、simple或english**。  
