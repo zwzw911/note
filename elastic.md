@@ -107,6 +107,9 @@
     floating number=>float/double  
     boolean=>boolean  
     date=>date   
+    null  
+    数组  
+    对象  
 9. 当为文档添加一个新的字段，ES会用动态映射对字段类型进行推测。查看映射 GET /index/**_mapping**/type。除了string类型，其它类型很少需要映射。 
     string有2个重要的映射参数：**index**和**analyzer**。**index:analyzed/not_anaylzed/no，以何种方式被索引**。  
     analyzed（full Text），not\_analyzed（exact value），no（不索引这个字段。这个字段不能为搜索到。）。对以非字符类型，也可以设置index，但是只能取not_analyzed或者no。对于analyzed类型的字符串字段，使用**analyzer参数来指定哪一种分析器将在搜索和索引的时候使用**。默认的，Elasticsearch使用**standard**分析器，但是你可以通过指定一个内建的分析器来更改它，例如**whitespace、simple或english**。  
@@ -115,8 +118,10 @@
     **添加字段时定义**： **PUT** /gb/\_mapping/tweet   {"**properties**":{"tag":{"type":"string","**index**":"**not_analyzed**"}}}。  
     **测试映射**：GET /gb/_analyze?field=tweet -d "{Black-cats}"。
 11. **多值对象（数组）**:对于数组**不需要特殊的映射**。任何一个字段可以包含**零个、一个或多个值**，同样对于全文字段将被分析并产生多个词。言外之意，这意味着**数组中所有值必须为同一类型**。你不能把日期和字符窜混合。如果你创建一个新字段，这个字段索引了一个数组，Elasticsearch将使用**第一个值**的类型来确定这个新字段的类型。
-12. **空字段**: **""/null/[]/[null]**。
-13. **内部对象**：文档字段包含对像。  
+12. **空字段**: **""/null/[]/[null]**。空字段不被索引。  
+13. 多层对象
+    **内部对象**：文档字段的类型是object。  
+    **内部数组**：文档字段的类型是数组。  
   
 #####结构化查询（搜索）
 1. **大多数的参数以JSON格式所容纳而非查询字符串**
