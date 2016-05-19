@@ -60,7 +60,14 @@
 10. 更新（不存在则新加）：POST /index/type/id/_update {script:"ctx._source.views+=1", upsert:{views:1}}  
 11. 更新（根据内容删除）：POST /index/type/id/_update {script:"ctx.op= ctx._source.views==para? 'delete':'none'", params:{count:1}}  
 12. 获得多个文档： **_mget**。如果URL中没有指定index/type/id，那么body中，需要指定这3个参数：GET /_mget  -d {**docs**:[{**_index**:a,**_type**:b,**_id**:c,**_source**:filed}]}。如果在同一个index/type，原本的docs可简写成{"**ids**":**[**"123","124"**]**}。  
-13. 批量（bulk）：\n区分换行；**action/metadata**这一行定义了文档行为(what action)发生在哪个文档(which document)之上, action有create/index/delete/update，需要指定/index/type/id，  
+13. 批量（bulk）：
+    1. **POST**  
+    2. \n区分换行。 action {}\n request_body {} \n  
+    3. **action/metadata**这一行定义了文档行为(what action)发生在哪个文档(which document)之上。包含_index/_type/_id（**如果URL中已经有对应的部分，可以省略**）  
+    4. request_body:文档的_source。指定操作的文档内容。**delete操作不需要**。  
+    4. action有**create(新建文档)/index（创建或者整个替换文档）/delete（删除文档）/update（局部更新）**，需要指定/index/type/id  
+    5. 每个子请求都被独立的执行，所以一个子请求的错误并不影响其它请求。这些说明bulk请求不是原子操作——它们不能实现事务。  
+    6. 
   
 #####搜索
 1. 空搜索：不指定index/type/id，直接使用**_search**，获得集群中所有文档。**?timeout=10ms**：搜索超时时间，**不会停止搜索**，而是在达到定义的时间后返回当前搜索到的结果。took:搜索花费的时间。shards：节点告诉我们参与查询的分片数。
