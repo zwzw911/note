@@ -148,13 +148,17 @@
 #####排序
 1. 默认按照**相关性**排序。相关性指\_score。某些情况下，\_score是一样的（使用过滤来查询文档，\_score都是1）
 2. GET \_search {"query":{"filtered":{"filter":{"term":{"user_id":1}}}},"**sort**":{"date":{"**order**":"**desc**"}}}。  
-3. sort添加一个sort字段，用来排序。如果sort的字段不是\_score，则\_score和max\_score为null，因为此时无需score（计算score耗费资源）。如要强迫开启：track\_scores设为true。**sort也可以使用\_score进行排序**
+3. sort会在结果中添加一个_score字段，用来排序。如果sort指定的字段不是\_score，则\_score和max\_score为null，因为此时无需score（计算score耗费资源）。如要强迫开启：track\_scores设为true。**sort也可以使用\_score进行排序**
 4. 如果要对多个字段排序，sort为数组。"sort":**[**{"date":{"order":"desc"}},{"\_score":{"order":"desc"}}**]**
 5. 查询字符串：GET /\_search?sort=date:desc&sort=_score&q=search
-6. 多值（数组）字段排序（确切值）："sort":{"dates":{"order":"asc",**"mode":"min"**}}。模式可以是min/max/sum/avg。
-7. 字符串排序：ES存储的是**analyzed的多值字段**，可以强制使用min/max，但是无意义。一般希望对原始字符串进行排序，需要使用fields添加一个non\_analyzed字段，以便排序。"tweet":{"type":"string","analyzer":"english","**fields**":{"**raw**":{**"type":"string","index":"not_analyzed"**}}}
-8. 相关性算法：**TF/IDF，term frequency/invert document frequency，词频/反向文档/字段长度准则**。词频：出现次数多，权重高；反向文档：出现频率低，权重高（检索词越少越重要）；长度准则：检索到的字符串长度越短，权重越高（检索词占整个字符串的比重高，权重高）。如果多条查询子句被合并为一条复合查询语句，比如 bool 查询，则每个查询子句计算得出的评分会被合并到总的相关性评分中。
-9. GET /\_search?**explain** {"query":{"match":{"tweet":"honeymoon"}}}。
+6. 多值（数组）字段排序（确切值）："sort":{"dates":{"order":"asc",**"mode":"min"**}}。模式可以是**min/max/sum/avg**。
+7. 字符串排序：ES存储的是**analyzed的多值字段**，可以强制使用min/max，但是无意义。一般希望对原始字符串进行排序，需要使用fields添加一个not_analyzed字段，以便排序。"tweet":{"type":"string","analyzer":"english","**fields**":{"**raw**":{**"type":"string","index":"not_analyzed"**}}}
+8. 相关性算法：**TF/IDF，term frequency/invert document frequency，词频/反向文档/字段长度准则**。  
+    1. 词频：出现次数多，权重高；  
+    2. 反向文档：出现频率低，权重高（检索词越少越重要）；  
+    3. 长度准则：检索到的字符串长度越短，权重越高（检索词占整个字符串的比重高，权重高）。  
+    4. 如果多条查询子句被合并为一条复合查询语句，比如 bool 查询，则每个查询子句计算得出的评分会被合并到总的相关性评分中。
+9. GET /\_search?**explain** -d {"query":{"match":{"tweet":"honeymoon"}}}。
 10. 当explain选项加到**某一文档**上时，它会告诉你为何这个文档会被匹配，以及一个文档为何没有被匹配。GET /us/tweet/12/**\_explain**。  
 11. 数据字段：**搜索需要遍历所有文档，排序需要遍历所有字段，这2个操作需要处理大量数据**。ElasticSearch 会将所有字段的值加载到内存中，这就叫做"数据字段"。 ElasticSearch将所有字段数据加载到内存中并不是匹配到的那部分数据。 而是**索引下所有文档中的值，包括所有类型**。内存不足是可以通过横向扩展解决的，我们可以增加更多的节点到集群。  
   
