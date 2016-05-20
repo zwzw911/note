@@ -182,7 +182,9 @@
 #####索引管理
 1. 创建：PUT /index {"**settings**":{...anysettings...},"**mappings**":{"type_one":{...anymappings...},"type_two":{...anymappings...},...}。防止**自动**创建索引：action.**auto_create_index**: false
 2. 删除： DELETE /index。删除多个索引：**DELETE /index***。
-3. 更改setting：使用\_setting API。PUT /index/**\_settings**{"number_of_replicas":1}。
+3. 索引设置：最重要2个setting:number_of_shards（创建索引后不能更改），number_of_replicas。
+    1. PUT /my_index -d {settings:{number_of_replicas:1}}  
+    2. 更改setting：使用\_setting API。PUT /index/**\_settings** -d {"number_of_replicas":2}。
 PUT /my_index
 {
     "**settings**": {
