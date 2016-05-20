@@ -137,11 +137,17 @@
     3. 如果某个字段指定了多个值（**数组**），那么文档需要一起去做匹配。**range**：**gt/gte/lt/lte**。  
     4. **exists/missing**:查找文档中是否包含指定字段或没有某个字段，类似于SQL语句中的IS_NULL条件。  
     5. **bool**  
-8. 查询语句：**match**：查询是一个标准查询，不管你需要全文本查询还是精确查询（**精确查询最好用过滤，因为可以缓存**）基本上都要用到它。**march_all**：可以查询到所有文档，是没有查询条件下的默认语句。**multi_match**:查询允许你做match查询的基础上同时搜索多个字段。"**multi_match**":{"**query**":"full text search","**fields**":["title","body"]}。**bool查询**：bool 查询与 bool 过滤相似，用于**合并多个查询子句**。不同的是，bool 过滤可以直接给出是否匹配成功， 而bool查询要**计算每一个查询子句的 _score** （相关性分值）。must:: 查询指定文档**一定要被包含**。must_not:: 查询指定文档一定**不要**被包含。should::查询指定文档，有则可以为**文档相关性加分**（和bool过滤不同，should在此是加分的作用）。     
+8. 查询语句：
+    1. **match**：查询是一个标准查询，不管你需要全文本查询还是精确查询（**精确查询最好用过滤，因为可以缓存**）基本上都要用到它。**march_all**：可以查询到所有文档，是没有查询条件下的默认语句。**multi_match**:查询允许你做match查询的基础上同时搜索多个字段。"**multi_match**":{"**query**":"full text search","**fields**":["title","body"]}。  
+    2. **bool查询**：bool 查询与 bool 过滤相似，用于**合并多个查询子句**。不同的是，bool 过滤可以直接给出是否匹配成功， 而bool查询要**计算每一个查询子句的 _score** （相关性分值）。must:: 查询指定文档**一定要被包含**。must_not:: 查询指定文档一定**不要**被包含。should::查询指定文档，有则可以为**文档相关性加分**（和bool过滤不同，should在此是加分的作用）。     
+    curl -XGET "http://localhost:9200/web/post1/_search?pretty" -d "{query:{filtered:{query:{match:{name:5}},filter:{exists:{field:\"name\"}}}}}"  
+    第一个query说明是搜索操作，第一个filtered说明搜索中带过滤，第一个query定义查询条件，第一个filter定义过滤条件。  
+9. 验证查询：
+    curl -XGET "http://localhost:9200/web/post1/**_validate/query**?pretty" -d "{query:{filtered:{query:{match:{name:5}},filter:{exists:{field:\"name\"}}}}}"  
 
 #####排序
 1. 默认按照**相关性**排序。相关性指\_score。某些情况下，\_score是一样的（使用过滤来查询文档，\_score都是1）
-2. GET \_search {"query":{"filtered":{"filter":{"term":{"user_id":1}}}},"**sort**":{"date":{"**order**":"**desc**"}}}。
+2. GET \_search {"query":{"filtered":{"filter":{"term":{"user_id":1}}}},"**sort**":{"date":{"**order**":"**desc**"}}}。  
 3. sort添加一个sort字段，用来排序。如果sort的字段不是\_score，则\_score和max\_score为null，因为此时无需score（计算score耗费资源）。如要强迫开启：track\_scores设为true。**sort也可以使用\_score进行排序**
 4. 如果要对多个字段排序，sort为数组。"sort":**[**{"date":{"order":"desc"}},{"\_score":{"order":"desc"}}**]**
 5. 查询字符串：GET /\_search?sort=date:desc&sort=_score&q=search
