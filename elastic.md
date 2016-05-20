@@ -114,9 +114,9 @@
     string有2个重要的映射参数：**index**和**analyzer**。**index:analyzed/not_anaylzed/no，以何种方式被索引**。  
     analyzed（full Text），not\_analyzed（exact value），no（不索引这个字段。这个字段不能为搜索到。）。对以非字符类型，也可以设置index，但是只能取not_analyzed或者no。对于analyzed类型的字符串字段，使用**analyzer参数来指定哪一种分析器将在搜索和索引的时候使用**。默认的，Elasticsearch使用**standard**分析器，但是你可以通过指定一个内建的分析器来更改它，例如**whitespace、simple或english**。  
 10. 定义映射： mapping只能在新建index或者添加新字段是定义，而无法修改（修改字段的定义会导致已经存储的数据无法正确处理）  
-    **新建索引是定义** PUT /gb -d {"**mappings**":{"tweet":{"**properties**":{"content":{"type":"string","**analyzer**":"english"}}}}}。  
-    **添加字段时定义**： **PUT** /gb/\_mapping/tweet   {"**properties**":{"tag":{"type":"string","**index**":"**not_analyzed**"}}}。  
-    **测试映射**：GET /gb/_analyze?field=tweet -d "{Black-cats}"。  
+    1. **新建索引是定义** PUT /gb -d {"**mappings**":{"tweet":{"**properties**":{"content":{"type":"string","**analyzer**":"english"}}}}}。  
+    2. **添加字段时定义**： **PUT** /gb/\_mapping/tweet   {"**properties**":{"tag":{"type":"string","**index**":"**not_analyzed**"}}}。  
+    3. **测试映射**：GET /gb/_analyze?field=tweet -d "{Black-cats}"。  
 11. **多值对象（数组）**:对于数组**不需要特殊的映射**。任何一个字段可以包含**零个、一个或多个值**，同样对于全文字段将被分析并产生多个词。言外之意，这意味着**数组中所有值必须为同一类型**。你不能把日期和字符窜混合。如果你创建一个新字段，这个字段索引了一个数组，Elasticsearch将使用**第一个值**的类型来确定这个新字段的类型。
 12. **空字段**: **""/null/[]/[null]**。空字段不被索引。  
 13. 多层对象
@@ -131,7 +131,12 @@
 4. 合并多子句：需要**must/must\_not/should**（类似SQL中的AND/NOT/OR）。**bool**。复合子句能合并 任意其他查询子句，包括其他的复合子句。 这就意味着复合子句可以相互嵌套，从而实现非常复杂的逻辑。
 5. 查询和过滤：查询：查询语句会询问每个文档的字段值与特定值的匹配程度如何。
 6. 查询语句不仅要查找相匹配的文档，还需要计算每个文档的相关性，所以**一般来说**查询语句要比 过滤语句更耗时，并且查询结果也不可缓存。有了倒排索引，一个**只匹配少量文档的简单查询语句**在百万级文档中的查询效率会与一条经过缓存 的过滤语句旗鼓相当，甚至略占上风。**原则上来说，使用查询语句做全文本搜索或其他需要进行相关性评分的时候，剩下的全部用过滤语句**。  
-7. 过滤语句：**term**:用于**精确匹配**哪些值，比如数字，日期，布尔值或 not\_analyzed的字符串(未经分析的文本数据类型)。**terms**：terms 跟 term 有点类似，但 terms 允许指定多个匹配条件。 如果某个字段指定了多个值（**数组**），那么文档需要一起去做匹配。**range**：**gt/gte/lt/lte**。**exists/missing**:查找文档中是否包含指定字段或没有某个字段，类似于SQL语句中的IS_NULL条件。**bool**
+7. 过滤语句：
+    1. **term**:用于**精确匹配**哪些值，比如数字，日期，布尔值或 not\_analyzed的字符串(未经分析的文本数据类型)。  
+    2. **terms**：terms 跟 term 有点类似，但 terms 允许指定多个匹配条件。  
+    3. 如果某个字段指定了多个值（**数组**），那么文档需要一起去做匹配。**range**：**gt/gte/lt/lte**。  
+    4. **exists/missing**:查找文档中是否包含指定字段或没有某个字段，类似于SQL语句中的IS_NULL条件。  
+    5. **bool**  
 8. 查询语句：**match**：查询是一个标准查询，不管你需要全文本查询还是精确查询（**精确查询最好用过滤，因为可以缓存**）基本上都要用到它。**march_all**：可以查询到所有文档，是没有查询条件下的默认语句。**multi_match**:查询允许你做match查询的基础上同时搜索多个字段。"**multi_match**":{"**query**":"full text search","**fields**":["title","body"]}。**bool查询**：bool 查询与 bool 过滤相似，用于**合并多个查询子句**。不同的是，bool 过滤可以直接给出是否匹配成功， 而bool查询要**计算每一个查询子句的 _score** （相关性分值）。must:: 查询指定文档**一定要被包含**。must_not:: 查询指定文档一定**不要**被包含。should::查询指定文档，有则可以为**文档相关性加分**（和bool过滤不同，should在此是加分的作用）。     
 
 #####排序
