@@ -100,4 +100,5 @@ AOF：append only file。 appendonly **no=>yes**。appendfilenam默认为appendo
   
 #####实际操作
 1. redis-cli：进入redis
-2. redis-cli下运行脚本：eval "script.lua" 2 key1 val1 key2 val2
+2. redis-cli下运行脚本：eval "script.lua" 2 key1 val1 key2 val2。 **直接使用eval，可能会报错误信息，使用evalsha就不会有错**。  
+3. 获得脚本SHA：通过fs读取脚本内容，然后通过ioclient的load方法把内容转换成sha
