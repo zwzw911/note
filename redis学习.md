@@ -97,3 +97,7 @@
 #####持久化
 RDB：snapshot。 save 900 1/save 300 10
 AOF：append only file。 appendonly **no=>yes**。appendfilenam默认为appendonly.aof，**auto-aof-rewrite-percentage** 100，**auto-aof-rewrite-min-size** 64mb，**BGREWRITEAO**，**appendfsync** always/everysec/no9从磁盘缓存写入磁盘的策略）
+  
+#####实际操作
+1. redis-cli：进入redis
+2. redis-cli下运行脚本：eval "script.lua" 2 key1 val1 key2 val2
