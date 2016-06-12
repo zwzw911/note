@@ -7,8 +7,8 @@
 3.2 设置gzip
     	gzip  on;==========>打开gzip
 	gzip_min_length  1000;=======>当内容能够超过1000byte才使用gzip压缩
-	gzip_buffers 4 16k;========>4*16K用于缓存gzip的结果
-	#gzip_http_version 1.0;===========>默认1.1，只对http1.1的request的结果进行gzip；如果nginx用作反向代理服务器，此时nginx和其他server用http1。0通信
+	gzip_buffers 4 16k;========>以4*16K为单位，申请内存用于缓存gzip的结果
+	\#gzip_http_version 1.0;===========>默认1.1，只对http1.1的request的结果进行gzip；如果nginx用作反向代理服务器，此时nginx和其他server用http1.0通信
 	gzip_comp_level 3;==========>1~9 压缩比例越大，速度越慢
 	gzip_proxied     expired no-cache no-store private auth;
 	gzip_types       text/plain text/css application/x-javascript application/javascript application/xml image/jpeg image/gif image/png;===============>对header中mime那些类型进行压缩
