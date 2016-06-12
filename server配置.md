@@ -1,3 +1,6 @@
+#####0. 安装必须文件
+######windows  
+1. 
 #####1. 运行mongodb  
  mongod --logpath /home/db/log/mongodb.log --logRotate rename --timeStampFormat iso8601-local   --dbpath /home/db/  --cpu  
  --logpath /home/db/log/mongodb.log： log信息输入指定文件，而不是打印在屏幕上  
