@@ -18,6 +18,10 @@
 		server 172.24.251.205:3000;
 		ip_hash;
 	}  
+4 配置server：  
+4.1 server_name 172.24.251.205;==============>外部IP（可以是网址），以便访问  
+4.2 charset **utf-8**  
+
 
 #####1. 运行mongodb  
  mongod --logpath /home/db/log/mongodb.log --logRotate rename --timeStampFormat iso8601-local   --dbpath /home/db/  --cpu  
