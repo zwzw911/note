@@ -18,10 +18,13 @@
 		server 172.24.251.205:3000;
 		ip_hash;
 	}  
-4 配置server：  
-4.1 server_name 172.24.251.205;==============>外部IP（可以是网址），以便访问  
-4.2 charset **utf-8**  
-
+3.4 配置server：  
+    server_name 172.24.251.205;==============>外部IP（可以是网址），以便访问  
+    charset **utf-8**  
+4. 安装mongodb和nginx为window服务  
+   4.1 在windows的PATH，添加mongodb安装路径（C:\Program Files\MongoDB\Server\3.0\bin）  
+       然后再cmd中，执行mongod --logpath D:/ss_db/mongo/mongodb.log --logRotate rename --timeStampFormat iso8601-local --dbpath D:/ss_db/mongo/ --serviceName MongoDB --install  
+	可以通过命令net start/stop MongoDB来启动/停止mongo服务  
 
 #####1. 运行mongodb  
  mongod --logpath /home/db/log/mongodb.log --logRotate rename --timeStampFormat iso8601-local   --dbpath /home/db/  --cpu  
