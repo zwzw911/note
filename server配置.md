@@ -23,7 +23,7 @@
     charset **utf-8**  
 4. 安装mongodb和nginx为window服务  
    4.1 在windows的PATH，添加mongodb安装路径（C:\Program Files\MongoDB\Server\3.0\bin）  
-       然后再cmd中，执行mongod --logpath D:/ss_db/mongo/mongodb.log --logRotate rename --timeStampFormat iso8601-local --dbpath D:/ss_db/mongo/ --repSet ss/135.252.254.80:27017 --serviceName MongoDB --install  
+       然后再cmd中，执行**mongod --logpath D:/ss_db/mongo/mongodb.log --logRotate rename --timeStampFormat iso8601-local --dbpath D:/ss_db/mongo/ --replSet ss/135.252.254.80:27017 --serviceName MongoDB --install**  
 	可以通过命令net start/stop MongoDB来启动/停止mongo服务  
 	--repSet ss/135.252.254.80:27017: 副本集中其它任意一个副本
 
