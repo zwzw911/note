@@ -13,11 +13,11 @@
 
 #####配置命令
 1. 首先**分别在所有的节点上各自**启动一个mongod进程，出了bing_ip不同，其他尽量一致
-C:\Users\lte>mongod --bind_ip SH-JQ-254-77 --logpath D:/ss_log/mongo/mongodb.log --logRotate reopen --logappend --timeStampFormat iso8601-local --oplogSize 1000 --dbpath D:/ss_db/mongo/ --replSet "ss"
+C:\Users\lte>**mongod --bind_ip 135.252.254.77 --logpath D:/ss_log/mongo/mongodb.log --logRotate reopen --logappend --timeStampFormat iso8601-local --oplogSize 1000 --dbpath D:/ss_db/mongo/ --replSet "ss"**  
 没有采用mongod -f xxx.conf的方式，因为window的mongodb版本是3.0，不支持某些选项。而直接采用命令行的方式。  
---bind_ip：必须是主机名，而不是IP地址，例如127.0.0.1（否则无法区分primary/secondary）
---replSet：复制集合名称  
---oplogSize: primary的oplog大小，默认是磁盘剩余空间的5%。如果设置，单位是MB。 
+**--bind_ip**：可以是主机名或IP地址，建议使用IP，如果server配置多个IP，hostname可能会绑定内部IP，导致客户端无法连接。  
+**--replSet**：复制集合名称  
+**--oplogSize**: primary的oplog大小，默认是磁盘剩余空间的5%。如果设置，单位是MB。 
 2. 联入此mongod，在**单独一个节点**上执行initiate命令，完成replication需要的oplog文件的创建。单个文件最大2GB，如果oplogSize小于2GB，只创建一个文件local.1。    
 **rs.initiate()**  
 {  
