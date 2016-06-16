@@ -7,4 +7,5 @@
   5.1 优先级为0：能接受read，也能进行vote，但是不会触发选举，永远是secondary（cold standby）  
   5.2 隐藏节点：不接受read，能进行vote，防止application从中读取数据  
   5.3 延时节点：通过一个运行中的“历史”snapshot，防止意外操作被记录下来。延时节点必须被设置成优先级0，且为隐藏节点。     
+  5.4 投票节点：
 5. 当primary停止响应超过10秒后，合适的secondary发起选举，选自己为primary，成员通过则变成primary。3.2采用protocol 1来节省故障回滚时间。
