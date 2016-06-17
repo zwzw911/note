@@ -57,4 +57,8 @@ mongoDB的某些操作（mapreduce，group，$where）需要server-side的javasc
 db.runCommand({**collStats**:'articles'，scale:1024})=====>获得collection的统计信息。scale：默认是是byte，要使用KB，设成1024  
 db.runCommand({**dbHash**:1, [collectios]})========>获得db中指定的（如不制定，返回所有）collection的hash，以及这些collection的MD5.  
 db.runCommnad({**listDatabases**:1})==========>必须在**admin数据库**中执行，返回db一些基本信息。  
+**listCommands/buildInfo(当前mongoDB的build信息)/availableQueryOptions**  
+**connPoolStats/shardConnPoolStats**：返回当前实例/当前集群的pool。**集群中的连接池用于连接集群间的成员**  
+**{dbStats:1,scale:1024}**:db统计信息  
+{**dataSize**:"db.coll",**keyPattern**:{field:1}, **min**:{filed2:1}, **max**:{field:10} }
 
