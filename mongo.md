@@ -27,6 +27,27 @@ C:\Users\lte>**mongod --bind_ip 135.252.254.77 --logpath D:/ss_log/mongo/mongodb
         "ok" : 1  
 }  
 3. 命令  
-   rs.add():无论是IP还是hostname，必须使用""括起，作为字符  
-   rs.conf():  
-   rs.isMaster():  
+   **rs.add()**:无论是IP还是hostname，必须使用""括起，作为字符  
+   **rs.conf()**:  
+   **rs.isMaster()**:  
+   **rs.sterDown()**:对于primary，需要强制primary变成secondary，并且触发一次选举。之后可以进行维护操作。    
+   **rs.reconf()**::传入配置信息，重新配置replication。  
+
+
+#####安全
+######接入控制和身份验证（Authentication ）
+集群中，要启用身份验证。MongoDB采用role的方式进行验证。  
+######通信加密  
+采用TTS/SSL在mongo通信中
+######防止网络暴露
+######审查网络活动  
+企业版有工具可以记录分析各种操作  
+######运行mongo  
+使用特定的账号运行mongo，这个账号可以进入mongoDB，但是没有其他多余的权限。运行mongoDB with安全配置选项。  
+mongoDB的某些操作（mapreduce，group，$where）需要server-side的javascript，如果不需要，使用**--noscriptig**选项关闭。  
+
+#####用户  
+1. 为了验证client，必须使用**db.createUser()**创建一个用户，同时授予合适的role。第一个创建的用户必须**管理**的role。  
+2. 用户对不同的数据库有不同的权限。可能会出现同名用户，但是对不同的数据库有不同的操作。
+3. 验证用户可以：a) **在命令行带上-u -p --db**; b) 连接进去后，执行**db.auth()**  
+4. 
