@@ -62,6 +62,13 @@ db.runCommnad({**listDatabases**:1})==========>必须在**admin数据库**中执
 **{dbStats:1,scale:1024}**:db统计信息  
 {**dataSize**:"db.coll",**keyPattern**:{field:1}, **min**:{filed2:1}, **max**:{field:10} }  
 **netstat**: for mongo**s**  
-**profile**: -1:查询当前设置；0：disable；1：enable，记录slow（**slowms**，**执行后返回的结果是上次的设置结果，要查看当前结果，使用-1**）；2：记录所有  
+**profile**: -1:查询当前设置；0：disable；1：enable，记录slow（**slowms**，**执行后返回的结果是上次的设置结果，要查看当前结果，使用-1**）；2：记录所有。**db.getPrifilingStatus(), db.setProfilinigLevel()**  
+**validate**: **full:true**:显示详细信息；**scandata：ture**：只验证数据，不验证index。等同**db.coll.validate**  
+**top**: 只能运行在admin上，返回一些统计信息。  
+**whatsmyuri**: client连接mongo的uri。  
+**getLog**:运行在**admin**中，返回RAM中的部分log。**global/rs/startupWarnings**  
+**hostInfo**:返回server的cpu信息。  
+**serverStatus**：返回服务器状态。**rangeDelete/repl**默认不包含在输出，为了包含，设为1。 {serverStatus:1, rangeDelete:1, repl:1}  
+
 
 
