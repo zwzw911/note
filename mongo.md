@@ -62,6 +62,6 @@ db.runCommnad({**listDatabases**:1})==========>必须在**admin数据库**中执
 **{dbStats:1,scale:1024}**:db统计信息  
 {**dataSize**:"db.coll",**keyPattern**:{field:1}, **min**:{filed2:1}, **max**:{field:10} }  
 **netstat**: for mongo**s**  
-**profile**: -1:查询当前设置；0：disable；1：enable，记录slow（**slowms**）；2：记录所有  
+**profile**: -1:查询当前设置；0：disable；1：enable，记录slow（**slowms**，**执行后返回的结果是上次的设置结果，要查看当前结果，使用-1**）；2：记录所有  
 
 
