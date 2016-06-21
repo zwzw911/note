@@ -74,4 +74,5 @@ db.runCommnad({**listDatabases**:1})==========>必须在**admin数据库**中执
 #####role
 1. 使用**db.createUser({})**创建用户之后，在**admin**中产生**system.roles**，带有**_id/role/db/privileges/roles**。  
 2. 对于**privileges**，格式为[{resource:[],actions:[]}]，resource格式为:{db:"",collection:""}，如果collection为空，**说明适用在db下所有的collection，但是不包括system.xx**，如果要对系统级的collection设置权限，需要显式设置privilege。  
-3. 对于**roles**，格式如roles: [{ role: "appUser", db: "myApp" }]，指定role的privilege会赋给当前用户。  
+3. 对于**roles**，格式如roles: [{ role: "appUser", db: "myApp" }| “myRole”]，指定role(**此role必须定义在同一个db中**)的privilege会赋给当前用户。  
+4. 定义在admin中的role，适用admin和其他db，以及cluster；同时，也能继承定义在admin/其他db/cluster中定义的role。  
