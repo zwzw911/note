@@ -78,4 +78,4 @@ db.runCommnad({**listDatabases**:1})==========>必须在**admin数据库**中执
    定义在admin中的role，适用admin和其他db，以及cluster；同时，也能继承定义在admin/其他db/cluster中定义的role。  
 2. **db.updateRole(roleName, update, writeConcern)**:  
    必须在role所在的db上执行。  
-   完全替换对应field（privilege或者roles）的值，使用db.grantPrivilegesToRole()/grantRolesToRole()/revokePrivilegesFromRole()/revokeRolesFromRole()替换。
+   完全替换对应field（privilege或者roles）的值，使用**db.grantPrivilegesToRole()/grantRolesToRole()/revokePrivilegesFromRole()/revokeRolesFromRole()**替换。
