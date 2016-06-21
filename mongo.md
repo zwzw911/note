@@ -79,3 +79,4 @@ db.runCommnad({**listDatabases**:1})==========>必须在**admin数据库**中执
 2. **db.updateRole(roleName, update, writeConcern)**:  
    必须在role所在的db上执行。  
    完全替换对应field（privilege或者roles）的值，使用**db.grantPrivilegesToRole()/grantRolesToRole()/revokePrivilegesFromRole()/revokeRolesFromRole()**替换。
+3. **db.dropAllRoles()**:删除当前db中，所有**user-defined** role
