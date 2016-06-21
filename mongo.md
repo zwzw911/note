@@ -71,4 +71,7 @@ db.runCommnad({**listDatabases**:1})==========>必须在**admin数据库**中执
 **serverStatus**：返回服务器状态。**rangeDelete/repl**默认不包含在输出，为了包含，设为1。 {serverStatus:1, rangeDelete:1, repl:1}  
 
 
-
+#####role
+1. 使用**db.createUser({})**创建用户之后，在**admin**中产生**system.roles**，带有**_id/role/db/privileges/roles**。  
+2. 对于**privileges**，格式为[{resource:[],actions:[]}]，resource格式为:{db:"",collection:""}，如果collection为空，**说明适用在db下所有的collection，但是不包括system.xx**，如果要对系统级的collection设置权限，需要显式设置privilege。  
+3. 对于**roles**，格式如roles: [{ role: "appUser", db: "myApp" }]，指定role的privilege会赋给当前用户。  
