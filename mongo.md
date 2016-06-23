@@ -45,12 +45,16 @@ C:\Users\lte>**mongod --bind_ip 135.252.254.77 --logpath D:/ss_log/mongo/mongodb
 ######运行mongo  
 使用特定的账号运行mongo，这个账号可以进入mongoDB，但是没有其他多余的权限。运行mongoDB with安全配置选项。  
 mongoDB的某些操作（mapreduce，group，$where）需要server-side的javascript，如果不需要，使用**--noscriptig**选项关闭。  
+######localhost Exception  
+localhost Exception(通过localhost登录？？)只有在没有任何user的时候可以使用，用来在数据库admin中创建**第一个**用户。在**分片**中，LE不但应用在集群本身（mongos），也应用在分片。即使在mongos使用LE创建了user，还需要在各个分片上创建user（否则分片还是未使用验证机制）。  
+
+
 
 #####用户  
 1. 为了验证client，必须使用**db.createUser()**创建一个用户，同时授予合适的role。第一个创建的用户必须**管理**的role。  
 2. 用户对不同的数据库有不同的权限。可能会出现同名用户，但是对不同的数据库有不同的操作。
 3. 验证用户可以：a) **在命令行带上-u -p --db**; b) 连接进去后，执行**db.auth()**  
-4. 
+4. 创建用户：db.**createUser**({**user**:'zw',**password**:'1111', **roles**:[{role:'read',db:'ss'},{role:'write',db:'test'}]})
 
   
 #####diagnostic commands
