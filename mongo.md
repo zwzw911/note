@@ -1,4 +1,4 @@
-#####replSet
+###replSet
 1. 检测对端：mongo --host 135.252.254.80 --port 27017，能够连接说明本机和对端的连接OK。  
 2. mongo的rep set最多支持50个节点，其中最多7个voting节点。voting节点必须是奇数，如果不是，添加一个arbiter节点。  
 3. arbiter节点没有数据，同时不能被转换成primary。arbiter必须运行在没有primary或者secondary的节点上。  
@@ -11,7 +11,7 @@
 5. 当primary停止响应超过10秒后，合适的secondary发起选举，选自己为primary，成员通过则变成primary。3.2采用protocol 1来节省故障回滚时间。  
 
 
-#####配置命令
+###配置命令
 1. 首先**分别在所有的节点上各自**启动一个mongod进程，出了bing_ip不同，其他尽量一致  
 C:\Users\lte>**mongod --bind_ip 135.252.254.77 --logpath D:/ss_log/mongo/mongodb.log --logRotate rename ~~reopen~~ ~~--logappend~~ --timeStampFormat iso8601-local --oplogSize 1000 --dbpath D:/ss_db/mongo/ --replSet "ss"**  
 没有采用mongod -f xxx.conf的方式，因为window的mongodb版本是3.0，不支持某些选项。而直接采用命令行的方式。  
@@ -34,7 +34,7 @@ C:\Users\lte>**mongod --bind_ip 135.252.254.77 --logpath D:/ss_log/mongo/mongodb
    **rs.reconf()**::传入配置信息，重新配置replication。  
 
 
-#####安全
+###安全
 ######接入控制和身份验证（Authentication ）
 集群中，要启用身份验证。MongoDB采用role的方式进行验证。  
 ######通信加密  
@@ -48,14 +48,17 @@ mongoDB的某些操作（mapreduce，group，$where）需要server-side的javasc
 ######localhost Exception  
 localhost Exception(通过localhost登录？？)只有在没有任何user的时候可以使用，用来在数据库admin中创建**第一个**用户。在**分片**中，LE不但应用在集群本身（mongos），也应用在分片。即使在mongos使用LE创建了user，还需要在各个分片上创建user（否则分片还是未使用验证机制）。  
 
-
-
 #####用户  
 1. 为了验证client，必须使用**db.createUser()**创建一个用户，同时授予合适的role。第一个创建的用户必须**管理**的role。  
 2. 用户对不同的数据库有不同的权限。可能会出现同名用户，但是对不同的数据库有不同的操作。
 3. 验证用户可以：a) **在命令行带上-u -p --db**; b) 连接进去后，执行**db.auth()**  
-4. 创建用户：db.**createUser**({**user**:'zw',**password**:'1111', **roles**:[{role:'read',db:'ss'},{role:'write',db:'test'}]})
+4. 创建用户：db.**createUser**({**user**:'zw',**password**:'1111', **roles**:[{role:'read',db:'ss'},{role:'write',db:'test'}]})  
+#####验证机制
+**client和mongodb间**，默认采用SDRAM-SHA-1。通过比较用户凭证against用户名+密码+用户db。  
 
+#####内部验证
+对复制集或者分片集群的**成员之间**进行验证。**keyfiles或者X.509**。**启用内部验证也意味着启用了用户验证**  
+对于keyfile，其key的长度在6～1024，并只能包含base64的字符。同时在所有的成员（分片包括mongos）上，内容都是一样的。为了使用keyfile，使用**security.keyFile**或者CLI的**--keyFile**选项  
   
 #####diagnostic commands
 db.runCommand({**collStats**:'articles'，scale:1024})=====>获得collection的统计信息。scale：默认是是byte，要使用KB，设成1024  
