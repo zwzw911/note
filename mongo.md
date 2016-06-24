@@ -55,6 +55,12 @@ localhost Exception(通过localhost登录？？)只有在没有任何user的时�
 4. 创建用户：db.**createUser**({**user**:'zw',**password**:'1111', **roles**:[{role:'read',db:'ss'},{role:'write',db:'test'}]})    
 #####验证机制
 **client和mongodb间**，默认采用SDRAM-SHA-1。通过比较用户凭证against用户名+密码+用户db。  
+**x.509**: 使用单独的CA（自己维护的或者有资质）颁发的证书。  
+1. client和server都要有证书。  
+2. client端的证书必须包含：keyUsage=digitalSignature，extendedKeyUsage = **clientAuth**  
+3. 每个user有自己的证书。  
+4. DN必须和成员证书（member）不一致，否则，会把client认为是复制集或者分片的成员，而赋予全部权限。
+5. 对于集群，必须使用相同的**--clusterAuthMode**
 
 #####内部验证
 对复制集或者分片集群的**成员之间**进行验证。**keyfiles或者X.509**。**启用内部验证也意味着启用了用户验证**  
