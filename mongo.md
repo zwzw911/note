@@ -58,7 +58,7 @@ localhost Exception(通过localhost登录？？)只有在没有任何user的时�
 
 #####内部验证
 对复制集或者分片集群的**成员之间**进行验证。**keyfiles或者X.509**。**启用内部验证也意味着启用了用户验证**  
-keyfiles适用于dev环境，x.509适用于prod环境。  
+keyfiles适用于dev环境，x.509适用于prod环境（**使用证书，而不是用户名密码来进行验证**）。  
 x.509使用TLS/SSL连接。
 使用x.509的要求：  
 1. 所有的成员使用同一个CA颁发的证书；  
@@ -67,6 +67,9 @@ x.509使用TLS/SSL连接。
 4. CN（common name）或者SAN（subject altenative name）之一必须和hostname（也许可以使用IP）一致，以便其他成员使用？？  
 配置**cilent验证**，mongod或者mongos需要配置** net.ssl.PEMKeyFile***或者使用**--sslPEMKeyFile**指定Pemfile。对于成员证书，如果没有配置**clusterFile **，则使用Pemfile。  
 对于复制集或者分片，使用相同的** --clusterAuthMode **。  
+为了使用X.509，需要：
+1. CLI中添加option：mongod --replSet <name> --sslMode requireSSL --clusterAuthMode x509 --sslClusterFile <path to membership certificate and key PEM file> --sslPEMKeyFile <path to SSL certificate and key PEM file> --sslCAFile <path to root CA PEM file>。 **如果sslCAFile没有指定或者指定的文件不存在，x.509不工作**  
+2. 
 对于keyfile，其key的长度在6～1024，并只能包含base64的字符。同时在所有的成员（分片包括mongos）上，内容都是一样的。为了使用keyfile，使用**security.keyFile**或者CLI的**--keyFile**选项  
   
 #####diagnostic commands
