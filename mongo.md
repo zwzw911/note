@@ -52,12 +52,14 @@ localhost Exception(通过localhost登录？？)只有在没有任何user的时�
 1. 为了验证client，必须使用**db.createUser()**创建一个用户，同时授予合适的role。第一个创建的用户必须**管理**的role。  
 2. 用户对不同的数据库有不同的权限。可能会出现同名用户，但是对不同的数据库有不同的操作。
 3. 验证用户可以：a) **在命令行带上-u -p --db**; b) 连接进去后，执行**db.auth()**  
-4. 创建用户：db.**createUser**({**user**:'zw',**password**:'1111', **roles**:[{role:'read',db:'ss'},{role:'write',db:'test'}]})  
+4. 创建用户：db.**createUser**({**user**:'zw',**password**:'1111', **roles**:[{role:'read',db:'ss'},{role:'write',db:'test'}]})    
 #####验证机制
 **client和mongodb间**，默认采用SDRAM-SHA-1。通过比较用户凭证against用户名+密码+用户db。  
 
 #####内部验证
 对复制集或者分片集群的**成员之间**进行验证。**keyfiles或者X.509**。**启用内部验证也意味着启用了用户验证**  
+keyfiles适用于dev环境，x.509适用于prod环境。
+使用x.509的前提：1. 所有的成员使用同一个CA颁发的证书；2. 证书的内容（DN=O+OU/CN）相同
 对于keyfile，其key的长度在6～1024，并只能包含base64的字符。同时在所有的成员（分片包括mongos）上，内容都是一样的。为了使用keyfile，使用**security.keyFile**或者CLI的**--keyFile**选项  
   
 #####diagnostic commands
