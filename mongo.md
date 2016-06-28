@@ -1,12 +1,13 @@
 ###分片
-1. 分片集群的配置信息保存在一个/组专门的mongod服务器上，供包括mongos在内的其他程序使用。mongo移动chunk（数据块）时，**所有**的配置服务器都必须on service，否则操作无法进行/正在进行的chunk迁移回退。**任何一台**配置服务器OOS，配置就无法操作。  
+1. 分片集群的配置信息保存在一个/组专门的mongod服务器上，供包括mongos在内的其他程序使用。mongo移动chunk（数据块）时，**所有**的配置服务器都必须on service，否则操作无法进行/正在进行的chunk迁移回退。**任何一台**配置服务器OOS（或者primary的config server OOS，同时无法选出新的primary），config server变成**可读**，再此期间，对data仍可以读写，但是chunk的分裂和迁移都无法执行，直到所有config server都恢复正常。    
 2. 集群由3部分组成：存储数据的分片，负责路由的mongos，跟踪（保存）集群状态的配置服务器。  
 3. mongos和配置服务器都是轻量级：mongos可以和app server发在一起，配置服务器可以放在任意机器上。  
 4. 片键不要选择:  
 a) 值有限的字段，否则只能分成有限个分片；若是为了因为查询的原因，选择了小基数片键，采用组合片键（添加第二个字段）。  
 b) 升/降序值：这样，所有数据总会被写入第一个/最后一个片。
-3. 配置服务器的数量为1或3：1适用测试，3适用生产。**配置服务器之间有同步，但是和复制集机制不一样，所以只需启动mongod即可，无需参数**。    
-4. **mongos --configdb hostname1,hostname2,hostname3。**  
+3. 配置服务器的数量为1或3：1适用测试，3适用生产。**配置服务器之间有同步，但是和复制集机制不一样，所以只需启动mongod即可，无需参数**。**PS:3.2之后，配置服务器可以以复制集的方式部署，如此，可以最多配置50个config server（但是加大了管理难度）**    
+4. **mongos --configdb hostname1,hostname2,hostname3。**mongos缓存config server的metadata，所以即使所有的config server都OOS，仍可以对cluster进行读写；但是一旦重启且config server仍旧未恢复，cluster不可读写。  
+5. 
 
 ###replSet
 1. 检测对端：mongo --host 135.252.254.80 --port 27017，能够连接说明本机和对端的连接OK。  
