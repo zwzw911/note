@@ -7,7 +7,10 @@ a) 值有限的字段，否则只能分成有限个分片；若是为了因为�
 b) 升/降序值：这样，所有数据总会被写入第一个/最后一个片。
 3. 配置服务器的数量为1或3：1适用测试，3适用生产。**配置服务器之间有同步，但是和复制集机制不一样，所以只需启动mongod即可，无需参数**。**PS:3.2之后，配置服务器可以以复制集的方式部署，如此，可以最多配置50个config server（但是加大了管理难度）**    
 4. **mongos --configdb hostname1:port1,hostname2:port2,hostname3:port3。** hostname可以用IP代替。mongos缓存config server的metadata，所以即使所有的config server都OOS，仍可以对cluster进行读写；但是一旦重启且config server仍旧未恢复，cluster不可读写。  
-5. 当cluster中某个shard的chunk比其他shard多时，mongos会自动迁移数据。这是自动且透明的。3.2，开始均衡时，mongos会从config server获得一个lock，且此lock不受时钟不一致的影响（镜像config server对时钟同步有严格要求）。均衡器一次迁移一个chunk。可以**禁用均衡器**或者**设置均衡器时间窗口**。**迁移阀值**：cluster中chunk最多的shard和chunk最少的chunk之间的差值，如果达到迁移阀值，才开始迁移操作，防止过于频繁的操作，影响性能。2：少于20个；4：20～79；8：80个以上。均衡开始后，知道chunk差值少于2个或者迁移失败，才会停止。
+5. 当cluster中某个shard的chunk比其他shard多时，mongos会自动迁移数据。这是自动且透明的。3.2，开始均衡时，mongos会从config server获得一个lock，且此lock不受时钟不一致的影响（镜像config server对时钟同步有严格要求）。均衡器一次迁移一个chunk。可以**禁用均衡器**或者**设置均衡器时间窗口**。**迁移阀值**：cluster中chunk最多的shard和chunk最少的chunk之间的差值，如果达到迁移阀值，才开始迁移操作，防止过于频繁的操作，影响性能。2：少于20个；4：20～79；8：80个以上。均衡开始后，知道chunk差值少于2个或者迁移失败，才会停止。  
+6. 数据迁移过程：均衡器发送**moveChunk**命令到**源分片**，源分片开始迁移数据，目标分片为要迁移的数据建立index，然后开始接收数据。接收完毕，开始同步（迁移过程中产生的新数据）。同步完成，更新config server。  
+7. 2.6开始，迁移时，源分片上被迁移的chunk会被存成文件（--dbpath），使用**sharding.archiveMovedChunks**（默认enable）；**Jumbo chunk**：在迁移是，如果chunk大小超过chunk size或者chunk中的doc数量超过Maximum Number of Documents Per Chunk to Migrate，先分裂，后迁移。  
+8. 
 
 ###replSet
 1. 检测对端：mongo --host 135.252.254.80 --port 27017，能够连接说明本机和对端的连接OK。  
