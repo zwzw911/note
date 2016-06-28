@@ -6,7 +6,7 @@
 a) 值有限的字段，否则只能分成有限个分片；若是为了因为查询的原因，选择了小基数片键，采用组合片键（添加第二个字段）。  
 b) 升/降序值：这样，所有数据总会被写入第一个/最后一个片。
 3. 配置服务器的数量为1或3：1适用测试，3适用生产。**配置服务器之间有同步，但是和复制集机制不一样，所以只需启动mongod即可，无需参数**。**PS:3.2之后，配置服务器可以以复制集的方式部署，如此，可以最多配置50个config server（但是加大了管理难度）**    
-4. **mongos --configdb hostname1,hostname2,hostname3。**mongos缓存config server的metadata，所以即使所有的config server都OOS，仍可以对cluster进行读写；但是一旦重启且config server仍旧未恢复，cluster不可读写。  
+4. **mongos --configdb hostname1:port1,hostname2:port2,hostname3:port3。** hostname可以用IP代替。mongos缓存config server的metadata，所以即使所有的config server都OOS，仍可以对cluster进行读写；但是一旦重启且config server仍旧未恢复，cluster不可读写。  
 5. 
 
 ###replSet
