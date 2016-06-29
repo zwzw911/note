@@ -119,3 +119,8 @@ db.runCommnad({**listDatabases**:1})==========>必须在**admin数据库**中执
    必须在role所在的db上执行。  
    完全替换对应field（privilege或者roles）的值，使用**db.grantPrivilegesToRole()/grantRolesToRole()/revokePrivilegesFromRole()/revokeRolesFromRole()**替换。
 3. **db.dropAllRoles()**:删除当前db中，所有**user-defined** role
+
+
+
+#####选项
+--repair: 在mongodump时，只**写入valid的数据**，而排除因为mongo crash活不正常shutdown产生的错误数据。此选项只对mmapv1引擎的mongod生效。
