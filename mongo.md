@@ -123,4 +123,5 @@ db.runCommnad({**listDatabases**:1})==========>必须在**admin数据库**中执
 
 
 #####选项
---repair: 在mongodump时，只**写入valid的数据**，而排除因为mongo crash活不正常shutdown产生的错误数据。此选项只对mmapv1引擎的mongod生效。
+--repair: 在mongodump时，只**写入valid的数据**，而排除因为mongo crash活不正常shutdown产生的错误数据。此选项只对mmapv1引擎的mongod生效。**由于采用复杂算法，repair过程中会产生大量的重复数据**
+storage.syncPeriodSecs：默认60秒。mongod会即使把数据写入日志，但是每隔一段时间从日志写入data file。
