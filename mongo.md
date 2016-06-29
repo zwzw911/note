@@ -29,6 +29,7 @@ b) 升/降序值：这样，所有数据总会被写入第一个/最后一个片
 1. 首先**分别在所有的节点上各自**启动一个mongod进程，出了bing_ip不同，其他尽量一致  
 C:\Users\lte>**mongod --bind_ip 135.252.254.77 --logpath D:/ss_log/mongo/mongodb.log --logRotate rename ~~reopen~~ ~~--logappend~~ --timeStampFormat iso8601-local --oplogSize 1000 --dbpath D:/ss_db/mongo/ --replSet "ss"**  
 **C:\Users\lte>mongod -f D:\ss_conf\mongo\shard1.conf --serviceName MongoDBShard1--install**  
+**删除service：**sc delete MongoDBShard1
 没有采用mongod -f xxx.conf的方式，因为window的mongodb版本是3.0，不支持某些选项。而直接采用命令行的方式。  
 **--bind_ip**：可以是主机名或IP地址，建议使用IP，如果server配置多个IP，hostname可能会绑定内部IP，导致客户端无法连接。  
 **--logRotate**:采用rename，这样每次启动生成一个新文件，防止单一文件过大？？  
