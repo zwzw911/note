@@ -109,4 +109,6 @@ net:
 storage:
    dbPath: D:\ss_db\mongo\config  
 4. **mongod -f D:\ss_conf\mongo\cfgsvr.conf --serviceName MongoDBCfgsvr --serviceDisplayName MongoDBCfgsvr --install**。 
-5. 
+5. 在P上，执行> rs.initiate( {_id: "configReplSet",configsvr: true,members: [{ _id: 0, host: "
+135.252.254.77:27019" },{ _id: 1, host: "135.252.254.80:27019" },{ _id: 2, host: "135.252.254.87:27019" }]} )。**和普通repl略有不同，initiate时候必须含有如上filed：_id/configsvr/members**。普通repl不需这些参数，可以在initiate后，通过命令方式添加member。  
+
