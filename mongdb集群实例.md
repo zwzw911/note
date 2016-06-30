@@ -124,3 +124,10 @@ storage:
 #####启动mongos
 **mongos --configdb configReplSet/135.252.254.77:27019,135.252.254.80:27019,135,252,254,87:21091 --port 27018**。可以指定port。  
 连接mongos：mongo --host 135.252.254.77(运行mongos的PC地址) --port 27018
+
+
+#####添加shard
+每个shard只需添加一个member（如果分片使用复制集）。注意：**addShard只需添加复制集中任意一个member（P or S都行）即可，mongs会自动找到其他member**  
+sh.addShard("shard1/135.252.254.77:27020")  
+sh.addShard("shard2/135.252.254.77:27021")  
+sh.addShard("shard3/135.252.254.77:27022")  
