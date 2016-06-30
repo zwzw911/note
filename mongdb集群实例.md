@@ -77,3 +77,31 @@ storage:
 1. 作为service安装：
 **C:\Users\lte>mongod -f D:\ss_conf\mongo\shard1.conf --serviceName MongoDBShard1--serviceDisplayName MongoDBShard1 --install**。必须设定serviceDisplayName，否则每个shard会重名，无法安装。
 1. 复制集：  
+
+
+#####配置服务器
+1. 从3.2起，config server可以使用复制集方式，前提是必须使用wiredTiger。**mongo会把localhost和127.0.0.1辨认为不同的host**  
+2. 使用复制集来配置config server，必须满足：没有仲裁节点，没有延迟节点，必须建立索引（所有成员的buildIndexes？？必须设为true）
+3. # 为了安装成window service，需要提供log path；否则config server启动无需此option
+systemLog:
+    traceAllExceptions: true
+    #log存储的方式，如果定义file，必须定义path；还可以定义为syslog
+    destination: file
+    # 必须指定log文件名
+    path: "D:/ss_log/mongo/config/config.log"
+    #window中，对新log重命名；unix/linux中，rename，以便新建文件
+    logRotate: rename
+    #window中，创建一个新log文件；unix/Linux，true，以便在新打开的文件中存入log
+    logAppend: false
+    timeStampFormat: iso8601-local
+sharding:
+   clusterRole: configsvr
+replication:
+   replSetName: configReplSet
+net:
+   bindIp: 135.252.254.77
+   port: 27019
+storage:
+   dbPath: D:\ss_db\mongo\config  
+4. **C:\Users\lte>mongod -f D:\ss_conf\mongo\cfgsvr.conf --serviceName MongoDBCfgsvr--serviceDisplayName MongoDBCfgsvr --install**。 
+5. 
