@@ -78,7 +78,7 @@ storage:
            prefixCompression: true
 ...  
 
-#####命令
+#####数据（复制集）命令
 1. 作为service安装：
 **mongod -f D:\ss_conf\mongo\shard1.conf --serviceName MongoDBShard1 --serviceDisplayName MongoDBShard1 --install**。必须设定serviceDisplayName，否则每个shard会重名，无法安装。
 1. 复制集：  
@@ -112,3 +112,6 @@ storage:
 5. 在P上，执行> rs.initiate( {_id: "configReplSet",configsvr: true,members: [{ _id: 0, host: "
 135.252.254.77:27019" },{ _id: 1, host: "135.252.254.80:27019" },{ _id: 2, host: "135.252.254.87:27019" }]} )。**和普通repl略有不同，initiate时候必须含有如上filed：_id/configsvr/members**。普通repl不需这些参数，可以在initiate后，通过命令方式添加member。  
 
+#####启动mongos
+**mongos --configdb configReplSet/135.252.254.77:27019,135.252.254.80:27019,135,252,254,87:21091 --port 27018**。可以指定port。  
+连接mongos：mongo --host 135.252.254.77(运行mongos的PC地址) --port 27018
