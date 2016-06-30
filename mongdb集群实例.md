@@ -81,8 +81,17 @@ storage:
 #####数据（复制集）命令
 1. 作为service安装：
 **mongod -f D:\ss_conf\mongo\shard1.conf --serviceName MongoDBShard1 --serviceDisplayName MongoDBShard1 --install**。必须设定serviceDisplayName，否则每个shard会重名，无法安装。
-1. 复制集：  
-
+配置分片复制集：
+1. 初始化复制集（不带任何参数）：**rs.initiate()**  
+2. 添加成员，如果是P，设置priority为2（大于默认的1），以便对应的成员是P。
+    PC1：rs.**add**({host:**"**135.252.254.80:27020",priporty:1})/rs.add({host:"135.252.254.87:27020",priority:1}) 。  
+    PC1：rs.add({host:"135.252.254.80:27021",priporty:**2**})/rs.add({host:"135.252.254.87:27021",priority:1}) 。
+    PC1：rs.add({host:"135.252.254.80:27022",priporty:1})/rs.add({host:"135.252.254.87:27022",priority:2})。  
+**注意：以上命令都在PC1上执行，通过设置不同priority，确定P落在哪个member。host的value要用双引号括起**  
+3. 设置成员priority(rs.initiate()添加当前PC的复制集member，并且priority默认为1)
+    cfg=rs.conf()
+    cfg.members[0].priority=2
+    rs.**reconfig**(cfg)
 
 #####配置服务器
 1. 从3.2起，config server可以使用复制集方式，前提是必须使用wiredTiger。**mongo会把localhost和127.0.0.1辨认为不同的host**  
