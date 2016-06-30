@@ -126,8 +126,14 @@ storage:
 连接mongos：mongo --host 135.252.254.77(运行mongos的PC地址) --port 27018
 
 
-#####添加shard
+#####shard操作
+1. **添加shard**  
 每个shard只需添加一个member（如果分片使用复制集）。注意：**addShard只需添加复制集中任意一个member（P or S都行）即可，mongs会自动找到其他member**  
 sh.addShard("shard1/135.252.254.77:27020")  
 sh.addShard("shard2/135.252.254.77:27021")  
 sh.addShard("shard3/135.252.254.77:27022")  
+2. *删除shard**  
+**删除只能通过runCommand** 
+db.runCommand(removeShard:"shard1")  
+3. **db上启动shard**
+sh.enableSharding("ss")  
