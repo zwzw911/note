@@ -75,7 +75,7 @@ storage:
 
 #####命令
 1. 作为service安装：
-**C:\Users\lte>mongod -f D:\ss_conf\mongo\shard1.conf --serviceName MongoDBShard1--serviceDisplayName MongoDBShard1 --install**。必须设定serviceDisplayName，否则每个shard会重名，无法安装。
+**mongod -f D:\ss_conf\mongo\shard1.conf --serviceName MongoDBShard1 --serviceDisplayName MongoDBShard1 --install**。必须设定serviceDisplayName，否则每个shard会重名，无法安装。
 1. 复制集：  
 
 
@@ -103,5 +103,5 @@ net:
    port: 27019
 storage:
    dbPath: D:\ss_db\mongo\config  
-4. **C:\Users\lte>mongod -f D:\ss_conf\mongo\cfgsvr.conf --serviceName MongoDBCfgsvr--serviceDisplayName MongoDBCfgsvr --install**。 
+4. **mongod -f D:\ss_conf\mongo\cfgsvr.conf --serviceName MongoDBCfgsvr --serviceDisplayName MongoDBCfgsvr --install**。 
 5. 
