@@ -1,26 +1,36 @@
+#####配置
+1. 最简配置  
+单台PC： app/图片/redis/mongo都在单台PC    
+2. 简单配置  
+3台PC：  app/图片/redis/shard1在第一台PC，shar2在2nd PC，shard3在3rd PC。每个shard由复制集组成，1P+2S，分布在3台机器上，只能保证任意一个P OOS，新选举出的P还能IS，但是和其他shard的P在同一个PC上；极端情况，2台PC OOS，所有shard都落在单台PC。
+3. 中等配置  
+7台PC：  app/图片/redis占用一台，shard1/2/3的P各自占用一台，剩下的2S分布在剩下的3台。如此，可以保证，任意一个P OOS，新选举出来的P还是能单独占用一台PC。  
+4. 满配  
+11台PC： app/redis一台，图片一台; 每个shard*3台PC（复制集最少需要奇数个有选举权的PC？？）  
+
 手头有3台机器：  
 1. shard设置3个，以便每个shard配在不同的PC上，实现负荷分担。每个shard配置成复制集，1P+2S，每个shard的P在不同PC上。3个shard复制集，分别使用27020/27021/27022端口  
 2. config server也配置3个，在不同的PC，端口为27019.  
 3. mongos和app在同一个server，port：27017  
 
-##### conf file
+##### conf file in shard1
 systemLog:
     traceAllExceptions: true
     #log存储的方式，如果定义file，必须定义path；还可以定义为syslog
     destination: file
     # 必须指定log文件名
-    path: "D:/ss_log/mongo/shard1/shard1.log"
+    path: **"D:/ss_log/mongo/shard1/shard1.log"**
     #window中，对新log重命名；unix/linux中，rename，以便新建文件
     logRotate: rename
     #window中，创建一个新log文件；unix/Linux，true，以便在新打开的文件中存入log
     logAppend: false
     timeStampFormat: iso8601-local
 net:
-    bindIp: 135.252.254.77
-    port: 27020
+    bindIp: **135.252.254.77**
+    port: **27020**
 replication:
     oplogSizeMB: 1000
-    replSetName: shard1
+    replSetName: **shard1**
     secondaryIndexPrefetch: all
     #默认false
     enableMajorityReadConcern: false
@@ -33,11 +43,11 @@ operationProfiling:
     #off/slowOp/all
     mode: slowOp
 storage:
-    dbPath: "D:/ss_db/mongo/shard1"
+    dbPath: **"D:/ss_db/mongo/shard1"**
     #如果在build index过程中停止mongodb，那么下次启动mongodb是否需要rebuild index
     indexBuildRetry: true
     #必须是dbPath的子目录，并且已经存在（不存在需手工创建）
-    repairPath: D:/ss_db/mongo/shard1/repair
+    repairPath: **D:/ss_db/mongo/shard1/repair**
     journal: 
       #mongod only；只有定义了dbPath后，才能使用；64bit OS默认打开，32bit默认关闭
       enabled: true
