@@ -13,6 +13,11 @@
 2. config server也配置3个，在不同的PC，端口为27019.  
 3. mongos和app在同一个server，port：27017  
 
+#####目录结构
+1. ss_db==>mongo==>config/shard1/shard2/shard3==>**repair**。 repair only for shard。  
+2. ss_log===>mongo===>config==>config.log/shard1===>shard1.log/shard2===>shard2.log/shard3===>shard3.log。**config server其实不需要log文件，但是为了install as window service，添加上的**   
+3. ss_conf==>mongo==>config.conf/shard1.conf/shard2.conf/shard3.conf  
+
 ##### conf file in shard1
 systemLog:
     traceAllExceptions: true
