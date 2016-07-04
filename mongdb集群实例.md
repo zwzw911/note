@@ -137,3 +137,15 @@ sh.addShard("shard3/135.252.254.77:27022")
 db.runCommand(removeShard:"shard1")  
 3. **db上启动shard**
 sh.enableSharding("ss")  
+
+
+#####查看集群配置
+1. 查看db是否启用了shard  
+    use config（必须在config上执行查看命令）  
+    db.database**s**.find()
+2. 查看所有shard  
+    use **admin**
+    db.runCommand({**listShards**:1})
+3. 查看集群细节  
+    **sh.status()**  
+4. 
