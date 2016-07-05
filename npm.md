@@ -14,6 +14,8 @@ npm config set https-proxy http://135.245.48.14:8000
 #####获得配置文件路径  
 npm config get userconfig  
 
+#####获取当前配置信息  
+npm config  
 
 #####获得npm版本  
 npm -v  
