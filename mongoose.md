@@ -54,3 +54,31 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
       **min/max**： 边界验证。  
       **enum/match**：枚举验证/匹配验证  
       **validate**：自定义验证规则  
+      *var PersonSchema = new Schema({  
+      name:{  
+        type:'String',  
+        required:true //姓名非空  
+      },  
+      age:{  
+        type:'Nunmer',  
+        min:18,       //年龄最小18  
+        max:120     //年龄最大120  
+      },  
+      city:{  
+        type:'String',  
+        enum:['北京','上海']  //只能是北京、上海人  
+      },  
+      other:{  
+        type:'String',  
+        validate:[validator,err]  //validator是一个验证函数，err是验证失败的错误信息  
+      }  
+    });*  
+2. 验证失败返回err
+   如果验证失败，则会返回err信息，err是一个对象该对象属性如下  
+    err.errors                //错误集合（对象）  
+    err.errors.color          //错误属性(Schema的color属性)  
+    err.errors.color.message  //错误属性信息  
+    err.errors.path             //错误属性路径  
+    err.errors.type             //错误类型  
+    err.name                //错误名称  
+    err.message                 //错误消息  
