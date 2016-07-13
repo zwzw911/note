@@ -21,7 +21,9 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
 6. autoIndex:  
 
 ###CRUD
-1. select  
+1. 查询  
+   1.1 直接查询：带回调  
+   1.2 链式查询：初始返回**query**对象。**query对象是尚未执行的预编译查询语句**。之后可以任意添加查询条件，最后exec带回调。  
 2. update  
    2.1 传统：读取document，修改，保存
     *PersonModel.findById(id,function(err,person){  
@@ -31,7 +33,17 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
     2.2 update：读取，删除，update。比较麻烦     
     2.3 **update+$set**：更新少量字段时方便  
     *PersonModel.update({_id:_id},{$set:{name:'MDragon'}},function(err,person){});*  
-3. insert
-    3.1 entity的save
-    3.2 model的create：create的对象只能是JSON（即要保存的数据本身），而不是entity，因为entity虽然只是打印数据，但实际上包含了schema和model的行为（例如，动态静态方法）等其他属性，不是纯粹的数据
-4. remove: entity和model都有remove
+3. insert  
+    3.1 entity的save  
+    3.2 model的create：create的对象只能是JSON（即要保存的数据本身），而不是entity，因为entity虽然只是打印数据，但实际上包含了schema和model的行为（例如，动态静态方法）等其他属性，不是纯粹的数据  
+4. remove: entity和model都有remove  
+
+###子文档
+子文档的操作都在副文档上执行。  
+    var ChildSchema1 = new Schema({name:String});  
+    var ChildSchema2 = new Schema({name:String});  
+    var ParentSchema = new Schema({  
+      children1:ChildSchema1,   //嵌套Document  
+      children2:[ChildSchema2]  //嵌套Documents  
+    });  
+    
