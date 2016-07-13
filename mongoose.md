@@ -82,3 +82,27 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
     err.errors.type             //错误类型  
     err.name                //错误名称  
     err.message                 //错误消息  
+
+
+###中间件
+中间件在**schema**定义，是一种控制函数，类似插件，能控制流程中的**init、validate、save、remove**方法。**一旦定义了中间件，就会在全部中间件执行完后执行其他操作**，使用中间件可以雾化模型，避免异步操作的层层迭代嵌套  
+
+使用范畴：
+复杂的验证  
+删除有主外关联的doc  
+异步默认  
+某个特定动作触发异步任务，例如触发自定义事件和通知  
+
+中间件分成2类：串行和并行。  
+    var schema = new Schema(...);  
+    schema.pre('save',function(next){  
+      //做点什么  
+      **next()**;  
+    });  
+    var schema = new Schema(...);  
+    schema.pre('save',function(next,done){  
+      //下一个要执行的中间件并行执行  
+      **next();**  
+      **doAsync(done);**  
+    });      
+    
