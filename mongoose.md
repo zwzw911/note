@@ -48,7 +48,7 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
     });  
     
 ###验证器
-1. 验证器是中间件。  
+1. **验证器是中间件**。  
 2. validate应用在使用默认值（如果定义了default），并准备保存之前。  
 1. 分为2种：内部和自定义。  
    内部：  
@@ -75,6 +75,10 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
         validate:[validator,err]  //validator是一个验证函数，err是验证失败的错误信息  
       }  
     });*  
+   自定义：**可以在schema上定义（推荐），或者在model.schema上定义**。validate带2个参数，**验证函数和错误消息**  
+   *Toy.schema.path('color').validate(function (value) {  
+    return /blue|green|white|red|orange|periwinkel/i.test(value);  
+   }, 'Invalid color');*  
 2. 验证失败返回err
    如果验证失败，则会返回err信息，err是一个对象该对象属性如下  
     err.errors                //错误集合（对象）  
@@ -85,6 +89,8 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
     err.name                //错误名称  
     err.message                 //错误消息  
 
+**Validation错误后，entity也将有相同的errors属性**  
+toy.errors.color.message === err.errors.color.message  
 
 ###中间件
 中间件在**schema**定义，是一种控制函数，类似插件，能控制流程中的**init、validate、save、remove**方法。**一旦定义了中间件，就会在全部中间件执行完后执行其他操作**，使用中间件可以雾化模型，避免异步操作的层层迭代嵌套  
