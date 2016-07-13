@@ -122,3 +122,21 @@ post**活在pre和方法执行之后操作**。post无流控（因为此时方�
 schema.post('init', function (doc) {  
   console.log('%s has been initialized from the db', doc._id);  
 })  
+
+
+###population
+1. 定义:  
+var storySchema = Schema({  
+  _creator : { type: Number, **ref: 'Person'** } //PersonModel  
+})  
+
+2. 使用：**可以通过model.find到entity后执行，或者直接在entity上执行(在entity执行还可以populate多个document？？？)**  
+*Story  
+.find(...)  
+.populate({  
+  path: 'fans',  
+  match: { age: { $gte: 21 }},  
+  select: 'name _id',//多个字段，用空格分隔    
+  options: { limit: 5 }  
+})*  
+.exec()
