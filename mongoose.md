@@ -48,7 +48,9 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
     });  
     
 ###验证器
-1. 分为2中：内部和自定义。  
+1. 验证器是中间件。  
+2. validate应用在使用默认值（如果定义了default），并准备保存之前。  
+1. 分为2种：内部和自定义。  
    内部：  
       **require**:非空验证。  
       **min/max**： 边界验证。  
