@@ -47,3 +47,10 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
       children2:[ChildSchema2]  //嵌套Documents  
     });  
     
+###验证器
+1. 分为2中：内部和自定义。  
+   内部：  
+      **require**:非空验证。  
+      **min/max**： 边界验证。  
+      **enum/match**：枚举验证/匹配验证  
+      **validate**：自定义验证规则  
