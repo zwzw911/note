@@ -93,7 +93,11 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
 toy.errors.color.message === err.errors.color.message  
 
 ###中间件
-中间件在**schema**定义，是一种控制函数，类似插件，能控制流程中的**init、validate、save、remove**方法。**一旦定义了中间件，就会在全部中间件执行完后执行其他操作**，使用中间件可以雾化模型，避免异步操作的层层迭代嵌套  
+中间件在**schema**定义，是一种控制函数，类似插件，能控制流程中的**init、validate、save、remove**方法。  
+中间件分成pre和post2种。  
+pre**会在方法（init/vlidate/save/remove）执行前操作**。pre分成串行和并行2中，带有流控制（通过next和done）  
+post**活在pre和方法执行之后操作**。post无流控（因为此时方法已经完成）。  
+**全部中间件执行完后执行其他操作**，使用中间件可以雾化模型，避免异步操作的层层迭代嵌套  
 
 使用范畴：
 复杂的验证  
@@ -101,7 +105,7 @@ toy.errors.color.message === err.errors.color.message
 异步默认  
 某个特定动作触发异步任务，例如触发自定义事件和通知  
 
-中间件分成2类：串行和并行。  
+**pre中间件**分成2类：串行和并行。  
     var schema = new Schema(...);  
     schema.pre('save',function(next){  
       //做点什么  
@@ -114,3 +118,7 @@ toy.errors.color.message === err.errors.color.message
       **doAsync(done);**  
     });      
     
+**POST** 
+schema.post('init', function (doc) {  
+  console.log('%s has been initialized from the db', doc._id);  
+})  
