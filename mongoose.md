@@ -140,3 +140,34 @@ var storySchema = Schema({
   options: { limit: 5 }  
 })*  
 .exec()
+
+
+###connection options  
+1. db/server/replset/user/pass/auth/mongos  
+var options = {  
+  db: { native_parser: true },  
+  server: { poolSize: 5 },  
+  replset: { rs_name: 'myReplicaSetName' },  
+  user: 'myUserName',  
+  pass: 'myPassword'  
+}  
+2. keepAlive  
+options.**server.socketOptions** = options.**replset.socketOptions** = { **keepAlive**: 1 };  
+mongoose.connect(uri, options);  
+3. 连接副本集（一般用不到，因为都直接连接mongos，通过mongos来决定连接到哪个副本）  
+mongoose.connect('mongodb://username:password[@host](/user/host):port/database,mongodb://username:password[@host](/user/host):port,mongodb://username:password[@host](/user/host):port?options...' [, options]);  
+4. 连接**mongos副本集**  
+mongoose.connect('mongodb://mongosA:27501,mongosB:27501', { mongos: true }, cb);  
+5. 连接多个uri（**连接不同的db**）
+`var conn = mongoose.createConnection('uri,uri,uri...', options);`  
+6. 连接池：mongoose内部维护一个连接池，默认大小5，可以更改：  
+// single server  
+var uri = 'mongodb://localhost/test';  
+mongoose.createConnection(uri, { server: { poolSize: 4 }});  
+
+// for a replica set  
+mongoose.createConnection(uri, { replset: { poolSize: 4 }});  
+
+// passing the option in the URI works with single or replica sets  
+var uri = 'mongodb://localhost/test?poolSize=4';  
+mongoose.createConnection(uri);  
