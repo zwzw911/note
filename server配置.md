@@ -42,34 +42,39 @@
 继续执行`openssl req -key key.pem -new -x509 -out cert.pem`,一路回车，生成公钥  
 修改ss-express/routes/assist/general.js，将pemPath改成key.pem的路径
 
-#####3. 设置captcha
-   创建路径,`mkdir /home/ss-express/captcha_Img`  
-   修改ss-express/routes/assist/general.js: **captchaImg_path:['/home/ss-express/captcha_Img']**  
-   
-#####4. 更改cookie的domian
-   修改ss-express/routes/express_component/cookieSession.js， 把domain改成server的ip或者域名（如果有）  
-
-#####4. 修改app.js
+#####3. 修改当前server匹配的参数
+3.1 更改cookie的domian
+   ~~修改ss-express/routes/express_component/cookieSession.js， 把domain改成server的ip或者域名（如果有）~~。直接从assist/general.js中读取
+3.2 修改app.js
 app.set("env","dev")====>app.set("env","pro")
-
-#####5. 安装Lua SHA为service
-C:\Users\lte>sc create ss_pre binPath= "C:\Program Files\nodejs\node.exe D:\ss_dist\maintaince\before_launch\preCheckBeforeLaunch.js"  
-[SC] CreateService SUCCESS  
-**注意，binPath=后是个空格**
-
-#####5. 修改routes/inputDefine/adminLogin/defaultGlobalSetting.js  
+3.3 assist/upload_define.js  
+saveDir: attachment目录  
+3.4 修改assist/general.js    
+reqHostname: 用在cookieSession  
+ueUploadPath: ue上传的图片放置的目录，和**ueditor_config.js**中的imagePathFormat共同组成 文件上传目录。例如D:/ss_file+inner_image。  
+pemPath：  
+3.5 修改routes/inputDefine/adminLogin/defaultGlobalSetting.js  
 reqHostName: 127.0.0.1->135.252.254.77  
 pemPath   
 globalSettingBackupPath: 备份全局设置的文件位置  
-一下为defaultSetting下的item
+以下为defaultSetting下的item
 inner_image/default:   
 user_icon/fileName:  
 user_icon/uploadDir:  
 attachment/saveDir:  
 Lua/scriptPath:  
 
-#####5. 载入defaultGlobalSetting  
+#####4. 载入defaultGlobalSetting（**第一次部署才运行**）  
 运行脚本maintaince/setDefaultGlobalSetting.bat 或者 直接 `node setDefaultGlobalSetting.js`，将默认设置写入redis。  
+
+#####5. 安装Lua SHA为service
+直接运行运行脚本maintaince/before_launch/preCheckBeforeLaunch.bat 或者 `node preCheckBeforeLaunch.js`  
+~~C:\Users\lte>sc create ss_pre binPath= "C:\Program Files\nodejs\node.exe D:\ss_dist\maintaince\before_launch\preCheckBeforeLaunch.js"~~  
+~~[SC] CreateService SUCCESS~~  
+~~**注意，binPath=后是个空格**~~
+
+
+  
 
 #####5. 安装font
    生成captcha需要用到某种字体。  
@@ -86,13 +91,6 @@ Lua/scriptPath:
   assist/general.js/ueUploadPath设置路径，assist/udeitor.config/imagePathFormat设置目录  
   general.js/ueUploadPath:/home/ss-express. **为了使用node来提供静态资源，此目录必须设在ss-express下**，但是可以为软连接，到实际放置文件的地方(windows不可以用快捷方式)
   `mkdir -p /home/inner_image`
-
-#####8. 设置附件上传路径  
-  assist/upload_define.js/   saveDir:/home/attachment/  
-  `mkdir -p /home/attachment`  
-
-#####9. 更改cookie的domian  
-routes/express_component/cookieSession: domain改成当前服务器的ip/域名  
 
 #####10. 安装nginx  
 首先安装3个包，pcre（必须），openssl和zlib。可以通过源代码安装，也可以使用yum install pcre/openssl/zlib安装。  
