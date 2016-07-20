@@ -60,8 +60,16 @@ C:\Users\lte>sc create ss_pre binPath= "C:\Program Files\nodejs\node.exe D:\ss_d
 #####5. 修改routes/inputDefine/adminLogin/defaultGlobalSetting.js  
 reqHostName: 127.0.0.1->135.252.254.77  
 pemPath   
-globalSettingBackupPath: 备份全局设置的文件位置
+globalSettingBackupPath: 备份全局设置的文件位置  
+一下为defaultSetting下的item
+inner_image/default:   
+user_icon/fileName:  
+user_icon/uploadDir:  
+attachment/saveDir:  
+Lua/scriptPath:  
 
+#####5. 载入defaultGlobalSetting  
+运行脚本maintaince/setDefaultGlobalSetting.bat 或者 直接 `node setDefaultGlobalSetting.js`，将默认设置写入redis。  
 
 #####5. 安装font
    生成captcha需要用到某种字体。  
