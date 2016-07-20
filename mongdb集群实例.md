@@ -122,7 +122,7 @@ storage:
 135.252.254.77:27019" },{ _id: 1, host: "135.252.254.80:27019" },{ _id: 2, host: "135.252.254.87:27019" }]} )。**和普通repl略有不同，initiate时候必须含有如上filed：_id/configsvr/members**。普通repl不需这些参数，可以在initiate后，通过命令方式添加member。  
 
 #####启动mongos
-**mongos --configdb configReplSet/135.252.254.77:27019,135.252.254.80:27019,135,252,254,87:21091 --port 27018**。可以指定port。  
+**mongos --configdb configReplSet/135.252.254.77:27019,135.252.254.80:27019,135,252,254,87:27091 --port 27018 --serviceName Mongos --serviceDisplayName Mongos --logpath D:\ss_log\mongo\mongos\log.log --install**。可以指定port。  
 连接mongos：mongo --host 135.252.254.77(运行mongos的PC地址) --port 27018
 
 
