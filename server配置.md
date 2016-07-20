@@ -52,6 +52,11 @@
 #####4. 修改app.js
 app.set("env","dev")====>app.set("env","pro")
 
+#####5. 安装Lua SHA为service
+C:\Users\lte>sc create ss_pre binPath= "C:\Program Files\nodejs\node.exe D:\ss_dist\maintaince\before_launch\preCheckBeforeLaunch.js"  
+[SC] CreateService SUCCESS  
+**注意，binPath=后是个空格**
+
 #####5. 安装font
    生成captcha需要用到某种字体。  
    首先`fc-cache -vfs`查看当前是否有字体，如果没有，安装基本字体`yum install liberation-sans-fonts.noarch liberation-mono-fonts.noarch liberation-serif-fonts.noarch`, 然后查看当前可用字体`fc-match`，查看所有字体`fc-list :lang=zh/en`  
