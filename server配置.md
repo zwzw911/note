@@ -57,6 +57,12 @@ C:\Users\lte>sc create ss_pre binPath= "C:\Program Files\nodejs\node.exe D:\ss_d
 [SC] CreateService SUCCESS  
 **注意，binPath=后是个空格**
 
+#####5. 修改routes/inputDefine/adminLogin/defaultGlobalSetting.js  
+reqHostName: 127.0.0.1->135.252.254.77  
+pemPath   
+globalSettingBackupPath: 备份全局设置的文件位置
+
+
 #####5. 安装font
    生成captcha需要用到某种字体。  
    首先`fc-cache -vfs`查看当前是否有字体，如果没有，安装基本字体`yum install liberation-sans-fonts.noarch liberation-mono-fonts.noarch liberation-serif-fonts.noarch`, 然后查看当前可用字体`fc-match`，查看所有字体`fc-list :lang=zh/en`  
