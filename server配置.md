@@ -50,14 +50,16 @@ app.set("env","dev")====>app.set("env","pro")
 3.3 assist/upload_define.js  
 saveDir: attachment目录  
 3.4 修改assist/general.js（大量的参数实际还是采用此文件中的参数，而不是redis中的参数）    
-reqHostname: 用在cookieSession  
+reqHostname: 用在cookieSession  127.0.0.1->135.252.254.77**此处IP地址为浏览器访问的IP**  
+port: 同上**此处IP地址为浏览器访问的PORT，默认80**  
 ueUploadPath: ue上传的图片放置的目录，和**ueditor_config.js**中的imagePathFormat共同组成 文件上传目录。例如D:/ss_file+inner_image。  
 searchResultPageSize：每页显示搜索结果的数量  
 articleFolderPageSize： 用户文档中每页显示的文档数量  
 
 pemPath：  
 3.5 修改routes/inputDefine/adminLogin/defaultGlobalSetting.js  
-reqHostName: 127.0.0.1->135.252.254.77  
+reqHostName: 127.0.0.1->135.252.254.77**此处IP地址为浏览器访问的IP**  
+port: 同上**此处IP地址为浏览器访问的PORT，默认80**  
 pemPath   
 globalSettingBackupPath: 备份全局设置的文件位置  
 以下为defaultSetting下的item
