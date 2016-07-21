@@ -49,9 +49,12 @@
 app.set("env","dev")====>app.set("env","pro")
 3.3 assist/upload_define.js  
 saveDir: attachment目录  
-3.4 修改assist/general.js    
+3.4 修改assist/general.js（大量的参数实际还是采用此文件中的参数，而不是redis中的参数）    
 reqHostname: 用在cookieSession  
 ueUploadPath: ue上传的图片放置的目录，和**ueditor_config.js**中的imagePathFormat共同组成 文件上传目录。例如D:/ss_file+inner_image。  
+searchResultPageSize：每页显示搜索结果的数量  
+articleFolderPageSize： 用户文档中每页显示的文档数量  
+
 pemPath：  
 3.5 修改routes/inputDefine/adminLogin/defaultGlobalSetting.js  
 reqHostName: 127.0.0.1->135.252.254.77  
@@ -73,7 +76,15 @@ Lua/scriptPath:
 ~~[SC] CreateService SUCCESS~~  
 ~~**注意，binPath=后是个空格**~~
 
-
+#####6. 数据迁移
+1. 数据导出  
+**monogdump** --host 127.0.0.1 --port 27017 -d ss -o c:/  
+-d: 数据库名，不写是**所有**db  
+-o: 导出数据存放的目录  
+2. 数据导入   
+mongorestore --host 135.252.254.77 --port 27018 -d ss --drop c:/
+--drop：删除db，无参数删除所有？？
+c:/  : 要导入的数据  
   
 
 #####5. 安装font
