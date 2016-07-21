@@ -43,20 +43,23 @@
 修改ss-express/routes/assist/general.js，将pemPath改成key.pem的路径
 
 #####3. 修改当前server匹配的参数
-3.1 更改cookie的domian
-   ~~修改ss-express/routes/express_component/cookieSession.js， 把domain改成server的ip或者域名（如果有）~~。直接从assist/general.js中读取
-3.2 修改app.js
-app.set("env","dev")====>app.set("env","pro")
-3.3 assist/upload_define.js  
-saveDir: attachment目录  
+3.1 更改cookie的domian  
+   ~~修改ss-express/routes/express_component/cookieSession.js， 把domain改成server的ip或者域名（如果有）~~。直接从assist/general.js中读取  
+   
+3.2 修改app.js  
+app.set("env","dev")====>app.set("env","pro")  
+
+3.3 assist/upload_define.js    
+saveDir: attachment目录    
+
 3.4 修改assist/general.js（大量的参数实际还是采用此文件中的参数，而不是redis中的参数）    
 reqHostname: 用在cookieSession  127.0.0.1->135.252.254.77**此处IP地址为浏览器访问的IP**  
 port: 同上**此处IP地址为浏览器访问的PORT，默认80**  
 ueUploadPath: ue上传的图片放置的目录，和**ueditor_config.js**中的imagePathFormat共同组成 文件上传目录。例如D:/ss_file+inner_image。  
 searchResultPageSize：每页显示搜索结果的数量  
 articleFolderPageSize： 用户文档中每页显示的文档数量  
-
 pemPath：  
+
 3.5 修改routes/inputDefine/adminLogin/defaultGlobalSetting.js  
 reqHostName: 127.0.0.1->135.252.254.77**此处IP地址为浏览器访问的IP**  
 port: 同上**此处IP地址为浏览器访问的PORT，默认80**  
@@ -102,8 +105,9 @@ c:/  : 要导入的数据
 #####7. 设置ueditor上传路径  
   ueditor上传路径由2部分组成：  
   assist/general.js/ueUploadPath设置路径，assist/udeitor.config/imagePathFormat设置目录  
-  general.js/ueUploadPath:/home/ss-express. **为了使用node来提供静态资源，此目录必须设在ss-express下**，但是可以为软连接，到实际放置文件的地方(windows不可以用快捷方式)
-  `mkdir -p /home/inner_image`
+  general.js/ueUploadPath:/home/ss-express. ~~为了使用node来提供静态资源，此目录必须设在ss-express下，但是可以为软连接，到实际放置文件的地方(windows不可以用快捷方式)~~  
+  **部署时候使用ngnix，可以自由配置静态资源**  
+  `mkdir -p /home/inner_image`  
 
 #####10. 安装nginx  
 首先安装3个包，pcre（必须），openssl和zlib。可以通过源代码安装，也可以使用yum install pcre/openssl/zlib安装。  
