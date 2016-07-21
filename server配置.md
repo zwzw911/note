@@ -15,7 +15,7 @@
 	gzip_disable "MSIE [1-6]\.";==========>不支持IE6(对image进行gzip会造成IE6假死)  
 3.3 设置负载均衡（暂时不用，需要从网址映射到IP）
 	upstream 172.24.251.205 {
-		server 172.24.251.205:3000;
+		server 127.0.0.1:3000;**这是nodejs提供的访问地址**  
 		ip_hash;
 	}  
 3.4 配置server：  
@@ -131,6 +131,6 @@ listen       80;	*这是服务器的端口*
  server_name  192.168.116.131;	*这是服务器的地址*  
  charset utf-8;	*服务器的编码*    
 location = / {  
-proxy_pass http://localhost;	*接收到进入服务器的request，转发到localhost的地址上*
+proxy_pass http://localhost:3000;	*ngnix服务器的接收到的request，转发到nodejs的地址上*
 }  
 		
