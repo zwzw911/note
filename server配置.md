@@ -90,7 +90,9 @@ Lua/scriptPath:
 mongorestore --host 135.252.254.77 --port 27018 -d ss --drop c:/
 --drop：删除db，无参数删除所有？？
 c:/  : 要导入的数据  
-  
+ 
+#####7. 开机启动
+1. 产生nginx和startWWW.bat的快捷范式，然后copy到C:\Users\lte\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup目录下。  
 
 #####5. 安装font
    生成captcha需要用到某种字体。  
