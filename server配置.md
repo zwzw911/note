@@ -1,6 +1,6 @@
 #####0. 安装必须文件  
 ######windows  
-1. 拷贝**mongodb**-win32-x86_**64**-3.0.1-signed.msi, **Redis-x64**-3.0.500-rc1.msi(**redis默认不支持windows，如要下载windows版的redis：https://github.com/MSOpenTech/redis/releases**), **nginx**-1.8.0.tar.gz，  
+1. 拷贝**mongodb**-win32-x86_**64**-3.0.1-signed.msi, **Redis-x64**-3.0.500-rc1.msi(**redis默认不支持windows，如要下载windows版的redis：https://github.com/MSOpenTech/redis/releases**), **nginx**-1.8.0.tar.gz， 和gm（参阅https://github.com/zwzw911/note/blob/master/%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86.md）  
 2. msi直接点击安装。nginx直接解压
 3. 配置nginx的http  
 3.1 设置上传最大不超过2M：client_max_body_size 2M;  
