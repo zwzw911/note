@@ -97,7 +97,10 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
 toy.errors.color.message === err.errors.color.message  
 
 ###中间件
-中间件在**schema**定义，是一种控制函数，类似插件，能控制流程中的**init、validate、save、remove**方法。  
+中间件在**schema**定义，是一种控制函数，类似插件。  
+分成2大类：**document和query**中间件
+document中间件适用document的**init、validate、save、remove**方法。  
+query中间件适用**Model和query**的**count/find/findOne/findOneAndRemove/findOneAndUpdate/update**
 中间件分成pre和post2种。  
 pre**会在方法（init/vlidate/save/remove）执行前操作**。pre分成串行和并行2中，带有流控制（通过next和done）  
 post**活在pre和方法执行之后操作**。post无流控（因为此时方法已经完成）。  
