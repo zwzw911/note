@@ -18,7 +18,7 @@ Schema.Types.Mixed类似nested，区别在，mixed没有定义具体成员，而
 schema.virtual('name.full').**get**(function(){**return** this.name.full=this.name.firstname+this.name.lastname})。 schema.virtual('name.full').**set**(function(**name**){ this.name.firstname=this.name.full.firstname})  
 #####option  
 1. safe：默认true。也可以设成{j:1,w:2,timeout:1000}    
-2. strict: 默认true：如果entity中的path没有在schema中定义，则此entity无法保存；false，则可以保存。**而不是path的值没有定义，就无法保存**。     
+2. strict: 默认true：如果entity中的path没有在schema中定义，则此path无法保存（entity可以保存）；false，则可以保存。**而不是path的值没有定义，就无法保存**。     
 3. shardKey：mongodb为分片时使用。  
 4. capped：批量操作的上限。  {capped:1000}:每次最多操作1000个document；还可以{capped:{size:1000,max:100,autoIndexId:true}}   
 5. versionKey:版本所，默认true。    
