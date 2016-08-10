@@ -11,7 +11,7 @@
 手头有3台机器：  
 1. shard设置3个，以便每个shard配在不同的PC上，实现负荷分担。每个shard配置成复制集，1P+2S，每个shard的P在不同PC上。3个shard复制集，分别使用27020/27021/27022端口  
 2. config server也配置3个，在不同的PC，端口为27019.  
-3. mongos和app在同一个server，port：27017  
+3. mongos和app在同一个server，port：27018。使用mogoose连接的时候，url直接设成mongos的地址+端口。例如* url="mongodb://135.252.254.77:27018/ss",options={db:{native_parser:!0}};mongoose.connect(url)*   
 
 #####目录结构
 1. ss_db==>mongo==>config/shard1/shard2/shard3==>**repair**。 repair only for shard。  
