@@ -7,3 +7,9 @@
 2. git commit -m 'test'
 3. git push origin master
 
+###初始化
+1. 在对应的项目先执行`git init`  
+2. 在github上创建一个仓库，例如finance.git（.git是自动添加的）
+3. 在项目下执行`git add -A`和`git commit -m "any"`（将要上传的内容commit）
+4. `git add remote origin git@github.com:zwzw911/finance`，将本地仓库和远程仓库的origin分支联系起来
+5. `git push -u origin master`。将本地的master分支推送到远程的origin分支。
