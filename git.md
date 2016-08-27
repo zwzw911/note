@@ -1,6 +1,9 @@
+###安装windows版本git客户端
+https://git-for-windows.github.io  
+
 ###创建key
-为了能和github创建联系，需要在本机上创建ssh密钥，并把**公钥**添加到github中  
-`ssh-keygen -t rsa -C "youremail@example.com"`，结果会显示公钥和私钥创建的位置，打开公钥文件，并把内容粘帖到github中即可  
+为了能和github创建联系，需要在本机上创建ssh密钥，并把**公钥**添加到github中 
+在git客户端，执行`ssh-keygen -t rsa -C "youremail@example.com"`，无需passphrase，一路回车，结果会显示公钥和私钥创建的位置，打开公钥文件（.pub文件），并把内容粘帖到github中即可  
 `git clone git@github.com:zwzw911/ss-express.git`来下载代码  
 
 1. git add -A
