@@ -18,6 +18,8 @@
 "grunt-ng-annotate": 重构angular依赖，以便可以进行压缩  
 
 "grunt-contrib-less": 把less文件编译成css  
+
+"grunt-postcss": grunt版本的autoprefixer  
 "postcss-cli autoprefixer":2个包，一个是主程序，一个是插件。postcss调用插件autoprefixr，把css转换成all browser support  
 
 “grunt-contrib-watch”：监控指定的文件，如果发生变化，执行指定的task:target.  
