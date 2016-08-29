@@ -21,7 +21,8 @@
 
 "grunt-postcss": grunt版本的autoprefixer(在grunt中，使用grunt-post
 css代替原生的postcss-cli)  
-"~~postcss-cli~~ autoprefixer":2个包，一个是主程序，一个是插件。postcss调用插件autoprefixr，把css转换成all browser support  
+`npm install --save-dev grunt-postcss pixrem autoprefixer cssnano`（pixrem：em和px转换，autoprefixer：添加前缀**测试使用dipaly:flex**，cssnano:minify css（一般用cssmin））  
+"~~postcss-cli autoprefixer":2个包，一个是主程序，一个是插件。postcss调用插件autoprefixr，把css转换成all browser support~~  
 
 “grunt-contrib-watch”：监控指定的文件，如果发生变化，执行指定的task:target.  
 
