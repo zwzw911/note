@@ -4,11 +4,15 @@
 \<a ng-click="click(**$event**)"\>\</a\>  
 $scope.click=function(**$event**){}  
 
-##### ui-router  
+#### ui-router  
 1. **去除url中的#**  
   1.1 在config中enable HTML5 mode。`$locationProvider.html5Mode(true);`  
   1.2 在html的head中添加`<base href="/" />`  
 2. 将template所在目录设为express的**静态路径**(获取template就像获取css/js/image一样)。  
 3. ui-sref: 点击某个元素，对应触发的状态。如果对应是子模板（state为parent.child），那么ui-sref也要写成parent.child格式，而不是仅仅child，让angular根据html结果来猜测parent。    
 
-
+#### 启用多个app  
+使用bootstrap方式，绑定元素和app  
+ `angular.bootstrap(document.getElementById("route"),['app']);`  
+ `angular.bootstrap(document.getElementById("bgCover"),['cropApp']);`  
+ 
