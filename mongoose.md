@@ -27,7 +27,10 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
 ###CRUD
 1. 查询  
    1.1 直接查询：带回调  
-   1.2 链式查询：初始返回**query**对象。**query对象是尚未执行的预编译查询语句**。之后可以任意添加查询条件，最后exec带回调。  
+   1.2 链式查询：初始返回**query**对象。**query对象是尚未执行的预编译查询语句**。之后可以任意添加查询条件，最后exec带回调。 
+   1.3 方法：在model上执行find/findOne/findById  
+   `model.findById(id) = model.find({_id:id})`      `model.findById(id,'field1 field2', {lean:true}, function(err,doc){})`  or `model.findById(id,'field1 field2').lean().exec(cb)`  lean: doc为js object而不是mongoose document  
+
 2. update  
    2.1 传统：读取document，修改，保存
     *PersonModel.findById(id,function(err,person){  
@@ -37,6 +40,7 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
     2.2 update：读取，删除，update。比较麻烦     
     2.3 **update+$set**：更新少量字段时方便  
     *PersonModel.update({_id:_id},{$set:{name:'MDragon'}},function(err,person){});*  
+    2.4 方法：findOneAndUpdate/  
 3. insert  
     3.1 entity的save  
     3.2 model的create：create的对象只能是JSON（即要保存的数据本身），而不是entity，因为entity虽然只是打印数据，但实际上包含了schema和model的行为（例如，动态静态方法）等其他属性，不是纯粹的数据  
