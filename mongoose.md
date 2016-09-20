@@ -62,7 +62,10 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
     `Model.findByIdAndUpdate(id, { name: 'jason borne' }, options, callback)`  
 3. insert  
     3.1 entity的save  
-    3.2 model的create：create的对象只能是JSON（即要保存的数据本身），而不是entity，因为entity虽然只是打印数据，但实际上包含了schema和model的行为（例如，动态静态方法）等其他属性，不是纯粹的数据   
+    3.2 model的create：create的对象只能是JSON（即要保存的数据本身），而不是entity，因为entity虽然只是打印数据，但实际上包含了schema和model的行为（例如，动态静态方法）等其他属性，不是纯粹的数据  
+    ####Model.create(doc(s), [callback])  
+    保存一个或者多个文档。等同于为每个文档调用new Model(doc).save()  
+
     ####Model.insertMany(doc(s), [callback])  
     一次插入多个文档。比create快。  
     `var arr = [{ name: 'Star Wars' }, { name: 'The Empire Strikes Back' }];`  
