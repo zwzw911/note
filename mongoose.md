@@ -49,11 +49,28 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
     2.2 update：读取，删除，update。比较麻烦     
     2.3 **update+$set**：更新少量字段时方便  
     *PersonModel.update({_id:_id},{$set:{name:'MDragon'}},function(err,person){});*  
-    2.4 方法：findOneAndUpdate/  
+    2.4 方法：  
+    ####Model.findByIdAndUpdate(id, [update], [options], [callback])  
+    根据id找到一个doc，并触发mongodb的findAndModify命令，根据[update]进行更新。  
+    *options*:  
+        new: bool。如果true，返回更新过的document。默认false。    
+        upsert:bool。如果true，更新文档不存在则创建新文档。默认false。  
+        runValidators：bool。如果true，在update的时候，执行schema上的validator（因为某些caverts，默认false）  
+        setDefaultsOnInsert：bool。当和upsert同时为true时，在插入新文档时，使用默认值。  
+        sort：如果找到多个文档（应该不太可能），按照什么顺序选择第一个文档进行update。  
+        select: 返回哪些字段。
+    `Model.findByIdAndUpdate(id, { name: 'jason borne' }, options, callback)`  
 3. insert  
     3.1 entity的save  
-    3.2 model的create：create的对象只能是JSON（即要保存的数据本身），而不是entity，因为entity虽然只是打印数据，但实际上包含了schema和model的行为（例如，动态静态方法）等其他属性，不是纯粹的数据  
+    3.2 model的create：create的对象只能是JSON（即要保存的数据本身），而不是entity，因为entity虽然只是打印数据，但实际上包含了schema和model的行为（例如，动态静态方法）等其他属性，不是纯粹的数据   
+    ####Model.insertMany(doc(s), [callback])  
+    一次插入多个文档。比create快。  
+    `var arr = [{ name: 'Star Wars' }, { name: 'The Empire Strikes Back' }];`  
+    `Movies.insertMany(arr, function(error, docs) {});`  
+
 4. remove: entity和model都有remove  
+    ####Model.findByIdAndRemove(id, [options], [callback])   
+    *等于Model.findOneAndRemove({_id:id}, [options], [callback])*  
 
 ###子文档
 子文档的操作都在副文档上执行。  
