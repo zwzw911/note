@@ -29,7 +29,16 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
    1.1 直接查询：带回调  
    1.2 链式查询：初始返回**query**对象。**query对象是尚未执行的预编译查询语句**。之后可以任意添加查询条件，最后exec带回调。 
    1.3 方法：在model上执行find/findOne/findById  
-   `model.findById(id) = model.find({_id:id})`      `model.findById(id,'field1 field2', {lean:true}, function(err,doc){})`  or `model.findById(id,'field1 field2').lean().exec(cb)`  lean: doc为js object而不是mongoose document  
+    ####Model.find(conditions, [projection], [options], [callback])  
+    `MyModel.find({ name: /john/i, age:{$gte:18}}}, 'name', { skip: 10 }, function (err, docs) {});` 
+    `MyModel.find({ name: /john/i, age:{$gte:18}}}).select(name).skip(10).exec();`   
+    projection: 可选，返回哪些字段。  
+    ####Model.findOne(conditions, [projection], [options], [callback])     
+    和find类似。conditions可以为空，此时返回任一document。  
+    ####Model.findById(id, [projection], [options], [callback])  
+   `model.findById(id) = model.find({_id:id})`      
+    `model.findById(id,'field1 field2', {lean:true}, function(err,doc){})`  or `model.findById(id,'field1 field2').lean().exec(cb)`  
+    lean: doc为js object而不是mongoose document   
 
 2. update  
    2.1 传统：读取document，修改，保存
