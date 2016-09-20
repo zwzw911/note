@@ -40,6 +40,15 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
     `model.findById(id,'field1 field2', {lean:true}, function(err,doc){})`  or `model.findById(id,'field1 field2').lean().exec(cb)`  
     lean: doc为js object而不是mongoose document   
 
+    ####Document#get(path, [type])  
+    获得字段的值（可以无视doc是js obj还是mongoose document）。 
+    path：字段。  
+    type：数据类型。string等。将获得的值转化成type类型。  
+    
+    ####Document#equals(doc)  
+    根据_id判断当前doc是否和doc相等。如果没有_id，使用deepEqual()比较。  
+    
+    
 2. update  
    2.1 传统：读取document，修改，保存
     *PersonModel.findById(id,function(err,person){  
@@ -60,6 +69,8 @@ schema.virtual('name.full').**get**(function(){**return** this.name.full=this.na
         sort：如果找到多个文档（应该不太可能），按照什么顺序选择第一个文档进行update。  
         select: 返回哪些字段。
     `Model.findByIdAndUpdate(id, { name: 'jason borne' }, options, callback)`  
+    ####Document#markModified(path)   
+    对于mixed(nested)文档有用：标记此文档的此field已经修改，save的时候必须记录。  
 3. insert  
     3.1 entity的save  
     3.2 model的create：create的对象只能是JSON（即要保存的数据本身），而不是entity，因为entity虽然只是打印数据，但实际上包含了schema和model的行为（例如，动态静态方法）等其他属性，不是纯粹的数据  
@@ -164,7 +175,23 @@ schema.post('init', function (doc) {
 })  
 
 
-###population
+###population  
+0. 语法  
+####Model.populate(docs, options, [callback(err,doc)])  
+doc(s)：可以是单个doc，也可以是doc**数组**。**doc可以是js object，也可以是mongoose doc**。  
+options：  
+    path：空格区分的外键（此键关联到其他doc）。  
+    select：  
+    match：  
+    model：  
+    options： 查询选项，如sort，limit等。  
+
+####Document#execPopulate()  
+返回一个promise，使用于ES6/7.  
+
+####Document#depopulate(path)  
+对一个已经populate的path，返回unpopulate状态（即获得字段的原始值）  
+
 1. 定义:  
 var storySchema = Schema({  
   _creator : { type: Number, **ref: 'Person'** } //PersonModel  
