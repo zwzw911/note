@@ -238,3 +238,16 @@ mongoose.createConnection(uri, { replset: { poolSize: 4 }});
 // passing the option in the URI works with single or replica sets  
 var uri = 'mongodb://localhost/test?poolSize=4';  
 mongoose.createConnection(uri);  
+
+
+
+###Promise  
+1. 返回的是mpromise。若要使用ES6原生的promise，或者bluebird/q的promise：  
+    // Use native promises  
+    `mongoose.Promise = global.Promise; `     
+    // Use q. Note that you **must** use require('q').Promise.  
+    `mongoose.Promise = require('q').Promise;`  
+*注意，以上设置不影响mongodb drive*
+2. query返回的一般不是promise，虽然返回的对象确实有.then()方法。   
+3. query.exec()能返回promise。   
+4. 
