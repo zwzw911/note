@@ -12,7 +12,9 @@ mongoose默认使用mpromise，但是将会在5.0废除。建议使用原生或�
 **Model.create(doc(s), [callback])**：docs中每个记率转换成new Model(doc).save()执行。返回Promise。  
 **Model.insertMany(doc(s), [callback])**: 参数docs为**数组**。比create快，因为将所有记录一次发送给mongodb（而不是每个记录执行save())。返回Promise。  
 ####更新记录：findByIdAndUpdate  
-**Model.findByIdAndUpdate(id, { name: 'jason borne' }, options, callback)**
+传统方式：查找文档，修改并保存。  
+改进方式：update+$set，适用于少量字段。`PersonModel.update({_id:_id},{$set:{name:'MDragon'}},function(err,person){});`。  
+推荐方式：**Model.findByIdAndUpdate(id, { name: 'jason borne' }, options, callback)**
 根据id找到一个doc，并触发mongodb的findAndModify命令，根据[update]进行更新。
 options:
 new: bool。如果true，返回更新过的document。默认false。
