@@ -14,14 +14,21 @@ mongoose默认使用mpromise，但是将会在5.0废除。建议使用原生或�
 ####更新记录：findByIdAndUpdate  
 传统方式：查找文档，修改并保存。  
 改进方式：update+$set，适用于少量字段。`PersonModel.update({_id:_id},{$set:{name:'MDragon'}},function(err,person){});`。  
-推荐方式：**Model.findByIdAndUpdate(id, { name: 'jason borne' }, options, callback)**
-根据id找到一个doc，并触发mongodb的findAndModify命令，根据[update]进行更新。
-options:
-new: bool。如果true，返回更新过的document。默认false。
-upsert:bool。如果true，更新文档不存在则创建新文档。默认false。
-runValidators：bool。如果true，在update的时候，执行schema上的validator（因为某些caverts，默认false）
-setDefaultsOnInsert：bool。当和upsert同时为true时，在插入新文档时，使用默认值。
-sort：如果找到多个文档（应该不太可能），按照什么顺序选择第一个文档进行update。
+推荐方式：**Model.findByIdAndUpdate(id, { name: 'jason borne' }, options, callback)**  
+根据id找到一个doc，并触发mongodb的findAndModify命令，根据[update]进行更新。  
+options:  
+new: bool。如果true，返回更新过的document。默认false。  
+upsert:bool。如果true，更新文档不存在则创建新文档。默认false。  
+runValidators：bool。如果true，在update的时候，执行schema上的validator（因为某些caverts，默认false）  
+setDefaultsOnInsert：bool。当和upsert同时为true时，在插入新文档时，使用默认值。  
+sort：如果找到多个文档（应该不太可能），按照什么顺序选择第一个文档进行update。  
 select: 返回哪些字段。 
+####删除记录：findByIdAndRemove  
+传统方式：查找文档，修改并保存。find/remove。  
+推荐方式：**Model.findByIdAndRemove(id, [options], [callback])**。等同于`findOneAndRemove({ _id: id }, ...)`  
+options:  
+sort: if multiple docs are found by the conditions, sets the sort order to choose which doc to update??  
+select: sets the document fields to return??  
+
 
 
