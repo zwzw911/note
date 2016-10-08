@@ -25,7 +25,7 @@ sort：如果找到多个文档（应该不太可能），按照什么顺序选�
 select: 返回哪些字段。 
 ####删除记录：findByIdAndRemove  
 传统方式：查找文档，修改并保存。find/remove。  
-推荐方式：**Model.findByIdAndRemove(id, [options], [callback])**。等同于`findOneAndRemove({ _id: id }, ...)`  
+推荐方式：**Model.findByIdAndRemove(id, [options], [callback])**。等同于`findOneAndRemove({ _id: id }, ...)`。成功返回被删除的doc。  
 options:  
 sort: if multiple docs are found by the conditions, sets the sort order to choose which doc to update??  
 select: sets the document fields to return??  
