@@ -4,6 +4,12 @@
 等号表示数据为JSON。  
 key用双引号括起（否则无法解析），value如果为字符，也用双引号括起  
 
+#### update  
+`curl -l -H "'Content-type': 'application/json,'charset':'utf-8','Accept': 'text/plain'" -X PUT -d "values"={\"_id\":{\"value\":\"57f355e9bf35f31c17695c8f\"},\"name\":{\"value\":\"dev\"}} http://127.0.0.1:3000/billType`  
 
 #### DELETE  
 `curl -l -H "'Content-type': 'application/json,'charset':'utf-8','Accept': 'text/plain'" -X DELETE -d "values"={\"_id\":{\"value\":\"57f355e9bf35f31c17695c8f\"}} http://127.0.0.1:3000/billType`  
+
+
+#### read  
+`curl -i http://127.0.0.1/department`  
