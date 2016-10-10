@@ -7,6 +7,18 @@ mongoose默认使用mpromise，但是将会在5.0废除。建议使用原生或�
 使用ES6原生Promise。
 `var mongoose=require('mongoose); mongoose.Promise=Promise`
 
+### Populate  
+1. 如果要对多个document进行populate，如下格式：  
+`Model.find(condition,selectField,option).populate(opt).exec(function(err,result){})`  
+**condition**: 查询条件。例如{name:/w/}  
+**selectField**: null,忽略 ; 'field1 field2': 显示field1 field2， '-field1 -field2': 显示所有，除了field1/field2；   
+**option**；sort/limit等。  
+**opt**：populate的选项  
+path:'department',//需要populate的字段  
+select:'name',//populate后，需要显示的字段  
+match:{},//populate后，过滤字段(不符合这显示null)。一般不用  
+options:{},//{sort:{name:-1}}  
+
 ### C(RUD)  
 ####新建记录，使用create或者insertMulti  
 **Model.create(doc(s), [callback])**：docs中每个记率转换成new Model(doc).save()执行。返回Promise。  
