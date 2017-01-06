@@ -139,4 +139,8 @@ listen       80;	*这是服务器的端口*
 location = / {  
 proxy_pass http://localhost:3000;	*ngnix服务器的接收到的request，转发到nodejs的地址上*
 }  
-		
+  
+##### 11. nodejs安装为windows service
+下载：http://nssm.cc/download/?page=download   
+安装为service：nssm install NodeJS "node.exe" "D:/ss_dist/bin/www" net start NodeJS  
+移除service：nssm remove NodeJS  
