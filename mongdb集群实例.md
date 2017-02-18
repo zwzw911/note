@@ -8,7 +8,7 @@
 1. 最简配置  
 单台PC： app/图片/redis/mongo都在单台PC    
 2. 简单配置  
-3台PC：  app/图片/redis/shard1在第一台PC，shar2在2nd PC，shard3在3rd PC。每个shard由复制集组成，1P+2S，分布在3台机器上，只能保证任意一个P OOS，新选举出的P还能IS，但是和其他shard的P在同一个PC上；极端情况，2台PC OOS，所有shard都落在单台PC。
+3台PC：  app/图片/redis/shard1（P）在第一台PC，shar2(P)在2nd PC，shard3(P)在3rd PC。每个shard由复制集组成，1P+2S，分布在3台机器上，只能保证任意一个P OOS，新选举出的P还能1S，但是和其他shard的P在同一个PC上；极端情况，2台PC OOS，所有shard都落在单台PC。
 3. 中等配置  
 7台PC：  app/图片/redis占用一台，shard1/2/3的P各自占用一台，剩下的2S分布在剩下的3台。如此，可以保证，任意一个P OOS，新选举出来的P还是能单独占用一台PC。  
 4. 满配  
