@@ -1,7 +1,9 @@
 #####说明  
-1. mongos：当一个数据库请求发送给mongos后，mongos知道这个请求所对应的数据在哪个实例（shard）中，并路由给此实例。  
-2. config server：mongos要路由请求，必须知道数据库的元信息。这些信息存储在config server中。每次mongos重启，会从中读取配置信息，并放入内存。  
-3. shard：当数据量变的巨大时，将
+1. **mongos**：当一个数据库请求发送给mongos后，mongos知道这个请求所对应的数据在哪个实例（shard）中，并路由给此实例。  
+2. **config server**：mongos要路由请求，必须知道数据库的元信息。这些信息存储在config server中。每次mongos重启，会从中读取配置信息，并放入内存。  
+3. **shard**：当数据量变的巨大时，将其进行拆分，放在不同的shard中，提升性能（一般不同的shard放在不同的PC上，提高读写/网络性能）。  
+4. **rep**：为了保证shard（部分数据）高可用性，每个shard有P+S组成。  
+
 #####配置
 1. 最简配置  
 单台PC： app/图片/redis/mongo都在单台PC    
