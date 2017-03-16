@@ -37,4 +37,43 @@ output最起码要定义2个属性：
 1.4 **[chunkhash]**: chunk的hash  
 2. **devtoolLineToLine**: 源文件和编译文件的sourcemap。默认true，对所有文件生效，可以采用module.loader类似的格式{test:,include,exclude}  
 3. **hotUpdateChunkFilename**：**[id], [hash]**  
-4. **hotUpdateFunction**
+4. **hotUpdateFunction**：异步加载hot update的JSONP函数  
+5. ****  
+  
+### 4. loader  
+loader是作用在源文件上的一个函数，返回另外一个resource。  
+module:{
+ rules:[
+   {test:/\.css/, **use**:'css-loader'} == {test:/\.css/, **loader**:'css-loader'} =={test: /\.css$/, **use**: {**loader**: 'css-loader',options: {}}
+ ]
+}  
+loader可以通过3中方式定义：  
+1. webpack.config.js（**推荐使用**）  
+rules: [
+      {
+        test: /\.css$/,
+        use: [
+          { loader: 'style-loader'},
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          }
+        ]
+      }
+2. require('style-loader!css-loader?modules!./styles.css');通过!作为分隔符，通过？带入option  
+3. CLI
+loader遵循module resolution，通常是node_modules
+
+
+### plugin  
+plugin是webpack的骨干，是一个带有apply属性的对象。  因为使用plugin要带入option，所以一般都要使用new来实例化。  
+
+### 配置文件  
+配置文件是一个export object的JS文件，所以可以使用各种Node.js的方法、函数等  
+
+resolver是一个lib，用来定位到module的绝对路径  
+1. 绝对路径: *import "/home/me/file";*  因为已经知道文件路径，无需resolve  
+2. 相对路径：require或者import的文件路径，需要和context的路径结合，获得绝对路径  
+3. 模块路径： 在**resolve.modules定义的路径**中搜索文件（可以通过resolve.alias更改此路径）。如果resolve后，import或者require的是一个文件，那么：如果有**扩展名**，直接大包；否则，通过resolve.extensions来判断哪种扩展名是webpack可以处理的。  如果是目录，检查有无package.json
