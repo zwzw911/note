@@ -5,5 +5,11 @@
 1.4 **plugin**: loader只是对单个文件进行处理，为了对多个文件进行处理（例如合并，打包），用plugin  
 
 ##### 2. entry  
-entry: string|Array\<string\>  
+1. **single entry**：entry: string|Array\<string\>    
 *entry: './path/to/my/entry/file.js'* 实际被转换成 *entry: { **main**: './path/to/my/entry/file.js' }* ，如果输入的是array，会被转换成multi main entry，这对加入多个依赖文件，并把它们打成一个chunk是很有用。  
+2. **object entry**:  entry: {[entryChunkName: string]: string|Array\<string\>}  
+ entry: {
+    app: './src/app.js',
+    vendors: './src/vendors.js'
+  }  
+  这是最灵活的配置方式：告诉webpack，**同时**在app和vendor中创建依赖图，且这些依赖图是完全独立且不互不关联的（每个bundle中都有独立的webpack bootstrap）
