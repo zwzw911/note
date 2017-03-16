@@ -24,12 +24,17 @@
 output告诉webpack如何将编译后的文件输出到磁盘上。**entry可以定义多个，但是putput只能定义一个**，如果使用[hash]或者[chunk_hash]来定义output，使用 **OccurrenceOrderPlugin or recordsPath**定义模块的顺序。  
 output最起码要定义2个属性：  
 1. **path**：绝对路径  
-2. **filename**：编译后的文件名。  
+2. **filename**：entry编译后的文件名。 如果有多个entry，可以使用**[name],[hash],[chunkhash]**来定义  
+  output: {
+    filename: '[name].js',
+    path: __dirname + '/build'
+  }
 除此还有其他属性：  
-1. **chunkFilename**: *output文件相对于path定义的路径*
+1. **chunkFilename**: **非entry**的*output文件相对于path定义的路径*
 1.1 **[id]**:chunk id  
 1.2 **[name]**: chunk name  
 1.3 **[hahs]**: 编译后的hash  
 1.4 **[chunkhash]**: chunk的hash  
-
-  
+2. **devtoolLineToLine**: 源文件和编译文件的sourcemap。默认true，对所有文件生效，可以采用module.loader类似的格式{test:,include,exclude}  
+3. **hotUpdateChunkFilename**：**[id], [hash]**  
+4. **hotUpdateFunction**
