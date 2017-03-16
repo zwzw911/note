@@ -26,6 +26,10 @@ output最起码要定义2个属性：
 1. **path**：绝对路径  
 2. **filename**：编译后的文件名。  
 除此还有其他属性：  
-1. **chunkFilename**: 
-1.1 **[id]**:
+1. **chunkFilename**: *output文件相对于path定义的路径*
+1.1 **[id]**:chunk id  
+1.2 **[name]**: chunk name  
+1.3 **[hahs]**: 编译后的hash  
+1.4 **[chunkhash]**: chunk的hash  
+
   
