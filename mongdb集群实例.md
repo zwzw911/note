@@ -1,10 +1,10 @@
-#####说明  
+##### 说明  
 1. **mongos**：当一个数据库请求发送给mongos后，mongos知道这个请求所对应的数据在哪个实例（shard）中，并路由给此实例。  
 2. **config server**：mongos要路由请求，必须知道数据库的元信息。这些信息存储在config server中。每次mongos重启，会从中读取配置信息，并放入内存。  
 3. **shard**：当数据量变的巨大时，将其进行拆分，放在不同的shard中，提升性能（一般不同的shard放在不同的PC上，提高读写/网络性能）。  
 4. **rep**：为了保证shard（部分数据）高可用性，每个shard有P+S组成。  
 
-#####配置
+##### 配置
 1. 最简配置  
 单台PC： app/图片/redis/mongo都在单台PC    
 2. 简单配置  
@@ -19,7 +19,7 @@
 2. config server也配置3个，在不同的PC，端口为27019.  
 3. mongos和app在同一个server，port：27018。使用mogoose连接的时候，url直接设成mongos的地址+端口。例如* url="mongodb://135.252.254.77:27018/ss",options={db:{native_parser:!0}};mongoose.connect(url)*   
 
-#####目录结构
+##### 目录结构
 1. ss_db==>mongo==>config/shard1/shard2/shard3==>**repair**。 repair only for shard。  
 2. ss_log===>mongo===>config==>config.log/shard1===>shard1.log/shard2===>shard2.log/shard3===>shard3.log。**config server其实不需要log文件，但是为了install as window service，添加上的**   
 3. ss_conf==>mongo==>config.conf/shard1.conf/shard2.conf/shard3.conf  
@@ -84,7 +84,7 @@ storage:
            prefixCompression: true
 ...  
 
-#####数据（复制集）命令
+##### 数据（复制集）命令
 1. 作为service安装：
 **mongod -f D:\ss_conf\mongo\shard1.conf --serviceName MongoDBShard1 --serviceDisplayName MongoDBShard1 --install**。必须设定serviceDisplayName，否则每个shard会重名，无法安装。
 配置分片复制集：
@@ -99,7 +99,7 @@ storage:
     cfg.members[0].priority=2
     rs.**reconfig**(cfg)
 
-#####配置服务器
+##### 配置服务器
 1. 从3.2起，config server可以使用复制集方式，前提是必须使用wiredTiger。**mongo会把localhost和127.0.0.1辨认为不同的host**  
 2. 使用复制集来配置config server，必须满足：没有仲裁节点，没有延迟节点，必须建立索引（所有成员的buildIndexes？？必须设为true）
 3. # 为了安装成window service，需要提供log path；否则config server启动无需此option
