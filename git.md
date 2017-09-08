@@ -1,5 +1,5 @@
-###安装windows版本git客户端
-https://git-for-windows.github.io  
+###安装windows版本git客户端  
+https://github.com/git-for-windows/git/releases/tag/v2.14.1.windows.1  
 
 ###创建key
 为了能和github创建联系，需要在本机上创建ssh密钥，并把**公钥**添加到github中 
