@@ -36,16 +36,17 @@ hash的值只能存储字符串
 2.  **hmset** key field1 val1 field2 vale
 3.  **hget** key f1
 3.  **hmget** key f1 f2
-4.  **hgetall** key
-5.  **hexists** key f1    //判断的是**key下的field**
-6.  **hsetNX**  key f3 3  //如果f3已经存在，那么不设置
+4.  **hgetall** key  //返回所有key和value
+5.  **hexists** key f1    //判断**key下的field**是否存在，存在，返回1，不存在，返回0  
+6.  **hSetNX**  key f3 3  //如果f3不存在，那么设置值，并返回1；如果field已经存在，不做任何操作，并返回0.*可以代替**hexists和hset***    
 7.  **hkeys/hvals** key   //获得一个key所有字段名/字段值  
 8.  **hdel** key f1   //删除hash下的一个字段
-9.  **hlen**  key   //key下有几个字段
+9.  **hlen**  key   //key下有几个字段  
+10. **hIncrBy**  key field increament //对指定key的某个field，增加increament。*hash 没有hincr，使用hincrby key field 1代替*
 
 #####list
 1.  **lpush/rpush** key val1 [val2]   //把val1、val2从左边（L）或右（R）边推入list
-2.  **lpop/rpop** key    //从左边（L）或右（R）边删除一个值，并返回这个值
+2.  **lpop/rpop** key    //从左边（L）或右（R）边删除**一个**值，并返回这个值
 3.  **llen**  key     //list的长度（key不存在时为0）
 4.  **lrange** key start stop   //start、stop可选正数和负数；正数：从左边开始选取，负数：从右边选取。lrange key 0 -1：选取所有。
 5.  **lrem** key count val    //从key中删除conut个值为val的元素。count>0，从左开始删除count个；count<0，从右开始删除count个；count=0，删除所有val；
@@ -56,16 +57,16 @@ hash的值只能存储字符串
 10.  **RpopLPush**  key1 key2 //从key1中rpop出**一个元素**，然后lpush到key2中
 
 #####set(集合)
-1.  **sADD**  key member1 member2 //集合添加成员，如果成员值已经存在，忽略当前添加
-2.  **sREM**  key member1 member2 //集合删除成员
-3.  **sMEMBERS**  key   //获得集合中所有元素
+1.  **sADD**  key member1 member2 //集合添加成员，如果成员值已经存在，忽略当前添加。返回值为成功添加的成员数。  
+2.  **sREM**  key member1 member2 //集合删除成员。返回值为成功删除的成员数。  
+3.  **sMEMBERS**  key   //获得集合中所有元素。  
 4.  **sISMEMBER** key member1 //判断member1是不是已经在key中存在了。存在：1，不存在：0
 5.  **sDIFF** key1 key2 //key1－key2（key1中有，而key2中没有的部分）
 6.  **sINTER**  key1 key2 //key1，key2共有部分
 7.  **sUNION**  key1 key2 //key1+key2
-8.  **sCARD** key   //获得集合中成员的数量
+8.  **sCARD** key   //获得集合中所有成员的**数量**
 9.  **sDIFF/INTER/UNION/STORE** dest key1 key2  //和diff/inter/union类似，只是会把结果存储在dest这个新的键值中
-10.  **sRANDMEMBER**  key [count]   //从集合中随机获取count个成员
+10.  **sRANDMEMBER**  key [count]   //从集合中随机获取count个成员。如果count为正，随机获得conut个不同的成员，如果count>集合数，返回集合中所有的值；如果count为负，获得的count个值可能相同  
 11.  **sPOP** key   //从集合中返回一个成员，并从集合中删除
 
 #####有序集合
