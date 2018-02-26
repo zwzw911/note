@@ -1,3 +1,12 @@
+0. **redis常用组件**    
+redis-server  
+redis-cli
+redis-benchmark  性能测试工具  
+redis-check-aof  AOF文件修复工具  
+redis-check-dump  RDB文件检查工具  
+
+db是实例中的命名空间，即db并不互相隔离，例如使用***FLUSHALL***会将所有db中的数据清空
+
 1. redis支持16个数据库，默认使用0.可以是**select 1**更换数据库
 
 #####公用命令
@@ -9,15 +18,20 @@
 1.  **set**     //设置key-value
 2.  **del**     //删除所有key
 6.  **get**     //获得key对应的value
-7.  **incr**    //增加key对应的value
-8.  **incrby**  //增加key对应的value
-9.  **decr** **decrby** //和incr/decrby相反
+7.  **incr**    //如果存储的字符是数字，value+1并返回  
+8.  **incrby**  //和incr类似，但是可以指定对应的增长值  
+9.  **decr** **decrby** //和incr/decrby相反，减少对应的值  
 10.  **INCRBYFLOAT**    //增加浮点数
-11.  **append**       //尾部增加字符。foo=6.1; append foo 2; foo-6.1**2**
-12.  **strlen**       //**字符**长度
-13.  **mget/mset**    // mget key1 val1 key2 val2
+11.  **append**       //向尾部增加字符，如果字符不存在，创建新的。返回字符长度 *foo=6.1; append foo 2; foo=6.1**2**,并返回4（字符的长度，包含小数点）*
+12.  **strlen**       //**字符**长度，如果key不存在，返回0；否则返回字符长度  
+13.  **mget/mset**    // mget key1 val1 key2 val2  
+14.  **getbit**   //获得字符的指定bit的值（0/1），idx从0开始，超出范围默认0。getbit k idx  
+15.  **setbit**   //设定字符的指定bit的值（0/1）。如果key不存在，设置idx前的bit为0，idx的bit为设定值。*setbit notExist 5 1====>idx 5对应的bit为1，idx 0～4对应的bit为0*  
+16.  **bitcount**   //统计1的个数  
+17.  **bitop**      //bit运算。OR/AND/XOR/NOT    *bitop op result para1 para2*  
   
-#####hash  
+#####**hash**  
+hash的值只能存储字符串  
 1.  **hset** key field value
 2.  **hmset** key field1 val1 field2 vale
 3.  **hget** key f1
