@@ -90,7 +90,7 @@ hash的值只能存储字符串
 
 
 #####排序
-**sort** key [alpha] [DESC] [limit offset count]   //用作对列表（list）和集合（set/zset）进行排序。alpha对无法字符进行排序。DESC：反向排序。limit:跳过offset，总共显示count个。
+**sort** key [alpha] [DESC] [LIMIT offset count]   //用作对列表（list）和集合（set/zset，有序集合的话，据略分数，直接对value）进行排序。alpha对字符进行排序。DESC：反向排序。LIMIT:跳过offset，总共显示count个。
 **by**
 **get**   //#返回本身
 **store**   //sort/by/get返回值存储在**列表**中
