@@ -1,3 +1,10 @@
+1. 设置淘宝镜像    
+`npm install -g cnpm --registry=https://registry.npm.taobao.org`    
+2. 安装webpack/webpack-cli/uglifyjs-webpack-plugin    
+3. 运行npx webpack    
+
+
+
 ### 1. 4个组成部分：  
 1.1 **entry**：入口点，告知需要打包的文件，以及这些文件之间的依赖关系  
 1.2 **output**：打包的文件放置的位置  
