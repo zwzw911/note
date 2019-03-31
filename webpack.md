@@ -1,10 +1,10 @@
 1. 设置淘宝镜像    
-`npm install -g cnpm --registry=https://registry.npm.taobao.org`    
-2. webpack不要安装4.29.6，有问题，暂时使用稍旧的版本4.29.0
-   webpack和webpack-cli全局安装，这样可以直接运行webpack。否则运行` npx webpack `    
- `npm install -g webpack@4.29.0 webpack-cli`  
+*`npm install -g cnpm --registry=https://registry.npm.taobao.org`*    
+2. webpack不要安装4.29.6，有问题，暂时使用稍旧的版本4.29.0    
+   webpack和webpack-cli全局安装，这样可以直接运行webpack。否则运行*` npx webpack `*    
+ *`npm install -g webpack@4.29.0 webpack-cli`*  
 3. 安装babel-loader    
-`npm i -D babel-loader @babel/core @babel/preset-env`  
+*`npm i -D babel-loader @babel/core @babel/preset-env`*  
    
 
 
