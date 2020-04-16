@@ -1,6 +1,6 @@
 0. **redis常用组件**    
 redis-server  
-redis-cli
+redis-cli    
 redis-benchmark  性能测试工具  
 redis-check-aof  AOF文件修复工具  
 redis-check-dump  RDB文件检查工具  
@@ -15,31 +15,28 @@ db是实例中的命名空间，即db并不互相隔离，例如使用***FLUSHAL
 3.  **type**    //显示key的类型
 
 #####string
-1.  **set**     //设置key-value
-2.  **del**     //删除所有key
-6.  **get**     //获得key对应的value
-7.  **incr**    //如果存储的字符是数字，value+1并返回  
-8.  **incrby**  //和incr类似，但是可以指定对应的增长值  
-9.  **decr** **decrby** //和incr/decrby相反，减少对应的值  
-10.  **INCRBYFLOAT**    //增加浮点数
-11.  **append**       //向尾部增加字符，如果字符不存在，创建新的。返回字符长度 *foo=6.1; append foo 2; foo=6.1**2**,并返回4（字符的长度，包含小数点）*
-12.  **strlen**       //**字符**长度，如果key不存在，返回0；否则返回字符长度  
-13.  **mget/mset**    // mget key1 val1 key2 val2  
-14.  **getbit**   //获得字符的指定bit的值（0/1），idx从0开始，超出范围默认0。getbit k idx  
-15.  **setbit**   //设定字符的指定bit的值（0/1）。如果key不存在，设置idx前的bit为0，idx的bit为设定值。*setbit notExist 5 1====>idx 5对应的bit为1，idx 0～4对应的bit为0*  
-16.  **bitcount**   //统计1的个数  
-17.  **bitop**      //bit运算。OR/AND/XOR/NOT    *bitop op result para1 para2*  
+1.  **set/get**     //设置/读取key-value    
+2.  **mget/mset**    // mget key1 val1 key2 val2 
+3.  **del**     //删除所有key
+4.  **incr**    //如果存储的字符是数字，value+1并返回  
+5.  **incrby**  //和incr类似，但是可以指定对应的增长值  
+6.  **decr/decrby** //和incr/decrby相反，减少对应的值  
+7.  **INCRBYFLOAT**    //增加浮点数
+8.  **append**       //向尾部增加字符，如果字符不存在，创建新的。返回字符长度 *foo=6.1; append foo 2; foo=6.1**2**,并返回4（字符的长度，包含小数点）*
+9.  **strlen**       //**字符**长度，如果key不存在，返回0；否则返回字符长度   
+10.  **getbit**   //获得字符的指定bit的值（0/1），idx从0开始，超出范围默认0。getbit k idx  
+11.  **setbit**   //设定字符的指定bit的值（0/1）。如果key不存在，设置idx前的bit为0，idx的bit为设定值。*setbit notExist 5 1====>idx 5对应的bit为1，idx 0～4对应的bit为0*  
+12.  **bitcount**   //统计1的个数  
+13.  **bitop**      //bit运算。OR/AND/XOR/NOT    *bitop op result para1 para2*  
   
 #####**hash**  
 hash的值只能存储字符串  
-1.  **hset** key field value
-2.  **hmset** key field1 val1 field2 vale
-3.  **hget** key f1
-3.  **hmget** key f1 f2
+1.  **hset/hget**  //hset/hget key field value    设置/读取key中单个field的value    
+2.  **hmset/hmget** //key field1 val1 field2 vale  设置/读取key中多个field的value
 4.  **hgetall** key  //返回所有key和value
+7.  **hkeys/hvals** key   //获得一个key所有字段名/字段值
 5.  **hexists** key f1    //判断**key下的field**是否存在，存在，返回1，不存在，返回0  
-6.  **hSetNX**  key f3 3  //如果f3不存在，那么设置值，并返回1；如果field已经存在，不做任何操作，并返回0.*可以代替**hexists和hset***    
-7.  **hkeys/hvals** key   //获得一个key所有字段名/字段值  
+6.  **hSetNX**  key f3 3  //如果f3不存在，那么设置值，并返回1；如果field已经存在，不做任何操作，并返回0.*可以代替**hexists和hset***      
 8.  **hdel** key f1   //删除hash下的一个字段
 9.  **hlen**  key   //key下有几个字段  
 10. **hIncrBy**  key field increament //对指定key的某个field，增加increament。*hash 没有hincr，使用hincrby key field 1代替*
@@ -72,7 +69,7 @@ hash的值只能存储字符串
 #####有序集合
 1. **zADD** key score val //scroe可以是整数，小数，+inf，－inf
 2. **zSCORE** key val   //val对应的score
-3. **z(REV)RANGE** key startIdx endIdx **[withscores]**  //按照score从小达到排序，去index[start,end]的元素。withscores：同时显示score
+3. **z(REV)RANGE** key startIdx endIdx **[withscores]**  //按照score从小到大排序，取index[start,end]的元素。withscores：同时显示score
 4.  **z(REV)RANGEBYSCORE** key scoreMIN scoreMAX **[withscores]** **[LIMIT]** start total//根据scoreMIN/MAX范围取值, limit同mysql
 5.  **zINCRBY** key scorenum val  //为某个val增加score值，可以为正数，负数
 6.  **zCARD** key   //有序集合的成员数
@@ -83,7 +80,7 @@ hash的值只能存储字符串
 
 
 #####事务
-1.  **multi/exec**      //开始结束事务，如果**事务命令出错，事务不执行**；如果事务**执行中出错，跳过出错语句，继续向下执行，需要手动回滚（redis不支持自动rollback）**
+1.  **multi/exec**      //开始/结束事务，如果**事务命令语法出错，事务不执行**；如果事务**执行中（运行时）出错，跳过出错语句，继续向下执行，需要手动回滚（redis不支持自动rollback）**
 2.  **(p)expire** key  time(s)  //设置key超时时间（秒），redis自动删除; pEXPIRE是以ms为单位
 3.  **ttl** key   //key还剩多久过期
 4.  **persist** key   //设成expire的key再次变成永久key
@@ -110,8 +107,11 @@ hash的值只能存储字符串
 将多个不互相依赖的命令，通过管道一次发送，并且一次获得结果。可以节省client/server之间的往返时间
 
 #####持久化
-RDB：snapshot。 save 900 1/save 300 10
-AOF：append only file。 appendonly **no=>yes**。appendfilenam默认为appendonly.aof，**auto-aof-rewrite-percentage** 100，**auto-aof-rewrite-min-size** 64mb，**BGREWRITEAO**，**appendfsync** always/everysec/no9从磁盘缓存写入磁盘的策略）
+RDB：snapshot。 save 900 1/save 300 10   可以有多个条件，是或的关系。900秒内有一个数据或者300秒内有10个数据被更改，则保存。原理：执行的时候fork一个子进程，将内存数据写入临时文件，此期间，如果有数据变化，父进程copy一份，保证子进程的内存不受影响。也可以通过SAVE（父进程备份，期间阻塞操作）或者BGSAVE（子进程）手工持久化。    
+
+AOF：append only file。 默认不开启，设置appendonly **no=>yes**开启。    
+appendfilenam默认为appendonly.aof，内容是文本文件，记录了操作的命令。有些命令可以优化，例如，连续对一个key进行了若干次set操作，那么只要记录最后一个set即可：**auto-aof-rewrite-percentage**：如果AOF超过上次重写时文件的大小（百分比），**auto-aof-rewrite-min-size** 64mb：AOF超过64MB，就重写。**BGREWRITEAO**，    
+理论是，每次更改会被记录到硬盘上，但是由于硬盘缓存的存在，可能会有延时，此时，可以设置**appendfsync** always（每条命令都写入硬盘，最安全但是最慢）/everysec（每秒执行，适中）/no（follow OS，一般是30秒写一次，效率最高，但是有丢失数据的风险）从磁盘缓存写入磁盘的策略。
   
 #####实际操作
 1. redis-cli：进入redis
